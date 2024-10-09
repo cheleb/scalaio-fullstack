@@ -5,12 +5,11 @@ theme: seriph
 # like them? see https://unsplash.com/collections/94734566/slidev
 background: https://cover.sli.dev
 # some information about your slides (markdown enabled)
-title: Welcome to Slidev
+title: Scala Full Stack
 info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
+  ## Scala Full Stack
 
-  Learn more at [Sli.dev](https://sli.dev)
+  Learn more at [ZIO <3 ScalaJS <3 Laminar](https://github.com/cheleb/zio-scalajs-laminar.g8)
 # apply unocss classes to the current slide
 class: text-center
 # https://sli.dev/features/drawing
@@ -24,7 +23,7 @@ mdc: true
 overviewSnapshots: true
 ---
 
-# Welcome to Slidev
+# Scala Full Stack
 
 Presentation slides for developers
 
@@ -52,148 +51,15 @@ The last comment block of each slide will be treated as slide notes. It will be 
 transition: fade-out
 ---
 
-# What is Slidev?
-
-Slidev is a slides maker and presenter designed for developers, consist of the following features
-
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - themes can be shared and re-used as npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embed Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export to PDF, PPTX, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - virtually anything that's possible on a webpage is possible in Slidev
-<br>
-<br>
-
-Read more about [Why Slidev?](https://sli.dev/guide/why)
-
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/features/slide-scope-style
--->
-
-<style>
-h1 {
-  background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
-</style>
-
-<!--
-Here is another comment.
--->
-
----
-transition: slide-up
-level: 2
----
-
-# Navigation
-
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/ui#navigation-bar)
-
-## Keyboard Shortcuts
-
-|     |     |
-| --- | --- |
-| <kbd>right</kbd> / <kbd>space</kbd>| next animation or slide |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd> | previous slide |
-| <kbd>down</kbd> | next slide |
-
-<!-- https://sli.dev/guide/animations.html#click-animation -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-  alt=""
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
-
----
-layout: two-cols
-layoutClass: gap-16
----
 
 # Table of contents
 
-You can use the `Toc` component to generate a table of contents for your slides:
-
-```html
 <Toc minDepth="1" maxDepth="1"></Toc>
-```
 
-The title will be inferred from your slide content, or you can override it with `title` and `level` in your frontmatter.
-
-::right::
-
-<Toc v-click minDepth="1" maxDepth="2"></Toc>
 
 ---
-layout: image-right
-image: https://cover.sli.dev
----
 
-# Code
-
-Use code snippets and get the highlighting directly, and even types hover!
-
-```ts {all|5|7|7-8|10|all} twoslash
-// TwoSlash enables TypeScript hover information
-// and errors in markdown code blocks
-// More at https://shiki.style/packages/twoslash
-
-import { computed, ref } from 'vue'
-
-const count = ref(0)
-const doubled = computed(() => count.value * 2)
-
-doubled.value = 2
-```
-
-<arrow v-click="[4, 5]" x1="350" y1="310" x2="195" y2="334" color="#953" width="2" arrowSize="1" />
-
-<!-- This allow you to embed external code blocks -->
-<<< @/snippets/external.ts#snippet
-
-<!-- Footer -->
-
-[Learn more](https://sli.dev/features/line-highlighting)
-
-<!-- Inline style -->
-<style>
-.footnotes-sep {
-  @apply mt-5 opacity-10;
-}
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
-
-<!--
-Notes can also sync with clicks
-
-[click] This will be highlighted after the first click
-
-[click] Highlighted with `count = ref(0)`
-
-[click:3] Last click (skip two clicks)
--->
-
----
-level: 2
----
-
-# TOC
+# Agenda
 
 
 ````md magic-move {lines: true}
@@ -225,8 +91,11 @@ object ScalaFullStack:
 
 # Setup
 
+
 ```bash
-sbt new cheleb/zio-scalajs-laminar.g8
+sbt new cheleb/zio-scalajs-laminar.g8 --name=scalaio-full-stack
+
+code scalaio-full-stack
 ```
 
 * VSCode / Metals 🤘🏼
@@ -238,24 +107,64 @@ sbt new cheleb/zio-scalajs-laminar.g8
 
 ## VSCode / Metals 🤘🏼
 
-Task automation with `tasks.json` and `launch.json`
+Task automation with `.vscode/tasks.json` and `launch.json`
 
-```json
+````md magic-move {lines: true}
+```json {7|9|11-12}
 {
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "test",
-      "type": "shell",
-      "command": "sbt test",
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      }
+       "label": "demo",
+        "runOptions": {
+            "runOn": "folderOpen"
+        },
+        "dependsOrder": "sequence",
+        "dependsOn": [
+            "setup",
+            "runDemo"
+        ],
+        "problemMatcher": [],
+        "group": {
+            "kind": "build"
+        }
     }
   ]
 }
 ```
+
+```json
+{
+    "label": "setup",
+    "type": "shell",
+    "command": "./scripts/setup.sh",
+    "presentation": {
+        "panel": "dedicated",
+        "group": "runDevCmd",
+        "close": true
+    },
+    "group": "build"
+}
+```
+
+```json
+{
+    "label": "runDemo",
+    "dependsOrder": "parallel",
+    "dependsOn": [
+        "docker",
+        "serverRun",
+        "fastLink",
+        "npmDev"
+    ],
+    "problemMatcher": [],
+    "group": {
+        "kind": "build"
+    }
+},
+```
+
+````
 
 ---
 
@@ -279,7 +188,35 @@ addSbtPlugin("io.spray" % "sbt-revolver" % "0.10.0")
 ```
 
 
-----
+---
+
+## npm / vite
+
+```js {5|8|12}
+import { defineConfig } from "vite";
+import scalaJSPlugin from "@scala-js/vite-plugin-scalajs";
+
+export default defineConfig({
+    plugins: [scalaJSPlugin({
+        // path to the directory containing the sbt build
+        // default: '.'
+        cwd: '../..',
+
+        // sbt project ID from within the sbt build to get fast/fullLinkJS from
+        // default: the root project of the sbt build
+        projectID: 'client',
+
+        // URI prefix of imports that this plugin catches (without the trailing ':')
+        // default: 'scalajs' (so the plugin recognizes URIs starting with 'scalajs:')
+        uriPrefix: 'scalajs',
+    })],
+    build: {
+        sourcemap: true,
+    }
+});
+```
+
+---
 
 ````md magic-move {lines: true}
 
@@ -322,60 +259,6 @@ object ScalaFullStack:
   object Server:
     val quill = "Compile-time query generation"
 
-```
-
-
-
-
-
-```ts {*|1-2|3-4|3-4,8}
-// step 2
-export default {
-  data() {
-    return {
-      author: {
-        name: 'John Doe',
-        books: [
-          'Vue 2 - Advanced Guide',
-          'Vue 3 - Basic Guide',
-          'Vue 4 - The Mystery'
-        ]
-      }
-    }
-  }
-}
-```
-
-```ts
-// step 3
-export default {
-  data: () => ({
-    author: {
-      name: 'John Doe',
-      books: [
-        'Vue 2 - Advanced Guide',
-        'Vue 3 - Basic Guide',
-        'Vue 4 - The Mystery'
-      ]
-    }
-  })
-}
-```
-
-Non-code blocks are ignored.
-
-```vue
-<!-- step 4 -->
-<script setup>
-const author = {
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-}
-</script>
 ```
 ````
 
@@ -672,7 +555,7 @@ Learn more: [Mermaid Diagrams](https://sli.dev/features/mermaid) and [PlantUML D
 ---
 foo: bar
 dragPos:
-  square: 691,32,167,_,-16
+  square: -26,0,0,0
 ---
 
 # Draggable Elements
