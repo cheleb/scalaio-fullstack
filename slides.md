@@ -62,7 +62,7 @@ transition: fade-out
 # Agenda
 
 
-````md magic-move {lines: true}
+````md magic-move
 
 ```scala {*|1|3-9|11-15}
 
