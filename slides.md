@@ -267,16 +267,16 @@ addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.3.2")
 ```
 
 * build.sbt
-```scala
-lazy val shared = crossProject(JSPlatform, JVMPlatform)
+```scala {1|2|8-9}
+lazy val shared: CrossProject = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
   .disablePlugins(RevolverPlugin)
   .in(file("modules/shared"))
   /* [...] */
   .settings(publish / skip := true)
   
-lazy val sharedJvm = shared.jvm
-lazy val sharedJs  = shared.js
+lazy val sharedJvm: Project = shared.jvm
+lazy val sharedJs: Project  = shared.js
 ```
 
 ---
@@ -285,10 +285,10 @@ lazy val sharedJs  = shared.js
 <h4>Shared</h4>
 
 ```scala
-lazy val shared = crossProject(JSPlatform, JVMPlatform)
+lazy val shared: CrossProject = crossProject(JSPlatform, JVMPlatform)
 // [...]  
-lazy val sharedJvm = shared.jvm
-lazy val sharedJs  = shared.js
+lazy val sharedJvm: Project = shared.jvm
+lazy val sharedJs: Project  = shared.js
 ```
 
 <div grid="~ cols-2 gap-4">
@@ -314,6 +314,25 @@ lazy val client = project
 </v-click>
 </div>
 </div>
+
+---
+
+# Shared
+
+What can be shared between the client and the server?
+
+<ul>
+ <li v-click="+1">Payloads</li>
+ <li v-click="+2">Business logic</li>
+ <li v-click="+3">Validation</li>
+ <li v-click="+4">Error handling</li>
+</ul>
+
+<div v-click="+5" class="absolute left-30%"> And ... </div>
+<div v-click="+6" class="absolute right-30%"> REST API definition </div>
+ 
+
+
 
 ---
 
