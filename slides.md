@@ -25,13 +25,8 @@ overviewSnapshots: true
 
 # Scala Full Stack
 
-Presentation slides for developers
+With ZIO, Tapir && Laminar
 
-<div class="pt-12">
-  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
-    Press Space for next page <carbon:arrow-right class="inline"/>
-  </span>
-</div>
 
 <div class="abs-br m-6 flex gap-2">
   <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
@@ -51,14 +46,6 @@ The last comment block of each slide will be treated as slide notes. It will be 
 transition: fade-out
 ---
 
-
-# Table of contents
-
-<Toc minDepth="1" maxDepth="1"></Toc>
-
-
----
-
 # Agenda
 
 
@@ -72,7 +59,7 @@ object ScalaFullStack:
 
     val scalfold = "sbt new cheleb/zio-scalajs-laminar.g8"
 
-    val build = "sbt"
+    val build = ("sbt", "npm/Vite", "Docker")
 
     val ide = "VSCode / Metals 🤘🏼"
 
@@ -229,7 +216,18 @@ object ScalaFullStack:
   object Backend  
 ```
 
-```scala {*|3-6|8-11|5-6,9-10}
+```scala {3-6}
+object ScalaFullStack:
+  
+  object Frontend:
+    val laminar = "Type-safe, reactive UI library"
+    val zio = "Type-safe, composable asynchronous and  concurrent programming"
+    val tapir = "Type-safe HTTP client generator"
+
+  object Backend:
+```
+
+```scala {8-11}
 object ScalaFullStack:
   
   object Frontend:
@@ -240,10 +238,7 @@ object ScalaFullStack:
   object Backend:
     val tapir = "Type-safe HTTP client generator"
     val zio = "Type-safe, composable asynchronous and concurrent programming"
-    val quill = "Compile-time query generation"
-  
-
-  
+    val quill = "Compile-time query generation"  
 ```
 
 ```scala
@@ -261,6 +256,109 @@ object ScalaFullStack:
 
 ```
 ````
+
+---
+
+# SBT Cross Project
+
+* plugins.sbt
+```scala
+addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.3.2")
+```
+
+* build.sbt
+```scala
+lazy val shared = crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+  .disablePlugins(RevolverPlugin)
+  .in(file("modules/shared"))
+  /* [...] */
+  .settings(publish / skip := true)
+  
+lazy val sharedJvm = shared.jvm
+lazy val sharedJs  = shared.js
+```
+
+---
+
+# SBT Cross Project
+<h4>Shared</h4>
+
+```scala
+lazy val shared = crossProject(JSPlatform, JVMPlatform)
+// [...]  
+lazy val sharedJvm = shared.jvm
+lazy val sharedJs  = shared.js
+```
+
+<div grid="~ cols-2 gap-4">
+<div>
+<v-click>
+<h4>Server</h4>
+```scala {*|3}
+lazy val server = project
+  .settings( /* [...] */ )
+  .dependsOn(sharedJvm)
+```
+</v-click>
+</div>
+<div>
+<v-click>
+<h4>Client</h4>
+```scala {*|4}
+lazy val client = project
+  .enablePlugins(ScalaJSPlugin)
+  .settings( /* [...] */ )
+  .dependsOn(sharedJs)
+```
+</v-click>
+</div>
+</div>
+
+---
+
+# Frontend
+
+Laminar is a Type-safe, reactive UI library for ScalaJS.
+
+It provides reactive components, and will update the DOM only when necessary.
+
+<div grid="~ cols-2 gap-4">
+<div>
+
+```scala
+import com.raquo.laminar.api.L._
+
+val app = {
+  val name = Var("World")
+  div(
+    input(
+      placeholder := "What's your name?",
+      onInput.mapToValue --> name.writer
+    ),
+    child.text <-- name.signal
+                       .map(name => s"Hello, $name!")
+  )
+}
+```
+</div>
+<div>
+Basicaly Laminar provides reactive components:
+
+* `Var` - a mutable value
+* `Signal` - a read-only value that updates when its dependencies change
+<!-- * `EventStream` - a stream of events
+* `EventBus` - a sink for events -->
+
+And 2 reactive operators:
+
+* `-->` - Write to a Laminar reactive element
+* `<--` - Read from a Laminar reactive element
+
+
+</div>
+</div>
+
 
 ---
 
@@ -555,7 +653,7 @@ Learn more: [Mermaid Diagrams](https://sli.dev/features/mermaid) and [PlantUML D
 ---
 foo: bar
 dragPos:
-  square: -26,0,0,0
+  square: 0,-9,0,0
 ---
 
 # Draggable Elements
