@@ -86,8 +86,8 @@ code scalaio-full-stack
 ```
 
 * VSCode / Metals 🤘🏼
-* sbt
 * npm / vite
+* sbt
 * Docker
 
 ---
@@ -152,29 +152,6 @@ Task automation with `.vscode/tasks.json` and `launch.json`
 ```
 
 ````
-
----
-
-## sbt
-
-```scala {*|1-2|3-5|6-8|9-10|11-12|13-14}
-// Cross project support, to spread project resources between js and jvm world
-addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.3.2")
-// Scala.js support
-addSbtPlugin("org.scala-js" % "sbt-scalajs"        % "1.17.0")
-addSbtPlugin("org.scala-js" % "sbt-jsdependencies" % "1.0.2")
-// Scala.js bundler
-addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler"     % "0.21.1")
-addSbtPlugin("ch.epfl.scala" % "sbt-web-scalajs-bundler" % "0.21.1")
-// TypeScript support
-addSbtPlugin("org.scalablytyped.converter" % "sbt-converter" % "1.0.0-beta44")
-// Static file generator
-addSbtPlugin("org.playframework.twirl" % "sbt-twirl" % "2.0.5")
-// Will reStart server on code modification.
-addSbtPlugin("io.spray" % "sbt-revolver" % "0.10.0")
-```
-
-
 ---
 
 ## npm / vite
@@ -205,57 +182,24 @@ export default defineConfig({
 
 ---
 
-````md magic-move {lines: true}
+## sbt
 
-
-```scala
-object ScalaFullStack:
-  
-  object Frontend
-
-  object Backend  
+```scala {*|1-2|3-5|6-8|9-10|11-12|13-14}
+// Cross project support, to spread project resources between js and jvm world
+addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.3.2")
+// Scala.js support
+addSbtPlugin("org.scala-js" % "sbt-scalajs"        % "1.17.0")
+addSbtPlugin("org.scala-js" % "sbt-jsdependencies" % "1.0.2")
+// Scala.js bundler
+addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler"     % "0.21.1")
+addSbtPlugin("ch.epfl.scala" % "sbt-web-scalajs-bundler" % "0.21.1")
+// TypeScript support
+addSbtPlugin("org.scalablytyped.converter" % "sbt-converter" % "1.0.0-beta44")
+// Static file generator
+addSbtPlugin("org.playframework.twirl" % "sbt-twirl" % "2.0.5")
+// Will reStart server on code modification.
+addSbtPlugin("io.spray" % "sbt-revolver" % "0.10.0")
 ```
-
-```scala {3-6}
-object ScalaFullStack:
-  
-  object Frontend:
-    val laminar = "Type-safe, reactive UI library"
-    val zio = "Type-safe, composable asynchronous and  concurrent programming"
-    val tapir = "Type-safe HTTP client generator"
-
-  object Backend:
-```
-
-```scala {8-11}
-object ScalaFullStack:
-  
-  object Frontend:
-    val laminar = "Type-safe, reactive UI library"
-    val zio = "Type-safe, composable asynchronous and  concurrent programming"
-    val tapir = "Type-safe HTTP client generator"
-
-  object Backend:
-    val tapir = "Type-safe HTTP client generator"
-    val zio = "Type-safe, composable asynchronous and concurrent programming"
-    val quill = "Compile-time query generation"  
-```
-
-```scala
-object ScalaFullStack:
-  
-  object Frontend:
-    val laminar = "Type-safe, reactive UI library"
-  
-  object Shared:
-    val zio = "Type-safe, composable asynchronous and  concurrent programming"
-    val tapir = "Type-safe HTTP client generator"
-
-  object Server:
-    val quill = "Compile-time query generation"
-
-```
-````
 
 ---
 
@@ -315,6 +259,61 @@ lazy val client = project
 </div>
 </div>
 
+
+---
+
+````md magic-move {lines: true}
+
+
+```scala
+object ScalaFullStack:
+  
+  object Frontend
+
+  object Backend  
+```
+
+```scala {3-6}
+object ScalaFullStack:
+  
+  object Frontend:
+    val laminar = "Type-safe, reactive UI library"
+    val zio = "Type-safe, composable asynchronous and  concurrent programming"
+    val tapir = "Type-safe HTTP client generator"
+
+  object Backend:
+```
+
+```scala {8-11}
+object ScalaFullStack:
+  
+  object Frontend:
+    val laminar = "Type-safe, reactive UI library"
+    val zio = "Type-safe, composable asynchronous and  concurrent programming"
+    val tapir = "Type-safe HTTP client generator"
+
+  object Backend:
+    val tapir = "Type-safe HTTP client generator"
+    val zio = "Type-safe, composable asynchronous and concurrent programming"
+    val quill = "Compile-time query generation"  
+```
+
+```scala
+object ScalaFullStack:
+  
+  object Frontend:
+    val laminar = "Type-safe, reactive UI library"
+  
+  object Shared:
+    val zio = "Type-safe, composable asynchronous and  concurrent programming"
+    val tapir = "Type-safe HTTP client generator"
+
+  object Server:
+    val quill = "Compile-time query generation"
+
+```
+````
+
 ---
 
 # Shared
@@ -331,21 +330,223 @@ What can be shared between the client and the server?
 <div v-click="+5" class="absolute left-30%"> And ... </div>
 <div v-click="+6" class="absolute right-30%"> REST API definition </div>
  
+------
+
+# Tapir
+
+Tapir stand between Http server and effect or direct style.
+
+<div v-click="+1">
+<img src="./images/tapir-zio.png" style="width: 100%;" />
+</div>
+
+
+---
+
+# ZIO 101
+
+ZIO is a library for asynchronous and concurrent programming in Scala. 
+
+<div v-click="+1">
+Simplified, ZIO is a data type that represents a computation:
+```scala
+trait ZIO[-R, +E, +A]
+```
+<div v-click="+2">
+
+<ul>
+  <li v-click="+2">that may require an environment of type `R`</li>
+  <li v-click="+3">that may fail with an error of type `E`</li>
+  <li v-click="+4">that may succeed with a value of type `A`
+</li>
+</ul>
+</div>
+</div>
+
+---
+
+# ZIO 101
+
+
+A simple mental model is to think of ZIO as a function:
+```scala
+type ZIO[R,E,A] = R => Either[E, A]
+```
+<div v-click="+1">
+Many aliases are provided for common use cases:
+
+```scala {*|*|2-3}
+type IO[+E, +A]   = ZIO[Any, E, A]         // Succeed with an `A`, may fail with `E`        , no requirements.
+type Task[+A]     = ZIO[Any, Throwable, A] // Succeed with an `A`, may fail with `Throwable`, no requirements.
+type RIO[-R, +A]  = ZIO[R, Throwable, A]   // Succeed with an `A`, may fail with `Throwable`, requires an `R`.
+type UIO[+A]      = ZIO[Any, Nothing, A]   // Succeed with an `A`, cannot fail              , no requirements.
+type URIO[-R, +A] = ZIO[R, Nothing, A]     // Succeed with an `A`, cannot fail              , requires an `R`.
+```
+</div>
+
+
+---
+
+# Tapir 101
+
+First step is to define the API endpoints as <span v-mark="{type:'circle', color:'orange', at:1}">values</span>.
+
+
+```scala {*|*|5|6|8|10} {at:2}
+//                                   In      Error     Out 
+//                                    ☟        ☟        ☟
+val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
+    .name("person")
+    .post                 // POST method
+    .in("person")         // Endpoint path is /person
+    .in(              
+      jsonBody[Person]    // Request body is JSON-encoded Person
+    )
+    .out(jsonBody[User])  // Response is JSON-encoded User
+```
+<div grid="~ cols-2 gap-4">
+<div v-click="+6">
+  From this definition, Tapir can generate:
+    <ul>
+        <li v-click="+6"><a href="localhost:8080/docs">OpenAPI documentation</a></li>
+        <li v-click="+7"><span v-mark="{type:'circle', color:'orange', at:10}">Http server</span> squeleton</li>
+        <li v-click="+8"><span v-mark="{type:'circle', color:'orange', at:11}">Sttp client</span></li>
+    </ul>
+</div>
+<div v-click="+9">
+  POST /person HTTP/1.2
+  
+    {
+        "email": "john.doe@foo.bar",
+        "password": "notsecured",
+        [ ... ]
+    }
+</div>
+</div>
+
+---
+
+# Tapir Server Side
+
+After a bunch of imports, we can implement the server side of the API.
+
+Given the following PersonServide:
+
+```scala
+trait PersonService:
+  def register(person: Person): Task[User]
+
+```
+
+<v-click>
+We can implement the server side of the API like this:
+
+````md magic-move
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService)
+```
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  PersonEndpoint.create
+     
+```
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+    .zServerLogic { 
+        // Logic here ..
+    }   
+```
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+    .zServerLogic { (p: Person) => 
+      personService.register(p) 
+    }   
+```
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+    .zServerLogic: (p: Person) =>
+      personService.register(p)
+```
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+    .zServerLogic:
+      personService.register
+```
+````
+
+</v-click>
+
+
+<div v-click="+7" class="absolute left-10%">
+`zServerLogic` is a Tapir extension method.
+</div>
 
 
 
 ---
 
-# Frontend
+# Tapir Client Side
 
-Laminar is a Type-safe, reactive UI library for ScalaJS.
+With another bunch of imports, we can implement the client side of the API, in one liner:
 
-It provides reactive components, and will update the DOM only when necessary.
+Let say we have a Person instance hold in a Var:
+
+````md magic-move
+```scala
+val personVar = Var(Person("john.doe@foo.bar", "notsecured"))
+```
+
+```scala
+val personVar = Var(Person("john.doe@foo.bar", "notsecured"))
+// From our endpoint definition that Person ~~> User
+PersonEndpoint.create
+```
+
+```scala
+val personVar = Var(Person("john.doe@foo.bar", "notsecured"))
+// From our endpoint definition that Person ~~> User
+PersonEndpoint.create( personVar.now() ) // RIO[SameOriginBackendClient, User]
+```
+
+```scala
+val personVar = Var(Person("john.doe@foo.bar", "notsecured"))
+// From our endpoint definition that Person ~~> User
+PersonEndpoint.create( personVar.now() ) // RIO[SameOriginBackendClient, User]
+              .emitTo(userBus, errorBus) // Then run it, and process the result in UI.
+```
+````
+
+
+<ul>
+  <li v-click="+5">`emitTo` is a ZIO extension method</li>
+  <li v-click="+6"> Question: there is another extention in action here, where ?</li>
+</ul>
+
+
+
+------
+
+# Laminar 101
 
 <div grid="~ cols-2 gap-4">
 <div>
 
-```scala
+```scala {*|4|10|*|8|10}
 import com.raquo.laminar.api.L._
 
 val app = {
@@ -364,394 +565,107 @@ val app = {
 <div>
 Basicaly Laminar provides reactive components:
 
-* `Var` - a mutable value
-* `Signal` - a read-only value that updates when its dependencies change
-<!-- * `EventStream` - a stream of events
-* `EventBus` - a sink for events -->
+<ul>
+  <li v-click="+1">`Var` - a mutable value</li>
+  <li v-click="+2">`Signal` - a read-only value that updates when its dependencies change</li>
+</ul>
 
-And 2 reactive operators:
+<div v-click="+3">And 2 reactive operators:</div>
 
-* `-->` - Write to a Laminar reactive element
-* `<--` - Read from a Laminar reactive element
+<ul>
+  <li v-click="+4">`-->`  Write to a Laminar reactive element</li>
+  <li v-click="+5">`<--`  Read from a Laminar reactive element</li>
+</ul>
 
 
 </div>
 </div>
 
+<div v-click="+6">
+  <h4>What is the missing part ?</h4>
+  <ul>
+    <li v-click="+7">`EventBus` - a way to emit and listen to events</li>
+    <li v-click="+8">`EventStream` - a listen only stream</li>
+  </ul>
+</div>
 
 ---
 
-# Components
+# Demo Time
+
+http://localhost:5173
+
+---
+
+# Laminar
+
+<div>
+
+```scala {1|2-3|1,9-10|18-20}
+val personVar = Var(Person("John", "john.does@foo.bar", Password("notsecured") ))
+val userBus  = EventBus[User]()
+val errorBus = EventBus[Throwable]()
+div(
+  styleAttr := "max-width: fit-content;  margin-left: auto;  margin-right: auto;",
+  h1("Signup"),
+  div(
+    styleAttr := "width: 600px; float: left;",
+    // The form is generated from the case class
+    personVar.asForm,
+  ),
+  div(
+    styleAttr := "clear:both;max-width: fit-content; margin:1em auto",
+    Button(
+      "Create",
+      disabled <-- personVar.signal.map(_.errorMessages.nonEmpty),
+      onClick --> { _ =>
+        PersonEndpoint
+          .create(personVar.now())
+          .emitTo(userBus, errorBus)
+      }
+    )
+  )
+)
+```
+</div>
+
+------
+
+# That all folks!
+
+But ...
 
 <div grid="~ cols-2 gap-4">
-<div>
-
-You can use Vue components directly inside your slides.
-
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
-
-```html
-<Counter :count="10" />
-```
-
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
-
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
-
+<div v-click="+1">
+  <img src="./images/tellme.webp" width="70%"/>
 </div>
 <div>
-
-```html
-<Tweet id="1390115482657726468" />
-```
-
-<Tweet id="1390115482657726468" scale="0.65" />
-
+  <ul>
+    <li v-click="+1">Form ?</li>
+    <li v-click="+2">Http client ?</li>
+    <li v-click="+3">What about the server side ?</li>
+    <li v-click="+4">What about the database ?</li>
+    <li v-click="+5">What about the authentication / authorisation ?</li>
+    <li v-click="+6">What about the deployment ?</li>
+  </ul>
 </div>
 </div>
 
-<!--
-Presenter note with **bold**, *italic*, and ~~striked~~ text.
 
-Also, HTML elements are valid:
-<div class="flex w-full">
-  <span style="flex-grow: 1;">Left content</span>
-  <span>Right content</span>
-</div>
--->
-
----
-class: px-20
----
-
-# Themes
-
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
-
-<div grid="~ cols-2 gap-2" m="t-2">
-
-```yaml
----
-theme: default
----
-```
-
-```yaml
----
-theme: seriph
----
-```
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true" alt="">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true" alt="">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/guide/theme-addon#use-theme) and
-check out the [Awesome Themes Gallery](https://sli.dev/resources/theme-gallery).
 
 ---
 
-# Clicks Animations
-
-You can add `v-click` to elements to add a click animation.
-
-<div v-click>
-
-This shows up when you click the slide:
-
-```html
-<div v-click>This shows up when you click the slide.</div>
-```
-
-</div>
-
-<br>
-
-<v-click>
-
-The <span v-mark.red="3"><code>v-mark</code> directive</span>
-also allows you to add
-<span v-mark.circle.orange="4">inline marks</span>
-, powered by [Rough Notation](https://roughnotation.com/):
-
-```html
-<span v-mark.underline.orange>inline markers</span>
-```
-
-</v-click>
-
-<div mt-20 v-click>
-
-[Learn more](https://sli.dev/guide/animations#click-animation)
-
-</div>
-
----
-
-# Motions
-
-Motion animations are powered by [@vueuse/motion](https://motion.vueuse.org/), triggered by `v-motion` directive.
-
-```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }"
-  :click-3="{ x: 80 }"
-  :leave="{ x: 1000 }"
->
-  Slidev
-</div>
-```
-
-<div class="w-60 relative">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-square.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-circle.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-triangle.png"
-      alt=""
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
-
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
-}
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 30, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn more](https://sli.dev/guide/animations.html#motion)
-
-</div>
-
----
-
-# LaTeX
-
-LaTeX is supported out-of-box. Powered by [KaTeX](https://katex.org/).
-
-<div h-3 />
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$ {1|3|all}
-\begin{aligned}
-\nabla \cdot \vec{E} &= \frac{\rho}{\varepsilon_0} \\
-\nabla \cdot \vec{B} &= 0 \\
-\nabla \times \vec{E} &= -\frac{\partial\vec{B}}{\partial t} \\
-\nabla \times \vec{B} &= \mu_0\vec{J} + \mu_0\varepsilon_0\frac{\partial\vec{E}}{\partial t}
-\end{aligned}
-$$
-
-[Learn more](https://sli.dev/features/latex)
-
----
-
-# Diagrams
-
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
-
-<div class="grid grid-cols-4 gap-5 pt-4 -mb-6">
-
-```mermaid {scale: 0.5, alt: 'A simple sequence diagram'}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
-```
-
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
-
-```mermaid
-mindmap
-  root((mindmap))
-    Origins
-      Long history
-      ::icon(fa fa-book)
-      Popularisation
-        British popular psychology author Tony Buzan
-    Research
-      On effectiveness<br/>and features
-      On Automatic creation
-        Uses
-            Creative techniques
-            Strategic planning
-            Argument mapping
-    Tools
-      Pen and paper
-      Mermaid
-```
-
-```plantuml {scale: 0.7}
-@startuml
-
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
-}
-
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
-
-cloud {
-  [Example 1]
-}
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
-```
-
-</div>
-
-Learn more: [Mermaid Diagrams](https://sli.dev/features/mermaid) and [PlantUML Diagrams](https://sli.dev/features/plantuml)
-
----
-foo: bar
-dragPos:
-  square: 0,-9,0,0
----
-
-# Draggable Elements
-
-Double-click on the draggable elements to edit their positions.
-
-<br>
-
-###### Directive Usage
-
-```md
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-```
-
-<br>
-
-###### Component Usage
-
-```md
-<v-drag text-3xl>
-  <carbon:arrow-up />
-  Use the `v-drag` component to have a draggable container!
-</v-drag>
-```
-
-<v-drag pos="663,206,261,_,-15">
-  <div text-center text-3xl border border-main rounded>
-    Double-click me!
-  </div>
-</v-drag>
-
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-
-###### Draggable Arrow
-
-```md
-<v-drag-arrow two-way />
-```
-
-<v-drag-arrow pos="67,452,253,46" two-way op70 />
-
----
-src: ./pages/imported-slides.md
-hide: false
----
-
----
-
-# Monaco Editor
-
-Slidev provides built-in Monaco Editor support.
-
-Add `{monaco}` to the code block to turn it into an editor:
-
-```ts {monaco}
-import { ref } from 'vue'
-import { emptyArray } from './external'
-
-const arr = ref(emptyArray(10))
-```
-
-Use `{monaco-run}` to create an editor that can execute the code directly in the slide:
-
-```ts {monaco-run}
-import { version } from 'vue'
-import { emptyArray, sayHello } from './external'
-
-sayHello()
-console.log(`vue ${version}`)
-console.log(emptyArray<number>(10).reduce(fib => [...fib, fib.at(-1)! + fib.at(-2)!], [1, 1]))
-```
-
----
-layout: center
-class: text-center
----
-
-# Learn More
-
-[Documentation](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/resources/showcases)
-
-<PoweredBySlidev mt-10 />
+# Resources
+
+
+
+* [ZIO](https://zio.dev)
+* [Laminar](https://laminar.dev)
+ * https://www.scala-js.org/doc/tutorial/laminar.html
+* [Tapir](https://tapir.softwaremill.com)
+* [ScalaJS](https://www.scala-js.org)
+* [Vite](https://vitejs.dev)
+* [SBT](https://www.scala-sbt.org)
+* [Docker](https://www.docker.com)
+* [VSCode](https://code.visualstudio.com)
+* [Metals](https://scalameta.org/metals/)
