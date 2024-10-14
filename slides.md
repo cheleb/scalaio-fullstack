@@ -94,10 +94,10 @@ code scalaio-full-stack
 
 ## VSCode / Metals 🤘🏼
 
-Task automation with `.vscode/tasks.json` and `launch.json`
+Task automation with <span v-mark="{type:'circle', color:'orange', at:0, delay:1000}">`.vscode/tasks.json`</span> and `launch.json`
 
 ````md magic-move {lines: true}
-```json {7|9|11-12}
+```json {*|7|9|11-12}
 {
   "version": "2.0.0",
   "tasks": [
@@ -156,7 +156,7 @@ Task automation with `.vscode/tasks.json` and `launch.json`
 
 ## npm / vite
 
-```js {5|8|12}
+```js {*|5|8|12}
 import { defineConfig } from "vite";
 import scalaJSPlugin from "@scala-js/vite-plugin-scalajs";
 
@@ -211,7 +211,7 @@ addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.3.2")
 ```
 
 * build.sbt
-```scala {1|2|8-9}
+```scala {*|1|2|8-9}
 lazy val shared: CrossProject = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
   .disablePlugins(RevolverPlugin)
@@ -236,26 +236,22 @@ lazy val sharedJs: Project  = shared.js
 ```
 
 <div grid="~ cols-2 gap-4">
-<div>
-<v-click>
+<div v-click="+1">
 <h4>Server</h4>
-```scala {*|3}
+```scala {*|3}{at:2}
 lazy val server = project
   .settings( /* [...] */ )
   .dependsOn(sharedJvm)
 ```
-</v-click>
 </div>
-<div>
-<v-click>
+<div v-click="+3">
 <h4>Client</h4>
-```scala {*|4}
+```scala {*|4}{at:4}
 lazy val client = project
   .enablePlugins(ScalaJSPlugin)
   .settings( /* [...] */ )
   .dependsOn(sharedJs)
 ```
-</v-click>
 </div>
 </div>
 
@@ -335,9 +331,33 @@ What can be shared between the client and the server?
 # Tapir
 
 Tapir stand between Http server and effect or direct style.
+<div grid="~ cols-3 gap-4">
+ <div>
+  <h3>Http server</h3>
+  <hr />
+  <ul>
+  <li v-click="+1" delay="1000">ZIO-HTTP</li>
+  <li v-click="+1" delay="2000">HTTP4S</li>
+  <li v-click="+1" delay="3000">Netty</li>
+  <li v-click="+1" delay="4000">Play</li>
+  <li v-click="+1" delay="5000">...</li>
+  </ul>
+ </div>
+ <div>
+   <img v-click="+2" src="./images/tapir-zio.png" style="width: 100%;" />
+ </div>
+ <div>
+  <h3>Effect or direct style</h3>
+  <hr />
+  <ul>
+  <li v-click="+1" delay="6000">ZIO</li>
+  <li v-click="+1" delay="7000">Cat Effects</li>
+  <li v-click="+1" delay="8000">Future</li>
+  <li v-click="+1" delay="8000">Direct style</li>
+  <li v-click="+1" delay="9000">...</li>
+  </ul>
 
-<div v-click="+1">
-<img src="./images/tapir-zio.png" style="width: 100%;" />
+ </div>
 </div>
 
 
@@ -389,7 +409,9 @@ type URIO[-R, +A] = ZIO[R, Nothing, A]     // Succeed with an `A`, cannot fail  
 
 # Tapir 101
 
-First step is to define the API endpoints as <span v-mark="{type:'circle', color:'orange', at:1}">values</span>.
+First step is to define the API endpoints as <span v-mark="{type:'circle', color:'orange', at:0, delay:2000}">values</span>.
+
+<div v-click="+1">
 
 
 ```scala {*|*|5|6|8|10} {at:2}
@@ -414,7 +436,7 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
     </ul>
 </div>
 <div v-click="+9">
-  POST /person HTTP/1.2
+  POST /person HTTP/1.1
   
     {
         "email": "john.doe@foo.bar",
@@ -422,6 +444,8 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
         [ ... ]
     }
 </div>
+</div>
+
 </div>
 
 ---
@@ -496,6 +520,72 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 `zServerLogic` is a Tapir extension method.
 </div>
 
+----
+
+# Tapir Client Side
+
+In the same way, we can implement the client side of the API.
+
+And we want to process the result in the UI.
+
+<ul>
+  <li v-click="+1">stay in the Scala world</li>
+  <li v-click="+2">use a type-safe API</li>
+  <li v-click="+3">use reactive stuff both http client and UI side</li>
+  <li v-click="+4">with a minimal of boilerplate</li>
+</ul>
+
+
+
+
+------
+
+# Laminar 101
+
+<div grid="~ cols-2 gap-3">
+<div>
+
+```scala {*|4|10|||8|10}
+import com.raquo.laminar.api.L._
+
+val app = {
+  val name = Var("World")
+  div(
+    input(
+      placeholder := "What's your name?",
+      onInput.mapToValue --> name.writer
+    ),
+    child.text <-- name.signal
+                       .map(name => s"Hello, $name!")
+  )
+}
+```
+</div>
+<div>
+Basicaly Laminar provides reactive components:
+
+<ul>
+  <li v-click="+1">`Var` - a mutable value</li>
+  <li v-click="+2">`Signal` - a read-only value that updates when its dependencies change</li>
+  <li v-click="+3">`EventStream` - a stream of events</li>
+  <li v-click="+3">`EventBus` - a stream of events that can be emitted to</li>
+</ul>
+
+<div v-click="+4">And 2 reactive operators:</div>
+
+<ul>
+  <li v-click="+5">`-->`  Write to a Laminar reactive element</li>
+  <li v-click="+6">`<--`  Read from a Laminar reactive element</li>
+</ul>
+
+
+</div>
+</div>
+
+<div v-click="+7">
+  <h4>In action</h4>
+  <a href="https://demo.laminar.dev/app/basic/hello">https://demo.laminar.dev/app/basic/hello</a>
+</div>
 
 
 ---
@@ -533,61 +623,12 @@ PersonEndpoint.create( personVar.now() ) // RIO[SameOriginBackendClient, User]
 
 
 <ul>
-  <li v-click="+5">`emitTo` is a ZIO extension method</li>
-  <li v-click="+6"> Question: there is another extention in action here, where ?</li>
+  <li v-click="+4">`emitTo` is a ZIO extension method</li>
+  <li v-click="+5"> Question: there is another extention in action here, where ?</li>
 </ul>
 
 
 
-------
-
-# Laminar 101
-
-<div grid="~ cols-2 gap-4">
-<div>
-
-```scala {*|4|10|*|8|10}
-import com.raquo.laminar.api.L._
-
-val app = {
-  val name = Var("World")
-  div(
-    input(
-      placeholder := "What's your name?",
-      onInput.mapToValue --> name.writer
-    ),
-    child.text <-- name.signal
-                       .map(name => s"Hello, $name!")
-  )
-}
-```
-</div>
-<div>
-Basicaly Laminar provides reactive components:
-
-<ul>
-  <li v-click="+1">`Var` - a mutable value</li>
-  <li v-click="+2">`Signal` - a read-only value that updates when its dependencies change</li>
-</ul>
-
-<div v-click="+3">And 2 reactive operators:</div>
-
-<ul>
-  <li v-click="+4">`-->`  Write to a Laminar reactive element</li>
-  <li v-click="+5">`<--`  Read from a Laminar reactive element</li>
-</ul>
-
-
-</div>
-</div>
-
-<div v-click="+6">
-  <h4>What is the missing part ?</h4>
-  <ul>
-    <li v-click="+7">`EventBus` - a way to emit and listen to events</li>
-    <li v-click="+8">`EventStream` - a listen only stream</li>
-  </ul>
-</div>
 
 ---
 
@@ -609,7 +650,7 @@ div(
   styleAttr := "max-width: fit-content;  margin-left: auto;  margin-right: auto;",
   h1("Signup"),
   div(
-    styleAttr := "width: 600px; float: left;",
+    styleAttr := "float: left;",
     // The form is generated from the case class
     personVar.asForm,
   ),
@@ -631,24 +672,124 @@ div(
 
 ------
 
-# That all folks!
+# Under the hood - Laminar Form Derivation
 
-But ...
+No boilerplate, no magic, just Scala.
 
-<div grid="~ cols-2 gap-4">
+<div v-click="+1"><a href="https://cheleb.github.io/laminar-form-derivation/demo/index.html">Laminar Form Derivation</a> with Magnolia</div>
+<ul>
+  <li v-click="+2">Case class to form</li>
+  <li v-click="+3">Databinding</li>
+  <li v-click="+4">Validation</li>
+  <li v-click="+5">Error handling</li>
+</ul>
+
+<div v-click="+6">
+
+```scala
+import import dev.cheleb.scalamigen.*
+
+case class Person(name: String, email: String, password: Password)
+
+val personVar = Var(Person("John", "john.does@foo.bar", Password("notsecured") ))
+
+personVar.asForm
+
+```
+
+</div>
+
+------
+
+# Under the hood - Http Request
+
+No boilerplate, no magic, just Scala.
+
+<div v-click="+1"><a href="https://cheleb.github.io/zio-laminar-tapir/docs/index.html">ZIO Laminar Tapir</a></div>
+<ul>
+  <li v-click="+2">Endpoint enhancement</li>
+  <li v-click="+3">Marshalling/unmarshalling</li>
+  <li v-click="+4">Error handling</li>
+  <li v-click="+5">Reactive</li>
+  <li v-click="+6">Type-safe</li>
+  <li v-click="+7">Minimal boilerplate</li>
+</ul>
+
+<div v-click="+8" class="absolute left-30%">
+```scala
+PersonEndpoint
+          .create(personVar.now())
+          .emitTo(userBus, errorBus)
+```
+</div>
+
+---
+
+# Under the hood - Http Request
+
+Inspired from [Rock The JVM](https://rockthejvm.com) courses/blog/videos ZIO rite of passage.
+
 <div v-click="+1">
-  <img src="./images/tellme.webp" width="70%"/>
+```scala
+import dev.cheleb.ziolaminartapir.*
+```
 </div>
-<div>
-  <ul>
-    <li v-click="+1">Form ?</li>
-    <li v-click="+2">Http client ?</li>
-    <li v-click="+3">What about the server side ?</li>
-    <li v-click="+4">What about the database ?</li>
-    <li v-click="+5">What about the authentication / authorisation ?</li>
-    <li v-click="+6">What about the deployment ?</li>
-  </ul>
+<div v-click="+2">
+Et voilà, you can now use Tapir in a reactive way, in you ScalaJS project.
 </div>
+
+<div v-click="+3">
+```scala
+// This import brings bunch of extension to Endpoint and ZIO.
+```
+</div>
+
+<div v-click="+4">
+
+````md magic-move {at:5}
+
+```scala
+extension [I, E <: Throwable, O](endpoint: Endpoint[Unit, I, E, O, Any])
+```
+
+```scala
+extension [I, E <: Throwable, O](endpoint: Endpoint[Unit, I, E, O, Any])
+  /** Call the endpoint with a payload, and get a ZIO back.
+    * @param payload
+    * @return
+    */
+  def apply(payload: I): RIO[SameOriginBackendClient, O] =
+    ZIO
+      .service[SameOriginBackendClient]
+      .flatMap(_.endpointRequestZIO(endpoint)(payload))
+```
+````
+</div>
+
+
+---
+
+# Under the hood - Http Request
+
+<div v-click="+1">
+
+```scala
+private[ziolaminartapir] abstract class BackendClient(
+    backend: SttpBackend[Task, ZioStreamsWithWebSockets],
+    interpreter: SttpClientInterpreter
+):
+
+  private[ziolaminartapir] def endpointRequestZIO[I, E <: Throwable, O](
+        baseUri: Uri,
+        endpoint: Endpoint[Unit, I, E, O, Any]
+    )(
+        payload: I
+    ): ZIO[Any, Throwable, O] =
+      backend
+        .send(endpointRequest(baseUri, endpoint)(payload))
+        .map(_.body)
+        .absolve
+```
 </div>
 
 
