@@ -46,6 +46,55 @@ The last comment block of each slide will be treated as slide notes. It will be 
 transition: fade-out
 ---
 
+# Scala Full Stack
+
+<ul>
+  <li v-click="+1">Scala JS</li>
+  <li v-click="+2">Scala JVM</li>
+  <li v-click="+3">Scala Native</li>
+  <li v-click="+4">Scala Wasm</li>
+</ul>
+
+---
+src: ./pages/ono-at-ledger.md
+---
+
+# Build tools
+
+<div grid="~ cols-3 gap-4">
+  <div>
+    <h3>JS</h3>
+    <ul>
+     <li v-click="+1">NPM: Node Package Manager.</li>
+     <li v-click="+2">Vite: Hot reload of UI.</li>
+    </ul>
+  </div>
+  <div>
+    <h3>&nbsp;</h3>
+    <ul style="list-style-type: none;">
+     <li>&nbsp;</li>
+     <li v-click="+9"><====== Vite Scala JS plugin === </li>
+    </ul>
+  </div>
+  <div>
+    <h3>Scala</h3>
+    <ul>
+     <li v-click="+3">SBT: Scala Build Tool.
+     <ul>
+        <li v-click="+5">Scala.js</li>
+        <li v-click="+6">Scala JVM</li>
+        <li v-click="+7">Bundler</li>
+        <li v-click="+8">Docker</li>
+     </ul>
+     </li>
+     <li v-click="+4">Metals: Scala Language Server.</li>
+    </ul>
+  </div>
+</div>
+
+
+---
+
 # Agenda
 
 
@@ -79,24 +128,23 @@ object ScalaFullStack:
 # Setup
 
 
-```bash
-sbt new cheleb/zio-scalajs-laminar.g8 --name=scalaio-full-stack
+<ul v-click="+1">
+ <li>VSCode / Metals 🤘🏼</li>
+ <li>npm / vite</li>
+ <li>sbt</li>
+ <li>Docker</li>
+</ul>
 
-code scalaio-full-stack
-```
 
-* VSCode / Metals 🤘🏼
-* npm / vite
-* sbt
-* Docker
+
 
 ---
 
 ## VSCode / Metals 🤘🏼
 
-Task automation with <span v-mark="{type:'circle', color:'orange', at:0, delay:1000}">`.vscode/tasks.json`</span> and `launch.json`
+Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vscode/tasks.json`</span> and `launch.json`
 
-````md magic-move {lines: true}
+````md magic-move {lines: true, at:2}
 ```json {*|7|9|11-12}
 {
   "version": "2.0.0",
@@ -120,7 +168,7 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:0, delay:1
 }
 ```
 
-```json
+```json {*|2|4|8}
 {
     "label": "setup",
     "type": "shell",
@@ -134,7 +182,7 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:0, delay:1
 }
 ```
 
-```json
+```json {*|2|3|5-8}
 {
     "label": "runDemo",
     "dependsOrder": "parallel",
@@ -152,11 +200,54 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:0, delay:1
 ```
 
 ````
+
 ---
 
-## npm / vite
+# Demo
 
-```js {*|5|8|12}
+```bash
+sbt new cheleb/zio-scalajs-laminar.g8 --name=scalaZio-fullstack-demo
+
+code scalaZio-fullstack-demo
+```
+
+
+---
+
+### NPM
+
+```json
+{
+  "name": "laminar-form-derivation",
+  "private": true,
+  "version": "0.0.1",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@ui5/webcomponents": "2.1.0",
+    "@ui5/webcomponents-fiori": "2.1.0",
+    "@ui5/webcomponents-icons": "2.1.0",
+    "chart.js": "2.9.4"
+  },
+  "devDependencies": {
+    "@scala-js/vite-plugin-scalajs": "^1.0.0",
+    "vite": "^5.4.9",
+    "typescript": "5.6.3",
+    "@types/chart.js": "2.9.29"
+  }
+}
+```
+
+
+---
+
+```js {*|2|5|8|12}
 import { defineConfig } from "vite";
 import scalaJSPlugin from "@scala-js/vite-plugin-scalajs";
 
