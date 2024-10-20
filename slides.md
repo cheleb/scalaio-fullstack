@@ -56,61 +56,24 @@ transition: fade-out
 </ul>
 
 ---
-src: ./pages/ono-at-ledger.md
+src: ./pages/01_ono-at-ledger.md
 ---
 
-# Build tools
-
-<div grid="~ cols-3 gap-4">
-  <div>
-    <h3>JS</h3>
-    <ul>
-     <li v-click="+1">NPM: Node Package Manager.</li>
-     <li v-click="+2">Vite: Hot reload of UI.</li>
-    </ul>
-  </div>
-  <div>
-    <h3>&nbsp;</h3>
-    <ul style="list-style-type: none;">
-     <li>&nbsp;</li>
-     <li v-click="+9"><====== Vite Scala JS plugin === </li>
-    </ul>
-  </div>
-  <div>
-    <h3>Scala</h3>
-    <ul>
-     <li v-click="+3">SBT: Scala Build Tool.
-     <ul>
-        <li v-click="+5">Scala.js</li>
-        <li v-click="+6">Scala JVM</li>
-        <li v-click="+7">Bundler</li>
-        <li v-click="+8">Docker</li>
-     </ul>
-     </li>
-     <li v-click="+4">Metals: Scala Language Server.</li>
-    </ul>
-  </div>
-</div>
-
+---
+src: ./pages/02_why.md
+---
 
 ---
+
 
 # Agenda
 
-
 ````md magic-move
-
-```scala {*|1|3-9|11-15}
+```scala
 
 object ScalaFullStack:
   
-  object SetUp:
-
-    val scalfold = "sbt new cheleb/zio-scalajs-laminar.g8"
-
-    val build = ("sbt", "npm/Vite", "Docker")
-
-    val ide = "VSCode / Metals 🤘🏼"
+  object SetUp
 
   object Projects:
 
@@ -118,6 +81,25 @@ object ScalaFullStack:
 
      object Backend 
 
+```
+
+```scala
+
+object ScalaFullStack:
+  
+  object SetUp:
+
+    val build = ("sbt", "npm/Vite", "Docker")
+
+    val ide = "VSCode / Metals 🤘🏼"
+
+    val scalfold = "sbt new cheleb/zio-scalajs-laminar.g8"
+
+  object Projects:
+
+     object Frontend
+
+     object Backend 
 
 ```
 
@@ -127,16 +109,32 @@ object ScalaFullStack:
 
 # Setup
 
+<div grid="~ cols-2 gap-4">
+ <div v-click="+1">
+   <v-clicks depth="3">
 
-<ul v-click="+1">
- <li>VSCode / Metals 🤘🏼</li>
- <li>npm / vite</li>
- <li>sbt</li>
- <li>Docker</li>
-</ul>
+   - Build tools
+     - NPM
+       - Node Package Manager.
+       - <span v-mark="{type:'underline', color:'orange', at:9, delay:2000}">Vite: Hot reload of UI.</span>
+     - SBT
+       - Scala JVM
+       - <span v-mark="{type:'underline', color:'orange', at:9}">Scala JS</span>
+   - Docker
+   </v-clicks>
+  </div>
+  <div v-click="+2">
+    <v-clicks depth="3" at="10">
 
-
-
+    - IDE
+      - VSCode
+      - Metals
+    - Scaffold
+      - sbt new cheleb/zio-scalajs-laminar.g8
+      
+   </v-clicks>
+  </div>
+</div>
 
 ---
 
