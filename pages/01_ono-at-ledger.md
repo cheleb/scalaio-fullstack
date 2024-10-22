@@ -31,14 +31,28 @@
 
 ---
 
-## What is Ledger?
+# What is Ledger?
 
-* Nano S
-* Nano X
-* Stax 
+Security both infrastructure and solutions for cryptocurrencies and blockchain application
+
+... and is the creator of the world's most popular hardware wallet familly.
+
+<div grid="~ cols-[50%_10%] gap-1">
+  <div>
+    <img src="../images/ledger/Ledger_Hardware_Family.webp" alt="Ledger Nano S" style="width: 70%; height: auto;">
+  </div>
+  <div>
+    <ul>
+      <li>Flex</li>
+      <li>Stax</li>
+      <li>Nano S</li>
+      <li>Nano X</li>
+    </ul>
+  </div>
+</div>
 
 Are all products of Ledger.
 
-Ledger is hiring, in almost all position, check out our [job offers](https://www.ledger.fr/jobs/).
+Ledger is hiring, in almost all positions/stacks, check out our [job offers (https://www.ledger.fr/jobs/)](https://www.ledger.fr/jobs/).
 
 

@@ -52,7 +52,7 @@ From Rock the JVM.
     <ul>
       <li style="list-style-type: '❤️';" v-click="+7">Scala definitively Rocks the JVM</li>
       <li style="list-style-type: '😴';" v-click="+8">Setup new project</li>
-      <li style="list-style-type: '😔';" v-click="+9">Staring dev environment</li>
+      <li style="list-style-type: '😔';" v-click="+9">Starting dev environment</li>
     </ul>
   </div>
 </div>
