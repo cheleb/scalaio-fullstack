@@ -14,15 +14,7 @@
    - Docker
    </v-clicks>
   </div>
-  <v-clicks depth="2" at="+2">
-
-  - Configuration:
-    - sbt new cheleb/zio-scalajs-laminar.g8
-  - Build/dev time
-    - VSCode
-    - Metals
-
-  </v-clicks>
+    <img v-click="+6" src="../images/build-stack.svg" style="width: 60%; height: auto;" />
 </div>
 
 ---

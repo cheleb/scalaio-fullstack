@@ -1,0 +1,195 @@
+# Tapir 101
+
+First step is to define the API endpoints as <span v-mark="{type:'circle', color:'orange', at:0, delay:2000}">values</span>.
+
+<div v-click="+1">
+
+````md magic-move {at:2}
+
+```scala
+//                                   In      Error     Out 
+//                                    ☟        ☟        ☟
+val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = ???
+```
+
+```scala {4|5|3,6|1,3,7-9}
+//                                   In 
+//                                    ☟
+val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
+    .name("person")
+    .post                 // POST method
+    .in("person")         // Endpoint path is /person
+    .in(              
+      jsonBody[Person]    // Request body is JSON-encoded Person
+    )
+```
+
+```scala {1,3,10}
+//                                                    Out 
+//                                                     ☟
+val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
+    .name("person")
+    .post                 // POST method
+    .in("person")         // Endpoint path is /person
+    .in(              
+      jsonBody[Person]    // Request body is JSON-encoded Person
+    )
+    .out(jsonBody[User])  // Response is JSON-encoded User
+```
+
+```scala {3-6}
+//                                   In      Error     Out 
+//                                    ☟        ☟        ☟
+val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = endpoint
+    .errorOut(statusCode and plainBody[String])
+    .mapErrorOut[Throwable](HttpError.decode)(HttpError.encode)
+    .prependIn("api")
+    .name("person")
+    .post                 // POST method
+    .in("person")         // Endpoint path is /person
+    .in(              
+      jsonBody[Person]    // Request body is JSON-encoded Person
+    )
+    .out(jsonBody[User])  // Response is JSON-encoded User
+```
+
+```scala
+//                                   In      Error     Out 
+//                                    ☟        ☟        ☟
+val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
+    .name("person")
+    .post                 // POST method
+    .in("person")         // Endpoint path is /person
+    .in(              
+      jsonBody[Person]    // Request body is JSON-encoded Person
+    )
+    .out(jsonBody[User])  // Response is JSON-encoded User
+```
+
+````
+<div grid="~ cols-2 gap-4">
+<div v-click="+10">
+  From this definition, Tapir can generate:
+    <ul>
+        <li v-click><a href="localhost:8080/docs">OpenAPI documentation</a></li>
+        <li v-click><span v-mark="{type:'circle', color:'orange', at:10}">Http server</span> squeleton</li>
+        <li v-click><span v-mark="{type:'circle', color:'orange', at:11}">Sttp client</span></li>
+    </ul>
+</div>
+<div v-click="+12">
+  POST /person HTTP/1.1
+  
+    {
+        "email": "john.doe@foo.bar",
+        "password": "notsecured",
+        [ ... ]
+    }
+</div>
+</div>
+
+</div>
+
+---
+
+# Tapir / HTTP Server
+
+After a bunch of imports, we can implement the server side of the API.
+
+Given the following PersonServide:
+
+```scala
+trait PersonService:
+  def register(person: Person): Task[User]
+
+```
+
+<v-click>
+We can implement the server side of the API like this:
+
+````md magic-move
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService)
+```
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  PersonEndpoint.create // PublicEndpoint[Person, Throwable, User, Any]
+     
+```
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  PersonEndpoint.create // PublicEndpoint[Person, Throwable, User, Any]
+
+  //
+  // Tapir sttp provide `zServerLogic` as an extension method on
+  extension [In, Out, R](e: Endpoint[In, Throwable, Out, R])
+    def zServerLogic(logic: In => Task[Out]): ServerEndpoint[In, Task] = ???
+```
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+    .zServerLogic { 
+        // Logic here ..
+    }   
+```
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+    .zServerLogic { (p: Person) => 
+      personService.register(p) 
+    }   
+```
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+    .zServerLogic: (p: Person) =>
+      personService.register(p)
+```
+
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+    .zServerLogic:
+      personService.register
+```
+````
+
+</v-click>
+
+---
+
+# Tapir / Client - Server
+
+
+
+
+<img v-click="+1" src="../images/tapir-api-client.svg" style="width:47%;" />
+
+<img src="../images/tapir-api-server.svg" style="width:50%;" />
+
+
+----
+
+# Tapir / Sttp Client
+
+In the same way, we can implement the client side of the API.
+
+And we want to process the result in the UI.
+
+<ul>
+  <li v-click="+1">stay in the Scala world</li>
+  <li v-click="+2">use a type-safe API</li>
+  <li v-click="+3">use reactive stuff both http client and UI side</li>
+  <li v-click="+4">with a minimal of boilerplate</li>
+</ul>
