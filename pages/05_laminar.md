@@ -53,20 +53,19 @@ Basicaly Laminar provides reactive components:
 
 <div>
 
-```scala {*|1|2-3|9-10|18-20}
+```scala {*|1|2-3|8-9|17-19}
 val personVar = Var(Person("John", "john.does@foo.bar", Password("notsecured") ))
 val userBus  = EventBus[User]()
 val errorBus = EventBus[Throwable]()
 div(
-  styleAttr := "max-width: fit-content;  margin-left: auto;  margin-right: auto;",
   h1("Signup"),
   div(
-    styleAttr := "width: 600px; float: left;",
+    styleAttr := "float: left;",
     // The form is generated from the case class
     personVar.asForm,
   ),
   div(
-    styleAttr := "clear:both;max-width: fit-content; margin:1em auto",
+    styleAttr := "max-width: fit-content; margin:1em auto",
     Button(
       "Create",
       disabled <-- personVar.signal.map(_.errorMessages.nonEmpty),
