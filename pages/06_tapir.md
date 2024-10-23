@@ -189,19 +189,9 @@ private[ziolaminartapir] abstract class BackendClient(
 
 # Under the hood - Http Request
 
-At this point:
-
-<div grid="~ cols-[20%_70%] gap-2">
- <div>
-  Endpoint --> I -->
- </div>
- <div>
-
 ```scala
- RIO[SameOriginBackendClient, O]
+ Endpoint --> I --> RIO[SameOriginBackendClient, O]
 ```
- </div>
-</div>
 
 <div v-click="+1">
 
@@ -214,10 +204,7 @@ extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 ```scala
 extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 
-  def emitTo(
-      bus: EventBus[A],
-      error: EventBus[E]
-  ): Unit =
+  def emitTo(bus: EventBus[A], error: EventBus[E]): Unit =
     zio
       .tapError(e => ZIO.attempt(error.emit(e)))
       .tap(a => ZIO.attempt(bus.emit(a)))
@@ -226,10 +213,7 @@ extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 ```scala
 extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 
-  def emitTo(
-      bus: EventBus[A],
-      error: EventBus[E]
-  ): Unit =
+  def emitTo( bus: EventBus[A], error: EventBus[E]): Unit =
     zio
       .tapError(e => ZIO.attempt(error.emit(e)))
       .tap(a => ZIO.attempt(bus.emit(a)))
@@ -249,3 +233,49 @@ extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 
 
 ---
+
+# Under the hood - Http Request
+
+There are a few more extension methods:
+
+* Different origin client
+* Bear token support (local storage)
+
+<div v-click="+1">
+
+```scala
+PersonEndpoint.profile(false).emitTo(userBus)
+```
+
+For the curious, the `profile` endpoint is defined as:
+
+```scala
+val profile: Endpoint[String, Boolean, Throwable, (User, Option[Pet]), Any]
+```
+
+
+</div>
+
+---
+
+# Under the hood - Http Request
+
+```scala {*|1|4|6|9}{lines:true}
+extension [I, E <: Throwable, O](endpoint: Endpoint[String, I, E, O, Any])
+  // Call the secured endpoint with a payload, and get a ZIO back.
+  @targetName("securedApply")
+  def apply[UserToken <: WithToken](
+      payload: I
+  )(using session: Session[UserToken]): RIO[SameOriginBackendClient, O] =
+    ZIO
+      .service[SameOriginBackendClient]
+      .flatMap(_.securedEndpointRequestZIO(endpoint)(payload))
+
+  // Call the secured endpoint with a payload on a different backend than the
+  def on[UserToken <: WithToken](baseUri: Uri)(
+      payload: I
+  )(using session: Session[UserToken]): RIO[DifferentOriginBackendClient, O] =
+    ZIO
+      .service[DifferentOriginBackendClient]
+      .flatMap(_.securedEndpointRequestZIO(baseUri, endpoint)(payload))
+```
