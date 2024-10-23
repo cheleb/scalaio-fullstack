@@ -272,54 +272,10 @@ src: ./pages/04_tapir.md
 ---
 
 ---
+src: ./pages/05_laminar.md
+---
 
-# Laminar 101
-
-<div grid="~ cols-2 gap-3">
-<div>
-
-```scala {*|4|10|||8|10}
-import com.raquo.laminar.api.L._
-
-val app = {
-  val name = Var("World")
-  div(
-    input(
-      placeholder := "What's your name?",
-      onInput.mapToValue --> name.writer
-    ),
-    child.text <-- name.signal
-                       .map(name => s"Hello, $name!")
-  )
-}
-```
-</div>
-<div>
-Basicaly Laminar provides reactive components:
-
-<ul>
-  <li v-click="+1">`Var` - a mutable value</li>
-  <li v-click="+2">`Signal` - a read-only value that updates when its dependencies change</li>
-  <li v-click="+3">`EventStream` - a stream of events</li>
-  <li v-click="+3">`EventBus` - a stream of events that can be emitted to</li>
-</ul>
-
-<div v-click="+4">And 2 reactive operators:</div>
-
-<ul>
-  <li v-click="+5">`-->`  Write to a Laminar reactive element</li>
-  <li v-click="+6">`<--`  Read from a Laminar reactive element</li>
-</ul>
-
-
-</div>
-</div>
-
-<div v-click="+7">
-  <h4>In action</h4>
-  <a href="https://demo.laminar.dev/app/basic/hello">https://demo.laminar.dev/app/basic/hello</a>
-</div>
-
+---
 
 ---
 

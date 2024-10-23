@@ -1,9 +1,9 @@
-# lklk
+# Laminar 101
 
-<div grid="~ cols-2 gap-4">
+<div grid="~ cols-2 gap-3">
 <div>
 
-```scala
+```scala {*|4|10|||8|10}
 import com.raquo.laminar.api.L._
 
 val app = {
@@ -22,29 +22,38 @@ val app = {
 <div>
 Basicaly Laminar provides reactive components:
 
-* `Var` - a mutable value
-* `Signal` - a read-only value that updates when its dependencies change
-<!-- * `EventStream` - a stream of events
-* `EventBus` - a sink for events -->
+<ul>
+  <li v-click="+1">`Var` - a mutable value</li>
+  <li v-click="+2">`Signal` - a read-only value that updates when its dependencies change</li>
+  <li v-click="+3">`EventStream` - a stream of events</li>
+  <li v-click="+3">`EventBus` - a stream of events that can be emitted to</li>
+</ul>
 
-And 2 reactive operators:
+<div v-click="+4">And 2 reactive operators:</div>
 
-* `-->` - Write to a Laminar reactive element
-* `<--` - Read from a Laminar reactive element
+<ul>
+  <li v-click="+5">`-->`  Write to a Laminar reactive element</li>
+  <li v-click="+6">`<--`  Read from a Laminar reactive element</li>
+</ul>
 
 
 </div>
+</div>
+
+<div v-click="+7">
+  <h4>In action</h4>
+  <a href="https://demo.laminar.dev/app/basic/hello">https://demo.laminar.dev/app/basic/hello</a>
+</div>
+<div v-click="+8">
+  <h4>Demo</h4>
+  <a href="http://localhost:5173">Demo signup page</a>
 </div>
 
 ---
 
-
-
-# Laminar s
-
 <div>
 
-```scala {1|2-3|8-9|17-19}
+```scala {*|1|2-3|9-10|18-20}
 val personVar = Var(Person("John", "john.does@foo.bar", Password("notsecured") ))
 val userBus  = EventBus[User]()
 val errorBus = EventBus[Throwable]()
