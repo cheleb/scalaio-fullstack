@@ -309,6 +309,37 @@ personVar.asForm
 
 ------
 
+# Scalablytyped
+
+Scalablytyped is a tool that generates Scala.js facade for TypeScript definitions.
+
+<div v-click="+1"><a href="https://scalablytyped.dev">Scalablytyped</a></div>
+
+In the template, Scalablytyped is used to generate facade for Chart.js.
+
+
+# Production deployement
+
+<ul>
+  <li v-click="+1">Docker</li>
+  <li v-click="+2">Kubernetes</li>
+  <li v-click="+3">AWS</li>
+  <li v-click="+4">GCP</li>
+</ul>
+
+<div v-click="+5" class="absolute left-30%">
+
+```bash
+MOD=prod sbt -mem 4096 server/run
+```
+</div>
+
+In this setup, the frontend is served by the backend, webassets are deployed as webjars.
+
+---
+
+
+
 
 # Resources
 
