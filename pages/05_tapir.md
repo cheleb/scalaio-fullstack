@@ -283,7 +283,7 @@ extension [I, E <: Throwable, O](endpoint: Endpoint[String, I, E, O, Any])
 
 ---
 
-# Tappir Sttp
+# Tapir Sttp
 
 Both server and client side are implemented with Tapir and Sttp.
 

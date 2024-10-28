@@ -1,4 +1,4 @@
-# Laminar 101
+# Laminar: 100% Scala, Reactive UI
 
 <div grid="~ cols-2 gap-3">
 <div>

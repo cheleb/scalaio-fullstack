@@ -179,6 +179,35 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 
 ---
 
+# Tapir / HTTP Server
+
+```scala {*|5,9,16|20-21}{lines:true}
+class PersonController private (personService: PersonService, jwtService: JWTService)
+    extends BaseController
+    with SecuredBaseController[String, UserID](jwtService.verifyToken) {
+
+  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+    .zServerLogic:
+      personService.register
+
+  val login: ServerEndpoint[Any, Task] = PersonEndpoint.login.zServerLogic { lp =>
+    for {
+      user  <- personService.login(lp.login, lp.password)
+      token <- jwtService.createToken(user)
+    } yield token
+  }
+
+  val profile: ServerEndpoint[Any, Task] = PersonEndpoint.profile.securedServerLogic { userId => withPet =>
+    personService.getProfile(userId, withPet)
+  }
+
+  val routes: List[ServerEndpoint[Any, Task]] =
+    List(create, login, profile)
+}
+```
+
+---
+
 # Tapir / Client - Server
 
 <img v-click="+1" src="../images/tapir-api-client.svg" style="width:47%;" />

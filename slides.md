@@ -272,11 +272,11 @@ src: ./pages/04_tapir.md
 ---
 
 ---
-src: ./pages/05_laminar.md
+src: ./pages/05_tapir.md
 ---
 
 ---
-src: ./pages/06_tapir.md
+src: ./pages/06_laminar.md
 ---
 ---
 
@@ -311,30 +311,75 @@ personVar.asForm
 
 # Scalablytyped
 
-Scalablytyped is a tool that generates Scala.js facade for TypeScript definitions.
+<a href="https://scalablytyped.dev">Scalablytyped (https://scalablytyped.dev)</a> is a tool that generates Scala.js facade for TypeScript definitions.
+<div grid="~ cols-5">
+<div>
+<img v-click="+1" src="./images/ts.png" width="100"/>
+</div>
+<div v-click="+2">
+Scalablytyped
+ <img src="./images/right.png" width="100"/>
+</div>
+<div>
+<img v-click="+2" src="./images/scala.png" width="50"/>
+</div>
+<div v-click="+3">
+ <img src="./images/right.png" width="100"/>
+</div>
+<div>
+<img v-click="+3" src="./images/jar.png" width="50"/>
+</div>
+</div>
 
-<div v-click="+1"><a href="https://scalablytyped.dev">Scalablytyped</a></div>
+<div v-click="+4">
+Then this facade can be used in ScalaJS code.
+</div>
 
+<div grid="~ cols-5">
+<div>
+<img v-click="+6" src="./images/jar.png" width="50"/>
+</div>
+<div v-click="+7">
+ <img src="./images/right.png" width="100"/>
+</div>
+<div>  
+<img v-click="+7" src="./images/scalajs.png" width="100"/>
+</div>
+<div v-click="+8" style="vertical-align:middle;">
+ <img src="./images/right.png" width="100"/>
+</div>
+<div>
+<img v-click="+8" src="./images/js.png" width="100"/>
+</div>
+</div>
+
+<div v-click="+9">
 In the template, Scalablytyped is used to generate facade for Chart.js.
+</div>
 
+
+
+
+---
 
 # Production deployement
 
-<ul>
-  <li v-click="+1">Docker</li>
-  <li v-click="+2">Kubernetes</li>
-  <li v-click="+3">AWS</li>
-  <li v-click="+4">GCP</li>
-</ul>
-
-<div v-click="+5" class="absolute left-30%">
+In this setup, the frontend is served by the backend, webassets are deployed as webjars.
 
 ```bash
 MOD=prod sbt -mem 4096 server/run
 ```
+
+<ul>
+  <li v-click="+1">Standalone Jar</li>
+  <li v-click="+2">Docker</li>
+  <li v-click="+3">Kubernetes</li>
+</ul>
+
+<div v-click="+5" class="absolute left-30%">
+
 </div>
 
-In this setup, the frontend is served by the backend, webassets are deployed as webjars.
 
 ---
 

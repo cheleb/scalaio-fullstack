@@ -91,66 +91,13 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vsco
 
 ````
 
-
-
 ---
 
-### NPM
+# Project Structure
 
-```json
-{
-  "name": "laminar-form-derivation",
-  "private": true,
-  "version": "0.0.1",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "@ui5/webcomponents": "2.1.0",
-    "@ui5/webcomponents-fiori": "2.1.0",
-    "@ui5/webcomponents-icons": "2.1.0",
-    "chart.js": "2.9.4"
-  },
-  "devDependencies": {
-    "@scala-js/vite-plugin-scalajs": "^1.0.0",
-    "vite": "^5.4.9",
-    "typescript": "5.6.3",
-    "@types/chart.js": "2.9.29"
-  }
-}
-```
-
-
----
-
-```js {*|2|5|8|12}
-import { defineConfig } from "vite";
-import scalaJSPlugin from "@scala-js/vite-plugin-scalajs";
-
-export default defineConfig({
-    plugins: [scalaJSPlugin({
-        // path to the directory containing the sbt build
-        // default: '.'
-        cwd: '../..',
-
-        // sbt project ID from within the sbt build to get fast/fullLinkJS from
-        // default: the root project of the sbt build
-        projectID: 'client',
-
-        // URI prefix of imports that this plugin catches (without the trailing ':')
-        // default: 'scalajs' (so the plugin recognizes URIs starting with 'scalajs:')
-        uriPrefix: 'scalajs',
-    })],
-    build: {
-        sourcemap: true,
-    }
-});
-```
+* `client` - ScalaJS
+* `server` - Scala JVM
+* `shared` - Shared code
 
 ---
 
@@ -226,4 +173,63 @@ lazy val client = project
 ```
 </div>
 </div>
+
+---
+
+### NPM
+
+```json {*|7-10,20-21|13-18|}{lines:true}
+{
+  "name": "laminar-form-derivation",
+  "private": true,
+  "version": "0.0.1",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@ui5/webcomponents": "2.1.0",
+    "@ui5/webcomponents-fiori": "2.1.0",
+    "@ui5/webcomponents-icons": "2.1.0",
+    "chart.js": "2.9.4"
+  },
+  "devDependencies": {
+    "@scala-js/vite-plugin-scalajs": "^1.0.0",
+    "vite": "^5.4.9",
+    "typescript": "5.6.3",
+    "@types/chart.js": "2.9.29"
+  }
+}
+```
+
+
+---
+
+```js {*|2|5|8|12}
+import { defineConfig } from "vite";
+import scalaJSPlugin from "@scala-js/vite-plugin-scalajs";
+
+export default defineConfig({
+    plugins: [scalaJSPlugin({
+        // path to the directory containing the sbt build
+        // default: '.'
+        cwd: '../..',
+
+        // sbt project ID from within the sbt build to get fast/fullLinkJS from
+        // default: the root project of the sbt build
+        projectID: 'client',
+
+        // URI prefix of imports that this plugin catches (without the trailing ':')
+        // default: 'scalajs' (so the plugin recognizes URIs starting with 'scalajs:')
+        uriPrefix: 'scalajs',
+    })],
+    build: {
+        sourcemap: true,
+    }
+});
+```
 
