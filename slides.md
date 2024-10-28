@@ -380,7 +380,10 @@ Then this facade can be used in ScalaJS code.
 </div>
 
 <div v-click="+9">
-In the template, Scalablytyped is used to generate facade for Chart.js.
+In the template, Scalablytyped is used to <a href="https://github.com/cheleb/zio-laminar-demo/blob/master/modules/client/src/main/scala/com/example/ziolaminardemo/app/demos/ScalablytypedDemoPage.scala#L103">generate facade</a> for Chart.js.
+
+Add result is used in the <a href="http://localhost:5173/public/demos/scalablytyped">Scalablytyped demo</a>.
+
 </div>
 
 
