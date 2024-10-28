@@ -14,7 +14,9 @@
    - Docker
    </v-clicks>
   </div>
-    <img v-click="+6" src="../images/build-stack.svg" style="width: 60%; height: auto;" />
+  <div>
+    <img v-click="+7" src="../images/build-stack.svg" style="width: 60%; height: auto;" />
+  </div>
 </div>
 
 ---
@@ -26,6 +28,8 @@ sbt new cheleb/zio-scalajs-laminar.g8 --name=scalaZio-fullstack-demo
 
 code scalaZio-fullstack-demo
 ```
+
+
 
 
 ---

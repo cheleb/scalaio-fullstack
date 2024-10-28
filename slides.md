@@ -16,7 +16,7 @@ class: text-center
 drawings:
   persist: false
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
-transition: slide-left
+transition: fade-out
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
 # take snapshot for each slide in the overview
@@ -78,11 +78,9 @@ object ScalaFullStack:
   
   object SetUp
 
-  object Projects:
+  object Projects
 
-     object Frontend
-
-     object Backend 
+  object Deployement 
 
 ```
 
@@ -92,17 +90,45 @@ object ScalaFullStack:
   
   object SetUp:
 
-    val build = ("sbt", "npm/Vite", "Docker")
-
     val ide = "VSCode / Metals 🤘🏼"
 
-    val scalfold = "sbt new cheleb/zio-scalajs-laminar.g8"
+    val build = ("sbt", "npm/Vite", "Docker")
+
+  object Projects
+
+  object Deployement
+
+```
+```scala
+
+object ScalaFullStack:
+  
+  object setup
 
   object Projects:
 
      object Frontend
 
-     object Backend 
+     object Backend
+
+  object Deployement
+
+```
+```scala
+
+object ScalaFullStack:
+  
+  object SetUp
+
+  object Projects
+  
+  object Deployement:
+  
+      object standalone
+  
+      object Docker
+  
+      object Kubernetes
 
 ```
 
@@ -311,20 +337,20 @@ personVar.asForm
 
 # Scalablytyped
 
-<a href="https://scalablytyped.dev">Scalablytyped (https://scalablytyped.dev)</a> is a tool that generates Scala.js facade for TypeScript definitions.
+<a href="https://scalablytyped.dev">Scalablytyped (scalablytyped.dev)</a> is a tool that generates Scala.js facade for TypeScript definitions.
 <div grid="~ cols-5">
 <div>
-<img v-click="+1" src="./images/ts.png" width="100"/>
+<img v-click="+1" src="./images/ts.png" width="70"/>
 </div>
 <div v-click="+2">
 Scalablytyped
- <img src="./images/right.png" width="100"/>
+ <img src="./images/right.svg" width="100"/>
 </div>
 <div>
-<img v-click="+2" src="./images/scala.png" width="50"/>
+<img v-click="+2" src="./images/scala.png" width="30"/>
 </div>
 <div v-click="+3">
- <img src="./images/right.png" width="100"/>
+ <img src="./images/right.svg" width="100"/>
 </div>
 <div>
 <img v-click="+3" src="./images/jar.png" width="50"/>
@@ -340,16 +366,16 @@ Then this facade can be used in ScalaJS code.
 <img v-click="+6" src="./images/jar.png" width="50"/>
 </div>
 <div v-click="+7">
- <img src="./images/right.png" width="100"/>
+ <img src="./images/right.svg" width="100"/>
 </div>
 <div>  
-<img v-click="+7" src="./images/scalajs.png" width="100"/>
+<img v-click="+7" src="./images/scalajs.png" width="50"/>
 </div>
 <div v-click="+8" style="vertical-align:middle;">
- <img src="./images/right.png" width="100"/>
+ <img src="./images/right.svg" width="100"/>
 </div>
 <div>
-<img v-click="+8" src="./images/js.png" width="100"/>
+<img v-click="+8" src="./images/js.png" width="60"/>
 </div>
 </div>
 
@@ -376,14 +402,61 @@ MOD=prod sbt -mem 4096 server/run
   <li v-click="+3">Kubernetes</li>
 </ul>
 
-<div v-click="+5" class="absolute left-30%">
+<div v-click="+5">
+```bash
+sbt new cheleb/zio-scalajs-laminar.g8  --name=zio-laminar-demo-k8s --githubUser=cheleb --with-argocd=true --version=0.0.6 --force
 
+code zio-laminar-demo-k8s
+```
 </div>
 
 
 ---
 
+# Take over / What next?
 
+<div grid="~ cols-2 gap-4">
+  <div>
+    <h3>In the box</h3>
+
+Oneliners
+
+ <v-clicks depth="3">
+
+   - scafolding
+   - Form derivation
+   - Scalablytyped
+   - Http client
+   - Docker deployement
+   - K8s deployement
+     - CD ArgoCD
+     - Image updater
+  
+
+ </v-clicks>
+  </div>
+  <div>
+    <h3>Next</h3>
+    <v-clicks depth="3">
+
+   - Testing: Testcontainers, ZIO Test
+   - Observability: ZIO Telemetry, ZIO Tracing
+   - GraphQL: Caliban
+   - WebSockets
+   - Security: OTP, OAuth, JWT
+   - WASM
+   - µServices: ZIO gRPC, ZIO-Pravega
+   - Resiliency(?): ZIO Circuit Breaker, ZIO Rate Limiter 
+   - Service Mesh: Istio
+   - CI: GitHub Actions
+
+ </v-clicks>
+
+  </div>
+</div>
+
+
+---
 
 
 # Resources

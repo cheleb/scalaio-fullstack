@@ -2,28 +2,28 @@
 
 With another bunch of imports, we can implement the client side of the API, in one liner:
 
-Let say we have a Person instance hold in a Var:
+Let say we have a Person instance:
 
 ````md magic-move
 
 ```scala
-val personVar = Var(Person("john.doe@foo.bar", "notsecured"))
+val person = VPerson("john.doe@foo.bar", "notsecured")
 ```
 
 ```scala
-val personVar = Var(Person("john.doe@foo.bar", "notsecured"))
+val personVar = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
 PersonEndpoint.create
 ```
 
 ```scala
-val personVar = Var(Person("john.doe@foo.bar", "notsecured"))
+val personVar = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
 PersonEndpoint.create( personVar.now() ) // RIO[SameOriginBackendClient, User]
 ```
 
 ```scala
-val personVar = Var(Person("john.doe@foo.bar", "notsecured"))
+val personVar = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
 PersonEndpoint.create( personVar.now() ) // RIO[SameOriginBackendClient, User]
               .emitTo(userBus, errorBus) // Then run it, and process the result in UI.
