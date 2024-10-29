@@ -48,34 +48,54 @@ transition: fade-out
 
 # Scala Full Stack
 
-<div grid="~ cols-3 gap-2">
-<div></div><div>
-  <img v-click="+1" src="./images/scalanative.webp" style="width: 20%; height: auto;" />
-  Scala Native
-</div>
+<div grid="~ cols-6 gap-1">
 <div></div>
-<div>
-  <img v-click="+1" src="./images/jvm.png" style="width: 30%; height: auto;" />
+<div></div>
+ <div v-click="+3">
+  <img src="./images/binary.jpeg" style="width: 30%; height: auto;"  />
+ LLVM
+ </div>
+ <div></div>
+ <div  v-click="+4"><img src="./images/wasm.png" style="width: 60%; height: auto; float:both" /></div>
+ <div></div>
+ <div></div>
+ <div></div>
+ <div  v-click="+3">
+  &nbsp;&nbsp; ↑
+  <div style="margin-left:-25px;">Scala Native<img src="./images/scalanative.webp" style="margin-left:30px; width: 15%; height: auto; float:both" /></div>
+  &nbsp;&nbsp;&nbsp;⏐
+ </div>
+ <div>
+ </div>
+ <div  v-click="+5">
+   &nbsp;&nbsp; ↑
+
+  &nbsp;&nbsp;&nbsp;⏐
+ </div> 
+ <div></div> 
+<div v-click="+1">
+  <img src="./images/jvm.png" style="width: 30%; height: auto;" />
   Scala JVM
 </div>
-
+ <div v-click="+1">
+<-- Scalac ---
+ </div>
 <div>
-  <img src="./images/scala.png" style="width: 10%; height: auto;" />
+  <img src="./images/scala.png" style="margin-left:10px; width: 10%; height: auto;" />
    Scala
 </div>
-<div>
-  <img v-click="+1" src="./images/scalajs.png" style="width: 20%; height: auto;" />
-  ScalaJs
+ <div  v-click="+2">
+ --- ScalaJS -->
+  <img src="./images/scalajs.png" style="margin-left:30px; width: 15%; height: auto;" />
+ </div> 
+ <div v-click="+5">SJIR &nbsp;&nbsp;  ---></div>
+<div v-click="+2">
+  <img src="./images/chrome.jpeg" style="width: 25%; height: auto; float:left" />
+  <img src="./images/node.png" style="margin-left:10px; width: 25%; height: auto; float:left" />
 </div>
 <div></div><div></div><div></div>
 </div>
 
-<ul>
-  <li v-click="+1">Scala JS</li>
-  <li v-click="+2">Scala JVM</li>
-  <li v-click="+3">Scala Native</li>
-  <li v-click="+4">Scala Wasm</li>
-</ul>
 
 ---
 src: ./pages/01_ono-at-ledger.md
@@ -196,10 +216,10 @@ object ScalaFullStack:
   object Frontend:
     val laminar = "Type-safe, reactive UI library"
     val zio = "Type-safe, composable asynchronous and  concurrent programming"
-    val tapir = "Type-safe HTTP client generator"
+    val tapir = "Type-safe HTTP client"
 
   object Backend:
-    val tapir = "Type-safe HTTP client generator"
+    val tapir = "Type-safe HTTP Controller"
     val zio = "Type-safe, composable asynchronous and concurrent programming"
     val quill = "Compile-time query generation"  
 ```
@@ -209,12 +229,17 @@ object ScalaFullStack:
   
   object Frontend:
     val laminar = "Type-safe, reactive UI library"
+    val zio = "Type-safe, composable asynchronous and  concurrent programming"
+    val tapir = "Type-safe HTTP client"
+
   
   object Shared:
-    val zio = "Type-safe, composable asynchronous and  concurrent programming"
-    val tapir = "Type-safe HTTP client generator"
+    val zio = "ZIO-Json"
+    val tapir = "Type-safe HTTP endpoint definitions"
 
   object Server:
+    val tapir = "Type-safe HTTP Controller"
+    val zio = "Type-safe, composable asynchronous and  concurrent programming"
     val quill = "Compile-time query generation"
 
 ```

@@ -33,7 +33,7 @@
 
 # What is Ledger?
 
-Security both infrastructure and solutions for cryptocurrencies and blockchain application
+We secure both infrastructure, asseets and solutions for cryptocurrencies and blockchain applications.
 
 ... and is the creator of the world's most popular hardware wallet familly.
 
