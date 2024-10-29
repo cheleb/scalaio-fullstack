@@ -48,6 +48,28 @@ transition: fade-out
 
 # Scala Full Stack
 
+<div grid="~ cols-3 gap-2">
+<div></div><div>
+  <img v-click="+1" src="./images/scalanative.webp" style="width: 20%; height: auto;" />
+  Scala Native
+</div>
+<div></div>
+<div>
+  <img v-click="+1" src="./images/jvm.png" style="width: 30%; height: auto;" />
+  Scala JVM
+</div>
+
+<div>
+  <img src="./images/scala.png" style="width: 10%; height: auto;" />
+   Scala
+</div>
+<div>
+  <img v-click="+1" src="./images/scalajs.png" style="width: 20%; height: auto;" />
+  ScalaJs
+</div>
+<div></div><div></div><div></div>
+</div>
+
 <ul>
   <li v-click="+1">Scala JS</li>
   <li v-click="+2">Scala JVM</li>
