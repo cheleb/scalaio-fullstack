@@ -1,6 +1,6 @@
 # Setup
 
-<div grid="~ cols-2 gap-4">
+<div grid="~ cols-3 gap-1">
   <div>
    <v-clicks depth="3">
 
@@ -9,13 +9,16 @@
        - Node Package Manager.
        - <span v-mark="{type:'underline', color:'orange', at:9, delay:2000}">Vite: Hot reload of UI.</span>
      - SBT
-       - Scala JVM
        - <span v-mark="{type:'underline', color:'orange', at:9}">Scala JS</span>
+       - Scala JVM
    - Docker
    </v-clicks>
   </div>
   <div>
-    <img v-click="+7" src="../images/build-stack.svg" style="width: 60%; height: auto;" />
+    <img v-click="+7" src="../images/dev-stack-scala.svg" style="width: 50%" />
+  </div>
+  <div>
+    <img v-click="+6" src="../images/dev-stack-scalajs.svg" style="width: 50%" />
   </div>
 </div>
 
@@ -97,14 +100,6 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vsco
 
 ---
 
-# Project Structure
-
-* `client` - ScalaJS
-* `server` - Scala JVM
-* `shared` - Shared code
-
----
-
 ## sbt
 
 ```scala {*|1-2|3-5|6-8|9-10|11-12|13-14}
@@ -124,7 +119,34 @@ addSbtPlugin("org.playframework.twirl" % "sbt-twirl" % "2.0.5")
 addSbtPlugin("io.spray" % "sbt-revolver" % "0.10.0")
 ```
 
+
+
 ---
+
+# Project Structure / SBT
+
+<div grid="~ cols-3">
+  <div></div>
+  <div v-click="+1" v-click.hide="+2">
+    <h4>shared</h4>
+    <img src="../images/sbt-project.svg" style="width: 50%" />
+  </div>
+  <div></div>
+  <div>
+    <h4>server</h4>
+    <img src="../images/scala-project.svg" style="width: 50%" />
+  </div>
+  <div v-click="+2">
+    <img src="../images/crossproject.svg" style="margin-left:19px; margin-top:30px; width: 55%" /></div>
+  <div>
+    <h4>client</h4>
+    <img src="../images/scalajs-project.svg" style="width: 50%" />
+  </div>
+</div>
+
+
+---
+
 
 # SBT Cross Project
 

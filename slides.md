@@ -224,7 +224,7 @@ object ScalaFullStack:
     val quill = "Compile-time query generation"  
 ```
 
-```scala
+```scala {*|5,9,14|6,10,13}
 object ScalaFullStack:
   
   object Frontend:
@@ -232,7 +232,6 @@ object ScalaFullStack:
     val zio = "Type-safe, composable asynchronous and  concurrent programming"
     val tapir = "Type-safe HTTP client"
 
-  
   object Shared:
     val zio = "ZIO-Json"
     val tapir = "Type-safe HTTP endpoint definitions"
