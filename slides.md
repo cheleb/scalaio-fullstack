@@ -51,23 +51,23 @@ transition: fade-out
 <div grid="~ cols-6 gap-1">
 <div></div>
 <div></div>
- <div v-click="+3" v-click.hide="+6">
+ <div v-click="+3">
   <img src="./images/binary.jpeg" style="width: 30%; height: auto;"  />
  LLVM
  </div>
  <div></div>
- <div  v-click="+4" v-click.hide="+6"><img src="./images/wasm.png" style="width: 60%; height: auto; float:both" /></div>
+ <div v-click="+4"><img src="./images/wasm.png" style="width: 60%; height: auto; float:both" /></div>
  <div></div>
  <div></div>
  <div></div>
- <div  v-click="+3" v-click.hide="+6">
+ <div v-click="+3">
   &nbsp;&nbsp; ↑
   <div style="margin-left:-25px;">Scala Native<img src="./images/scalanative.webp" style="margin-left:30px; width: 15%; height: auto; float:both" /></div>
   &nbsp;&nbsp;&nbsp;⏐
  </div>
  <div>
  </div>
- <div  v-click="+5" v-click.hide="+6">
+ <div  v-click="+5">
    &nbsp;&nbsp; ↑
 
   &nbsp;&nbsp;&nbsp;⏐

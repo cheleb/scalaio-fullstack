@@ -7,7 +7,7 @@ Let say we have a Person instance:
 ````md magic-move
 
 ```scala
-val person = VPerson("john.doe@foo.bar", "notsecured")
+val person = Person("john.doe@foo.bar", "notsecured")
 ```
 
 ```scala
@@ -19,13 +19,13 @@ PersonEndpoint.create
 ```scala
 val personVar = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
-PersonEndpoint.create( personVar.now() ) // RIO[SameOriginBackendClient, User]
+PersonEndpoint.create( person ) // RIO[SameOriginBackendClient, User]
 ```
 
 ```scala
 val personVar = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
-PersonEndpoint.create( personVar.now() ) // RIO[SameOriginBackendClient, User]
+PersonEndpoint.create( personVar ) // RIO[SameOriginBackendClient, User]
               .emitTo(userBus, errorBus) // Then run it, and process the result in UI.
 ```
 ````

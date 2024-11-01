@@ -103,7 +103,7 @@ After a bunch of imports, we can implement the server side of the API.
 
 <div>
 
-Given the following PersonServide:
+Given the following PersonService:
 
 ```scala
 trait PersonService:

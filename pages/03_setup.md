@@ -100,7 +100,9 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vsco
 
 ---
 
-## sbt
+## One project to rule them all
+
+
 
 ```scala {*|1-2|3-5|6-8|9-10|11-12|13-14}
 // Cross project support, to spread project resources between js and jvm world
@@ -127,8 +129,8 @@ addSbtPlugin("io.spray" % "sbt-revolver" % "0.10.0")
 
 <div grid="~ cols-3">
   <div></div>
-  <div v-click="+1" v-click.hide="+2">
-    <h4>shared</h4>
+  <div v-click="2">
+    <h4>CrossProject shared</h4>
     <img src="../images/sbt-project.svg" style="width: 50%" />
   </div>
   <div></div>
@@ -136,7 +138,7 @@ addSbtPlugin("io.spray" % "sbt-revolver" % "0.10.0")
     <h4>server</h4>
     <img src="../images/scala-project.svg" style="width: 50%" />
   </div>
-  <div v-click="+2">
+  <div v-click="+3">
     <img src="../images/crossproject.svg" style="margin-left:19px; margin-top:30px; width: 55%" /></div>
   <div>
     <h4>client</h4>
