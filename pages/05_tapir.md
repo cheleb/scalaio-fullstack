@@ -19,14 +19,14 @@ PersonEndpoint.create
 ```scala
 val personVar = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
-PersonEndpoint.create( person ) // RIO[SameOriginBackendClient, User]
+PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, User]
 ```
 
 ```scala
 val personVar = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
-PersonEndpoint.create( personVar ) // RIO[SameOriginBackendClient, User]
-              .emitTo(userBus, errorBus) // Then run it, and process the result in UI.
+PersonEndpoint.create( personVar )       // (1) RIO[SameOriginBackendClient, User]
+              .emitTo(userBus, errorBus) // (2) Then run it, and process the result in UI.
 ```
 ````
 
@@ -92,7 +92,7 @@ import dev.cheleb.ziolaminartapir.*
 ```
 </div>
 <div v-click="+2">
-Et voilà, you can now use Tapir in a reactive way, in you ScalaJS project.
+Et voilà, you can now use Tapir in a reactive way, in your ScalaJS project.
 </div>
 
 <div v-click="+3">

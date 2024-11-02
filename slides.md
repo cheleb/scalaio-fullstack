@@ -383,7 +383,7 @@ personVar.asForm
 
 # Scalablytyped
 
-<a href="https://scalablytyped.dev">Scalablytyped (scalablytyped.dev)</a> is a tool that generates Scala.js facade for TypeScript definitions.
+<a href="https://scalablytyped.org">Scalablytyped (scalablytyped.dev)</a> is a tool that generates Scala.js facade for TypeScript definitions.
 <div grid="~ cols-5">
 <div>
 <img v-click="+1" src="./images/ts.png" width="70"/>

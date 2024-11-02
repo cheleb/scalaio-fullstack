@@ -96,8 +96,8 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 After a bunch of imports, we can implement the server side of the API.
 
 <div grid="~ cols-[20%_70%] gap-0">
-<div v-click="+4" >
-  <img v-click="+5" src="../images/red-square.svg" style="margin-left:1em; margin-top:10em; z-index:2"/>
+<div v-click="+9" >
+  <img src="../images/red-square.svg" style="margin-left:1em; margin-top:10em; z-index:2"/>
   <img src="../images/backend-box.svg" style="width:100%; margin-top:-0.5em; z-index:1"/>
 </div>
 
@@ -141,7 +141,7 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 ```scala
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
-  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+  PersonEndpoint.create
     .zServerLogic { 
         // Logic here ..
     }   
@@ -150,7 +150,7 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 ```scala
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
-  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+  PersonEndpoint.create
     .zServerLogic { (p: Person) => 
       personService.register(p) 
     }   
@@ -159,11 +159,18 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 ```scala
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
-  val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
+  PersonEndpoint.create
     .zServerLogic: (p: Person) =>
       personService.register(p)
 ```
 
+```scala
+class PersonController private (personService: PersonService, jwtService: JWTService):
+
+  PersonEndpoint.create
+    .zServerLogic:
+      personService.register
+```
 ```scala
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
@@ -210,9 +217,11 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 
 # Tapir / Client - Server
 
-<img v-click="+1" src="../images/tapir-api-client.svg" style="width:47%;" />
+<img v-click="+1" src="../images/chrome.svg" style="margin:20px; width:10%;" />
 
-<img src="../images/tapir-api-server.svg" style="width:50%;" />
+<img v-click="+2" src="../images/tapir-api-client.svg" style="width:30%;" />
+
+<img src="../images/tapir-api-server.svg" style="width:30%;" />
 
 
 ---
