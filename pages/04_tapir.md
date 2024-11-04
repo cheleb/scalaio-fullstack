@@ -71,7 +71,7 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 <div v-click="+10">
   From this definition, Tapir can generate:
     <ul>
-        <li v-click><a href="localhost:8080/docs">OpenAPI documentation</a></li>
+        <li v-click><a href="localhost:8080/docs/">OpenAPI documentation</a></li>
         <li v-click><span v-mark="{type:'circle', color:'orange', at:10}">Http server</span> squeleton</li>
         <li v-click><span v-mark="{type:'circle', color:'orange', at:11}">Sttp client</span></li>
     </ul>
@@ -212,6 +212,112 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
     List(create, login, profile)
 }
 ```
+
+---
+
+# Tapir / HTTP Server
+
+````md magic-move {lines:true}
+
+```scala {*|2,6}
+object PersonController:
+  def makeZIO: URIO[PersonService & JWTService, PersonController] =
+    for
+      jwtService    <- ZIO.service[JWTService]
+      personService <- ZIO.service[PersonService]
+    yield new PersonController(personService, jwtService)
+```
+
+```scala
+object PersonController:
+  def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
+```
+```scala {*|4|5|6|7}
+object PersonController:
+  def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
+
+class PersonServiceLive private (
+  userRepository: UserRepository,
+  petRepository: PetRepository,
+  jwtService: JWTService,
+  quill: Quill.Postgres[SnakeCase]
+) extends PersonService
+
+```
+```scala
+object PersonController:
+  def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
+
+class PersonServiceLive private ( ... ) extends PersonService
+```
+class JWTServiceLive private ( ... ) extends JWTService
+```scala
+object PersonController:
+  def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
+
+class PersonServiceLive private ( ... ) extends PersonService
+class JWTServiceLive private ( ... ) extends JWTService
+
+object PersonServiceLive {
+  val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], PersonService] =
+    ZLayer.derive[PersonServiceLive]
+}
+```
+```scala {*|9|10}
+object PersonController:
+  def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
+
+class PersonServiceLive private ( ... ) extends PersonService
+class JWTServiceLive private ( ... ) extends JWTService
+
+object PersonServiceLive {
+  val layer: RLayer[
+      UserRepository & PetRepository & JWTService & Postgres[SnakeCase],
+      PersonService
+    ] =
+    ZLayer.derive[PersonServiceLive]
+}
+```
+````
+
+---
+
+# Tapir / HTTP Server
+
+````md magic-move {lines:true}
+
+```scala {*|11|12}
+private val program: RIO[FlywayService & PersonService & JWTService & Server, Unit] =
+    for {
+      _ <- runMigrations
+      _ <- server
+    } yield ()
+```
+```scala {*|11|12}
+private val program: RIO[FlywayService & PersonService & JWTService & Server, Unit] =
+    for {
+      _ <- runMigrations
+      _ <- server
+    } yield ()
+
+override def run =
+    program
+      .provide(
+        Server.default,
+        // Service layers
+        PersonServiceLive.layer,
+        FlywayServiceLive.configuredLayer,
+        JWTServiceLive.configuredLayer,
+        // Repository layers
+        UserRepositoryLive.layer,
+        PetRepositoryLive.layer,
+        Repository.dataLayer
+      )
+```
+````
+
+[Mermaid](https://mermaid-js.github.io/mermaid-live-editor/edit/#pako:eNp9kcFOwzAMQH8l8gmkrWIbcOiBA2IcUA6IDXHJxWrcLVqbVG4yVE37d9ytqL3AIZJlvzw7zgmKYAly2DE2e_W8NV7f3RjYEB-JM0slpioauJX8QvIf1ITWxcBdZjGixo5Yqmo-f1J6KcA7xZHR7khZNTC94cqthPtsif8G74V4-9r2U7iCLtUi-NLtEpPVE6Gc1VX6cGnObfDTWxPncuB6_RguxvBRDK9V943d_31hBjVxjc7K3k7GK2Ug7qkmA7mEFvlgwPizcKmRLdHa9o-EvMSqpRlgimHT-QLyyIl-oReH8gf1QJ1_AL7HiI4)
+
 
 ---
 
