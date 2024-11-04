@@ -188,7 +188,7 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 
 # Tapir / HTTP Server
 
-```scala {*|5,9,16|20-21}{lines:true}
+```scala {*|5,9,16|20-21|1-3}{lines:true}
 class PersonController private (personService: PersonService, jwtService: JWTService)
     extends BaseController
     with SecuredBaseController[String, UserID](jwtService.verifyToken) {
