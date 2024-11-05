@@ -103,7 +103,7 @@ After a bunch of imports, we can implement the server side of the API.
 
 <div>
 
-Given the following PersonService:
+Given:
 
 ```scala
 trait PersonService:
@@ -112,7 +112,8 @@ trait PersonService:
 ```
 
 <v-click>
-We can implement the server side of the API like this:
+Controller implementation:
+
 
 ````md magic-move
 
@@ -286,14 +287,14 @@ object PersonServiceLive {
 
 ````md magic-move {lines:true}
 
-```scala {*|11|12}
+```scala
 private val program: RIO[FlywayService & PersonService & JWTService & Server, Unit] =
     for {
       _ <- runMigrations
       _ <- server
     } yield ()
 ```
-```scala {*|11|12}
+```scala
 private val program: RIO[FlywayService & PersonService & JWTService & Server, Unit] =
     for {
       _ <- runMigrations

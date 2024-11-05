@@ -1,6 +1,6 @@
 # Setup
 
-<div grid="~ cols-3 gap-1">
+<div grid="~ cols-[50%_25%_25%] gap-1">
   <div>
    <v-clicks depth="3">
 
@@ -12,6 +12,7 @@
        - <span v-mark="{type:'underline', color:'orange', at:9}">Scala JS</span>
        - Scala JVM
    - Docker
+   - Kubernetes
    </v-clicks>
   </div>
   <div>
@@ -24,13 +25,27 @@
 
 ---
 
-# Demo
+# Setup / Demo
 
+Dozen of tools to setup ... 
+
+<div grid="~ cols-2">
+<img v-click src="../images/keyboard.webp" width="20%"/>
+<img v-click src="../images/boring.webp" width="40%"/>
+</div>
+
+<div  v-click>let's automate it with a template</div>
+
+<div  v-click>
 ```bash
 sbt new cheleb/zio-scalajs-laminar.g8 --name=scalaZio-fullstack-demo
-
+```
+</div>
+<div  v-click>
+```bash
 code scalaZio-fullstack-demo
 ```
+</div>
 
 
 
@@ -158,7 +173,7 @@ addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.3.2")
 ```
 
 * build.sbt
-```scala {*|1|2|8-9}
+```scala {*|1|8-9}
 lazy val shared: CrossProject = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
   .disablePlugins(RevolverPlugin)
@@ -204,11 +219,17 @@ lazy val client = project
 
 ---
 
-### NPM
+# Setup / Backend
 
-```json {*|7-10,20-21|13-18|}{lines:true}
+<img src="../images/completed.webp" />
+
+---
+
+### Setup / Frontend / NPM / package.json
+
+```json {*|7-11,20-21|13-18}{lines:true}
 {
-  "name": "laminar-form-derivation",
+  "name": "scalaZio-fullstack-demo",
   "private": true,
   "version": "0.0.1",
   "main": "index.js",
@@ -237,6 +258,9 @@ lazy val client = project
 
 ---
 
+### Setup / Frontend / NPM / vite.config.js
+
+
 ```js {*|2|5|8|12}
 import { defineConfig } from "vite";
 import scalaJSPlugin from "@scala-js/vite-plugin-scalajs";
@@ -261,3 +285,6 @@ export default defineConfig({
 });
 ```
 
+# Setup / Frontend
+
+<img src="../images/completed.webp" />

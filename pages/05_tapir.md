@@ -11,21 +11,21 @@ val person = Person("john.doe@foo.bar", "notsecured")
 ```
 
 ```scala
-val personVar = Person("john.doe@foo.bar", "notsecured")
+val person = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
 PersonEndpoint.create
 ```
 
 ```scala
-val personVar = Person("john.doe@foo.bar", "notsecured")
+val person = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
 PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, User]
 ```
 
 ```scala
-val personVar = Person("john.doe@foo.bar", "notsecured")
+val person = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
-PersonEndpoint.create( personVar )       // (1) RIO[SameOriginBackendClient, User]
+PersonEndpoint.create( person )       // (1) RIO[SameOriginBackendClient, User]
               .emitTo(userBus, errorBus) // (2) Then run it, and process the result in UI.
 ```
 ````
@@ -172,7 +172,7 @@ private[ziolaminartapir] abstract class BackendClient(
 
 Endpoint --> Request
 
-```scala {6|8|10|9}{lines:true}
+```scala {*|3,9-10}{lines:true}
 private[ziolaminartapir] abstract class BackendClient(
     backend: SttpBackend[Task, ZioStreamsWithWebSockets],
     interpreter: SttpClientInterpreter
@@ -204,7 +204,7 @@ extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 ```scala
 extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 
-  def emitTo(bus: EventBus[A], error: EventBus[E]): Unit =
+  def emitTo( bus: EventBus[A], error: EventBus[E]): Unit =
     zio
       .tapError(e => ZIO.attempt(error.emit(e)))
       .tap(a => ZIO.attempt(bus.emit(a)))
