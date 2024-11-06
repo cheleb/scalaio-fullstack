@@ -432,11 +432,6 @@ Add result is used in the <a href="http://localhost:5173/public/demos/scalablyty
 
 </div>
 
----
-src: ./pages/serverside.md
----
-
----
 
 ---
 
@@ -448,18 +443,22 @@ In this setup, the frontend is served by the backend, webassets are deployed as 
 MOD=prod sbt -mem 4096 server/run
 ```
 
-<ul>
-  <li v-click="+1">Standalone Jar</li>
-  <li v-click="+2">Docker</li>
-  <li v-click="+3">Kubernetes</li>
-</ul>
+<v-clicks depth="1">
 
-<div v-click="+5">
+- Standalone Jar
+- Docker
+- Kubernetes
+
+</v-clicks>
+
+<div v-click>
+
 ```bash
 sbt new cheleb/zio-scalajs-laminar.g8  --name=zio-laminar-demo-k8s --githubUser=cheleb --with-argocd=true --version=0.0.6 --force
 
 code zio-laminar-demo-k8s
 ```
+
 </div>
 
 
@@ -513,14 +512,13 @@ Oneliners
 
 # Resources
 
-
-
-* [ZIO](https://zio.dev)
-* [Laminar](https://laminar.dev)
- * https://www.scala-js.org/doc/tutorial/laminar.html
-* [Tapir](https://tapir.softwaremill.com)
-* [ScalaJS](https://www.scala-js.org)
-* [Vite](https://vitejs.dev)
+* [RTJVM](https://rockthejvm.com) by Daniel Ciociarlan
+* [Incredible Kit Langton](https://www.youtube.com/watch?v=JHriftPO62I)
+* [ZIO](https://zio.dev) by Ziverge
+* [Laminar](https://laminar.dev) by raquo
+* [Tapir](https://tapir.softwaremill.com) by SoftwareMill
+* [ScalaJS](https://www.scala-js.org)  by ScalaCenter / Sebastien Doeraene
+* [Vite](https://vitejs.dev) 
 * [SBT](https://www.scala-sbt.org)
 * [Docker](https://www.docker.com)
 * [VSCode](https://code.visualstudio.com)

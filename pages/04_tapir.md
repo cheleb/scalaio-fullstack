@@ -1,4 +1,4 @@
-# Tapir 101
+# Tapir 101 by SoftwareMill
 
 First step is to define the API endpoints as <span v-mark="{type:'circle', color:'orange', at:0, delay:2000}">values</span>.
 
@@ -250,8 +250,8 @@ object PersonController:
   def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
 
 class PersonServiceLive private ( ... ) extends PersonService
-```
 class JWTServiceLive private ( ... ) extends JWTService
+```
 ```scala
 object PersonController:
   def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
@@ -264,7 +264,7 @@ object PersonServiceLive {
     ZLayer.derive[PersonServiceLive]
 }
 ```
-```scala {*|9|10}
+```scala {*|10|9|8-12}
 object PersonController:
   def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
 

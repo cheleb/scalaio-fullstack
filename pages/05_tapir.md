@@ -19,13 +19,19 @@ PersonEndpoint.create
 ```scala
 val person = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
+PersonEndpoint.create( person )   // 😳      
+```
+
+```scala
+val person = Person("john.doe@foo.bar", "notsecured")
+// From our endpoint definition that Person ~~> User
 PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, User]
 ```
 
 ```scala
 val person = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
-PersonEndpoint.create( person )       // (1) RIO[SameOriginBackendClient, User]
+PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, User]
               .emitTo(userBus, errorBus) // (2) Then run it, and process the result in UI.
 ```
 ````
@@ -53,31 +59,6 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
     .out(jsonBody[User])  // Response is JSON-encoded User
 ```
 
-
----
-
-# Under the hood - Http Request
-
-No boilerplate, no magic, just Scala.
-
-<div v-click="+1"><a href="https://cheleb.github.io/zio-laminar-tapir/docs/index.html">ZIO Laminar Tapir</a></div>
-<ul>
-  <li v-click="+2">Endpoint enhancement</li>
-  <li v-click="+3">Marshalling/unmarshalling</li>
-  <li v-click="+4">Error handling</li>
-  <li v-click="+5">Reactive</li>
-  <li v-click="+6">Type-safe</li>
-  <li v-click="+7">Minimal boilerplate</li>
-</ul>
-
-<div v-click="+8" class="absolute left-30%">
-```scala
-PersonEndpoint //
-          .create(personVar.now())
-          .emitTo(userBus, errorBus)
-```
-
-</div>
 
 
 ---
@@ -239,7 +220,7 @@ extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 There are a few more extension methods:
 
 * Different origin client
-* Bear token support (local storage)
+* Bearer token support (local storage)
 
 <div v-click="+1">
 
@@ -279,6 +260,32 @@ extension [I, E <: Throwable, O](endpoint: Endpoint[String, I, E, O, Any])
       .service[DifferentOriginBackendClient]
       .flatMap(_.securedEndpointRequestZIO(baseUri, endpoint)(payload))
 ```
+
+---
+
+# Under the hood - Http Request
+
+No boilerplate, no magic, just Scala.
+
+<div v-click="+1"><a href="https://cheleb.github.io/zio-laminar-tapir/docs/index.html">ZIO Laminar Tapir</a></div>
+<ul>
+  <li v-click="+2">Endpoint enhancement</li>
+  <li v-click="+3">Marshalling/unmarshalling</li>
+  <li v-click="+4">Error handling</li>
+  <li v-click="+5">Reactive</li>
+  <li v-click="+6">Type-safe</li>
+  <li v-click="+7">Minimal boilerplate</li>
+</ul>
+
+<div v-click="+8" class="absolute left-30%">
+```scala
+PersonEndpoint //
+          .create(personVar.now())
+          .emitTo(userBus, errorBus)
+```
+
+</div>
+
 
 
 ---
