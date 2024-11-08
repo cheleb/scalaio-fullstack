@@ -28,6 +28,9 @@ overviewSnapshots: true
 With ZIO, Tapir && Laminar
 
 
+(https://github.com/cheleb/zio-scalajs-laminar.g8)
+
+
 <div class="abs-br m-6 flex gap-2">
   <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
     <carbon:edit />
@@ -509,17 +512,20 @@ Oneliners
 
 ---
 
+## Resources
 
-# Resources
-
-* [RTJVM](https://rockthejvm.com) by Daniel Ciociarlan
-* [Incredible Kit Langton](https://www.youtube.com/watch?v=JHriftPO62I)
+* [ScalaJS](https://www.scala-js.org)  by ScalaCenter / Sebastien Doeraene
+* [SBT](https://www.scala-sbt.org)
+* [Scalablytyped](https://scalablytyped.org)
+#### Depencencies:
 * [ZIO](https://zio.dev) by Ziverge
 * [Laminar](https://laminar.dev) by raquo
 * [Tapir](https://tapir.softwaremill.com) by SoftwareMill
-* [ScalaJS](https://www.scala-js.org)  by ScalaCenter / Sebastien Doeraene
+#### Tools:
 * [Vite](https://vitejs.dev) 
-* [SBT](https://www.scala-sbt.org)
 * [Docker](https://www.docker.com)
 * [VSCode](https://code.visualstudio.com)
 * [Metals](https://scalameta.org/metals/)
+#### Mentors:
+* [RTJVM](https://rockthejvm.com) by Daniel Ciociarlan
+* [Incredible Kit Langton](https://www.youtube.com/watch?v=JHriftPO62I)
