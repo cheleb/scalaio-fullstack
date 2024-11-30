@@ -100,7 +100,7 @@ val simple:                             UIO[Int]     = ZIO.succeed(42) // ~ Runa
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(message).r
+def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(message)
 
 ```
 

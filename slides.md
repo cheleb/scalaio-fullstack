@@ -49,14 +49,14 @@ The last comment block of each slide will be treated as slide notes. It will be 
 transition: fade-out
 ---
 
-# Scala Full Stack: What insisde?
+# Scala Full Stack: What inside?
 
-## Language && Build tools
+## Languages && Build tools
 
 <div>
 <v-clicks depth="3">
 
-   - Language:
+   - Languages:
      - Scala
      - ScalaJS
      - TypeScript: Scala.js facade with Scalablytyped
@@ -65,7 +65,7 @@ transition: fade-out
      - NPM
        - Node Package Manager.
        - Vite: Hot reload of UI.
-     - SBT
+     - SBT (Scala Build Tool)
 </v-clicks>
 </div>
 
@@ -83,6 +83,7 @@ transition: fade-out
      - Tapir: Type-safe HTTP client and server
      - ZIO: Type-safe, composable asynchronous and concurrent programming
      - Quill: Compile-time SQL query generation
+     - Chart.js: Charting library, Scalablytyped generated facade
    - Infrastructure:
      - PostgreSQL: THE database
      - Docker
