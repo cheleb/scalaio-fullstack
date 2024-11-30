@@ -49,6 +49,50 @@ The last comment block of each slide will be treated as slide notes. It will be 
 transition: fade-out
 ---
 
+# Scala Full Stack: What insisde?
+
+## Language && Build tools
+
+<div>
+<v-clicks depth="3">
+
+   - Language:
+     - Scala
+     - ScalaJS
+     - TypeScript: Scala.js facade with Scalablytyped
+
+   - Build tools:
+     - NPM
+       - Node Package Manager.
+       - Vite: Hot reload of UI.
+     - SBT
+</v-clicks>
+</div>
+
+
+---
+
+# Scala Full Stack: What insisde?
+
+## Librairies && Insfrastructure
+<div>
+<v-clicks depth="2">
+
+   - Libraries:
+     - Laminar: Type-safe, reactive UI library
+     - Tapir: Type-safe HTTP client and server
+     - ZIO: Type-safe, composable asynchronous and concurrent programming
+     - Quill: Compile-time SQL query generation
+   - Infrastructure:
+     - PostgreSQL: THE database
+     - Docker
+     - Kubernetes
+</v-clicks>
+</div>
+
+
+---
+
 # Scala Full Stack
 
 <div grid="~ cols-6 gap-1">
@@ -247,6 +291,11 @@ object ScalaFullStack:
 ```
 ````
 
+
+---
+src: ./pages/03_zio.md
+---
+
 ---
 
 # Shared
@@ -298,48 +347,7 @@ Tapir stands between Http transport and effect or direct style.
 </div>
 
 
----
 
-# ZIO 101
-
-ZIO is a library for asynchronous and concurrent programming in Scala. 
-
-<div v-click="+1">
-Simplified, ZIO is a data type that represents a computation:
-```scala
-trait ZIO[-R, +E, +A]
-```
-<div v-click="+2">
-
-<ul>
-  <li v-click="+2">that may require an environment of type `R`</li>
-  <li v-click="+3">that may fail with an error of type `E`</li>
-  <li v-click="+4">that may succeed with a value of type `A`
-</li>
-</ul>
-</div>
-</div>
-
----
-
-# ZIO 101
-
-
-A simple mental model is to think of ZIO as a function:
-```scala
-type ZIO[R,E,A] = R => Either[E, A]
-```
-<div v-click="+1">
-Many aliases are provided for common use cases:
-
-```scala {*|*|2-3}
-type IO[+E, +A]   = ZIO[Any, E, A]         // Succeed with an `A`, may fail with `E`        , no requirements.
-type Task[+A]     = ZIO[Any, Throwable, A] // Succeed with an `A`, may fail with `Throwable`, no requirements.
-type RIO[-R, +A]  = ZIO[R, Throwable, A]   // Succeed with an `A`, may fail with `Throwable`, requires an `R`.
-type UIO[+A]      = ZIO[Any, Nothing, A]   // Succeed with an `A`, cannot fail              , no requirements.
-type URIO[-R, +A] = ZIO[R, Nothing, A]     // Succeed with an `A`, cannot fail              , requires an `R`.
-```
-</div>
 
 
 ---

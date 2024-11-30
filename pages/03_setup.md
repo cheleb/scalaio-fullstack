@@ -285,6 +285,8 @@ export default defineConfig({
 });
 ```
 
+---
+
 # Setup / Frontend
 
 <img src="../images/completed.webp" />
