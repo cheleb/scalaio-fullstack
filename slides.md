@@ -49,17 +49,91 @@ The last comment block of each slide will be treated as slide notes. It will be 
 transition: fade-out
 ---
 
-# Scala Full Stack: What inside?
+# Scala Full Stack (lazy guide to)
 
-## Languages && Build tools
+<v-click>
+ <h2>Oneliners strike back.</h2>
+</v-click>
 
-<div>
+<table>
+
+<tr>
+<td style="vertical-align: top;">
+<v-clicks depth="3">
+
+* One line to setup a new project
+* One line to start the dev environment
+* One line to bind data in the UI
+* One line to expose API
+* One line to consume API
+* One line to deploy
+
+
+</v-clicks>
+
+
+</td>
+<td>
+<div v-click="[1, 2]"  v-motion
+  :initial="{ x: -50 }"
+  :enter="{ x: 0 }"
+  :leave="{ x: 50 }"
+>
+  <img src="./images/larry.jpeg" width="100%" style="float:both"/>
+</div>
+<div v-click="[2, 3]"  v-motion
+  :initial="{ x: -50, y:-180 }"
+  :enter="{ x: 0 }"
+  :leave="{ x: 50 }">
+  <img src="./images/bilou.jpeg" width="80%" style="float:both"/>
+</div>
+<div v-click="[3, 4]"  v-motion
+  :initial="{ x: -50, y:-370 }"
+  :enter="{ x: 0 }"
+  :leave="{ x: 50 }"
+>
+  <img src="./images/gotowork.webp" width="60%" style="float:both"/>
+</div>
+<div v-click="[4, 5]"  v-motion
+  :initial="{ x: -50, y:-500 }"
+  :enter="{ x: 0 }"
+  :leave="{ x: 50 }"
+>
+  <img src="./images/UI5_bindings.png" width="60%" style="float:both"/>
+</div>
+<div v-click="[5, 7]"  v-motion
+  :initial="{ x: -50, y:-650 }"
+  :enter="{ x: 0 }"
+  :leave="{ x: 50 }"
+>
+  <img src="./images/rest.png" width="60%" style="float:both"/>
+</div>
+<div v-click="7"  v-motion
+  :initial="{ x: -50, y:-800 }"
+  :enter="{ x: 0 }"
+  :leave="{ x: 50 }"
+>
+  <img src="./images/deploy.webp" width="60%" style="float:both"/>
+</div>
+</td>
+</tr>
+</table>
+
+
+
+
+
+---
+
+# Scala Full Stack: What is inside?
+
 <v-clicks depth="3">
 
    - Languages:
      - Scala
      - ScalaJS
-     - TypeScript: Scala.js facade with Scalablytyped
+       - Vanilla Scala transpiled to JavaScript
+       - TypeScript, Transpiler to Scala facade, then to JavaScript
 
    - Build tools:
      - NPM
@@ -67,7 +141,8 @@ transition: fade-out
        - Vite: Hot reload of UI.
      - SBT (Scala Build Tool)
 </v-clicks>
-</div>
+
+TODO: Pipeline picture.
 
 
 ---
@@ -78,18 +153,21 @@ transition: fade-out
 <div>
 <v-clicks depth="2">
    
-   - Libraries:
+   - Frontend:
      - Laminar: Type-safe, reactive UI library
-     - Tapir:   Type-safe HTTP client and server
+     - Chart.js: Charting library, Scalablytyped generated facade
+     - Tapir client: Type-safe HTTP client
+   - Shared:
+     - ZIO-Json: JSON serialization
+     - Tapir: Type-safe HTTP endpoint definitions
+   - Backend:  
+     - Tapir:   Type-safe HTTP server
      - ZIO:     Type-safe, composable asynchronous and concurrent programming
      - Quill:   Type-Safe,  Compile-time SQL query generation
-     - Chart.js: Charting library, Scalablytyped generated facade
-   - Infrastructure:
-     - PostgreSQL: THE database
-     - Docker
-     - Kubernetes
 </v-clicks>
 </div>
+
+// TODO hightlight "type" here :D
 
 
 ---
