@@ -127,19 +127,18 @@ transition: fade-out
 
 # Scala Full Stack: What is inside?
 
-<v-clicks depth="3">
+<v-clicks depth="2">
 
-   - Languages:
-     - Scala
-     - ScalaJS
-       - Vanilla Scala transpiled to JavaScript
-       - TypeScript, Transpiler to Scala facade, then to JavaScript
-
-   - Build tools:
-     - NPM
-       - Node Package Manager.
-       - Vite: Hot reload of UI.
-     - SBT (Scala Build Tool)
+   - Scala
+   - ScalaJS:
+     - Vanilla Scala transpiled to JavaScript
+     - TypeScript, Transpiler to Scala facade, then to JavaScript
+   - And associated tool chain configuration:
+     - Build: SBT, NPM
+     - IDE: VSCode / Metals
+     - Infra: Docker, Kubernetes
+     - CI/CD: GitHub Actions, ArgoCD
+      
 </v-clicks>
 
 TODO: Pipeline picture.
