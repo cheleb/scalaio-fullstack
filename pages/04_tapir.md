@@ -1,4 +1,4 @@
-# Tapir 101 by SoftwareMill
+# Controller: Tapir 101 by SoftwareMill
 
 First step is to define the API endpoints as <span v-mark="{type:'circle', color:'orange', at:0, delay:2000}">values</span>.
 
@@ -69,11 +69,11 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 ````
 <div grid="~ cols-2 gap-4">
 <div v-click="+10">
-  From this definition, Tapir can generate:
+  From this definition, Tapir will generate:
     <ul>
-        <li v-click><a href="localhost:8080/docs/">OpenAPI documentation</a></li>
-        <li v-click><span v-mark="{type:'circle', color:'orange', at:10}">Http server</span> squeleton</li>
-        <li v-click><span v-mark="{type:'circle', color:'orange', at:11}">Sttp client</span></li>
+        <li v-click><a href="localhost:8080/docs/"><span v-mark="{type:'circle', color:'orange', at:10}">OpenAPI documentation</span></a></li>
+        <li v-click><span v-mark="{type:'circle', color:'orange', at:11}">Http server</span> squeleton</li>
+        <li v-click><span v-mark="{type:'circle', color:'orange', at:12}">Sttp client</span></li>
     </ul>
 </div>
 <div v-click="+12">
@@ -89,27 +89,106 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 
 </div>
 
+------
+
+# Tapir
+
+Tapir stands between Http transport and effect or direct style.
+<div grid="~ cols-3 gap-4">
+ <div>
+  <h3>Http server</h3>
+  <hr />
+  <ul>
+  <li v-click="+1" delay="1000"><span v-mark="{type:'circle', color:'orange', at:3}">ZIO-HTTP</span></li>
+  <li v-click="+1" delay="2000">HTTP4S</li>
+  <li v-click="+1" delay="3000">Netty</li>
+  <li v-click="+1" delay="4000">Play</li>
+  <li v-click="+1" delay="5000">...</li>
+  </ul>
+ </div>
+ <div>
+   <img v-click="+2" src="../images/tapir-zio.png" style="width: 100%;" />
+ </div>
+ <div>
+  <h3>Effect or direct style</h3>
+  <hr />
+  <ul>
+  <li v-click="+1" delay="6000"><span v-mark="{type:'circle', color:'orange', at:3}">ZIO</span></li>
+  <li v-click="+1" delay="7000">Cat Effects</li>
+  <li v-click="+1" delay="8000">Future</li>
+  <li v-click="+1" delay="8000">Direct style</li>
+  <li v-click="+1" delay="9000">...</li>
+  </ul>
+
+ </div>
+</div>
+
 ---
 
-# Tapir / HTTP Server
+# Controller: Tapir / HTTP Server
 
-After a bunch of imports, we can implement the server side of the API.
+<div v-click>Controller implements server logic for the API endpoints.</div>
+<div v-click>
+
+```scala
+//                                   In      Error     Out 
+//                                    ☟        ☟        ☟
+val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
+    .name("person")
+    .post                 // POST method
+    .in("person")         // Endpoint path is /person
+    .in(              
+      jsonBody[Person]    // Request body is JSON-encoded Person
+    )
+    .out(jsonBody[User])  // Response is JSON-encoded User
+```
+</div>
+
+---
+
+# Controller: Tapir / HTTP Server
+```scala
+val create: PublicEndpoint[Person, Throwable, User, Any] = ???
+```
+<div v-click>Very classically, we will inject a service layer.</div>
 
 <div grid="~ cols-[20%_70%] gap-0">
-<div v-click="+9" >
+<div v-click="+11" >
   <img src="../images/red-square.svg" style="margin-left:1em; margin-top:10em; z-index:2"/>
   <img src="../images/backend-box.svg" style="width:100%; margin-top:-0.5em; z-index:1"/>
 </div>
 
-<div>
+<div v-click="+1">
 
 Given:
 
+````md magic-move
 ```scala
+// Scala
 trait PersonService:
   def register(person: Person): Task[User]
 
 ```
+```java
+// Java
+interface PersonService {
+  Task<Person> register(Person: person)
+}
+
+```
+```scala
+// Scala
+trait PersonService:
+  def register(person: Person): ZIO[Any, Throwable, User]
+
+```
+```scala
+// Scala
+trait PersonService:
+  def register(person: Person): Task[User]
+
+```
+````
 
 <v-click>
 Controller implementation:
@@ -128,13 +207,14 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
      
 ```
 
-```scala
+```scala {5-9}
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
   PersonEndpoint.create // PublicEndpoint[Person, Throwable, User, Any]
 
   //
-  // Tapir sttp provide `zServerLogic` as an extension method on
+  // Tapir sttp provides `zServerLogic` as an extension method on
+  //
   extension [In, Out, R](e: Endpoint[In, Throwable, Out, R])
     def zServerLogic(logic: In => Task[Out]): ServerEndpoint[In, Task] = ???
 ```
@@ -218,9 +298,77 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 
 # Tapir / HTTP Server
 
+<div grid="~ cols-2">
+ <div>
+   <img src="../images/lego.jpeg" />
+  </div>
+  <div>
+   <v-clicks depth="2">
+
+   - PersonController
+   - PersonService
+   - JWTService
+
+   </v-clicks>
+  </div>
+  <div v-click>
+    We want to assemble the pieces.
+  </div>
+  <div>
+  <v-clicks depth="2">
+
+   - All with Effect System.
+   - Fully reactive way (blocking or not).
+   - At compile time.
+   - With minimal boilerplate.
+   </v-clicks>
+  </div>
+  
+</div>
+
+
+---
+
+# Tapir / HTTP Server / ZIO
+
 ````md magic-move {lines:true}
 
-```scala {*|2,6}
+```scala
+val personService: PersonService = ???
+```
+```scala
+val personService: PersonService = ???
+val jwtService: JWTService = ???
+```
+```scala
+val personService: PersonService = ???
+val jwtService: JWTService = ???
+
+val personController = new PersonController(personService, jwtService)
+```
+
+````
+
+<div v-click>
+The equivalent in ZIO:
+
+
+````md magic-move {lines:true, at:4}
+
+```scala
+URIO[PersonService & JWTService, PersonController] // A ZIO effect ZIO[-R, +E, +A]
+                                                   // to produce a PersonController
+```
+
+
+```scala {*|2|3}
+URIO[
+  PersonService & JWTService, // Requires PersonService and JWTService
+  PersonController            // Produces a PersonController
+]
+```
+
+```scala {*|2|2,6|4,5}
 object PersonController:
   def makeZIO: URIO[PersonService & JWTService, PersonController] =
     for
@@ -259,27 +407,36 @@ object PersonController:
 class PersonServiceLive private ( ... ) extends PersonService
 class JWTServiceLive private ( ... ) extends JWTService
 
+```
+````
+</div>
+
+---
+
+# ZLayer
+
+ZLayer is a another ZIO DataType that can be used to compose services.
+
+
+````md magic-move {lines:true}
+
+```scala
 object PersonServiceLive {
   val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], PersonService] =
     ZLayer.derive[PersonServiceLive]
 }
 ```
-```scala {*|10|9|8-12}
-object PersonController:
-  def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
-
-class PersonServiceLive private ( ... ) extends PersonService
-class JWTServiceLive private ( ... ) extends JWTService
-
+```scala {*|3|4}
 object PersonServiceLive {
   val layer: RLayer[
-      UserRepository & PetRepository & JWTService & Postgres[SnakeCase],
-      PersonService
-    ] =
-    ZLayer.derive[PersonServiceLive]
+    UserRepository & PetRepository & JWTService & Postgres[SnakeCase],
+    PersonService] =
+      ZLayer.derive[PersonServiceLive]
 }
 ```
 ````
+
+
 
 ---
 

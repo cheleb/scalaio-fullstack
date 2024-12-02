@@ -30,11 +30,17 @@
 Dozen of tools to setup ... 
 
 <div grid="~ cols-2">
-<img v-click src="../images/keyboard.webp" width="20%"/>
+<div v-click><img  src="../images/keyboard.webp" width="20%"/>
+package.json, vite.config.js, build.sbt, plugins.sbt, Dockerfile, Kubernetes, ...
+</div>
 <img v-click src="../images/boring.webp" width="40%"/>
 </div>
 
-<div  v-click>let's automate it with a template</div>
+---
+
+<img v-click src="../images/lazyness.png" width="20%" />
+
+<div  v-click>Let's automate it with a template</div>
 
 <div  v-click>
 ```bash

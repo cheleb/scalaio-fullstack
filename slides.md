@@ -77,12 +77,12 @@ transition: fade-out
 ## Librairies && Insfrastructure
 <div>
 <v-clicks depth="2">
-
+   
    - Libraries:
      - Laminar: Type-safe, reactive UI library
-     - Tapir: Type-safe HTTP client and server
-     - ZIO: Type-safe, composable asynchronous and concurrent programming
-     - Quill: Compile-time SQL query generation
+     - Tapir:   Type-safe HTTP client and server
+     - ZIO:     Type-safe, composable asynchronous and concurrent programming
+     - Quill:   Type-Safe,  Compile-time SQL query generation
      - Chart.js: Charting library, Scalablytyped generated facade
    - Infrastructure:
      - PostgreSQL: THE database
@@ -299,56 +299,84 @@ src: ./pages/03_zio.md
 
 ---
 
+# The App structure
+
+````md magic-move {lines: true}
+```scala
+object ScalaFullStack:
+  
+  object Frontend
+
+  object Backend  
+```
+```scala
+object ScalaFullStack: // Runtime
+  
+  object Frontend      // Pure SPA (js, css, html)
+
+  object Backend       // Pure Scala / JVM
+```
+```scala
+object ScalaFullStack: // Runtime
+  
+  object Frontend
+
+  object Backend:
+    val BFF = "Backend for Frontend"
+    val API = "REST API
+```
+```scala
+object ScalaFullStack: // Build time
+  
+  object Frontend
+
+  object Backend:
+    val BFF = "Backend for Frontend"
+    val API = "REST API
+```
+```scala
+object ScalaFullStack: // Build time
+  
+  object Frontend
+
+  object Shared        // Shared between the client and the server
+    
+  object Backend:
+    val BFF = "Backend for Frontend"
+    val API = "REST API
+```
+```scala {*|5|10-11}
+object ScalaFullStack: // Build time
+  
+  object Frontend      //   ←-------------------+ 
+                       //                       |
+  object Shared        // Shared between the client and the server
+                       //                                      |
+  object Backend:      //   ←----------------------------------+ 
+    val BFF = "Backend for Frontend"
+    object `API API`:
+      val controller  = "Tapir: Type-safe HTTP Controller"
+      val service     = "ZIO, business logic"
+      val persistance = "DB Layer (repository)" 
+```
+````
+
+---
+
 # Shared
 
 What can be shared between the client and the server?
 
 <ul>
- <li v-click="+1">Payloads</li>
- <li v-click="+2">Business logic</li>
- <li v-click="+3">Validation</li>
- <li v-click="+4">Error handling</li>
+ <li v-click>Payloads</li>
+ <li v-click>Business logic</li>
+ <li v-click>Validation</li>
+ <li v-click>Error handling</li>
 </ul>
 
-<div v-click="+5" class="absolute left-30%"> And ... </div>
-<div v-click="+6" class="absolute right-30%"> REST API definition </div>
- 
-------
-
-# Tapir
-
-Tapir stands between Http transport and effect or direct style.
-<div grid="~ cols-3 gap-4">
- <div>
-  <h3>Http server</h3>
-  <hr />
-  <ul>
-  <li v-click="+1" delay="1000"><span v-mark="{type:'circle', color:'orange', at:3}">ZIO-HTTP</span></li>
-  <li v-click="+1" delay="2000">HTTP4S</li>
-  <li v-click="+1" delay="3000">Netty</li>
-  <li v-click="+1" delay="4000">Play</li>
-  <li v-click="+1" delay="5000">...</li>
-  </ul>
- </div>
- <div>
-   <img v-click="+2" src="./images/tapir-zio.png" style="width: 100%;" />
- </div>
- <div>
-  <h3>Effect or direct style</h3>
-  <hr />
-  <ul>
-  <li v-click="+1" delay="6000"><span v-mark="{type:'circle', color:'orange', at:3}">ZIO</span></li>
-  <li v-click="+1" delay="7000">Cat Effects</li>
-  <li v-click="+1" delay="8000">Future</li>
-  <li v-click="+1" delay="8000">Direct style</li>
-  <li v-click="+1" delay="9000">...</li>
-  </ul>
-
- </div>
-</div>
-
-
-
+<div v-click class="left-30%"> And ... </div>
+<ul><li v-click><span v-mark="{type:'circle', color:'orange', at:8}">REST API definition</span></li></ul>
+<div v-click class="right-31%">(kinda code centrict-contract first)</div>
 
 
 ---
