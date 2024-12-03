@@ -16,7 +16,7 @@
    </v-clicks>
   </div>
   <div>
-    <img v-click="+7" src="../images/dev-stack-scala.svg" style="width: 50%" />
+    <img v-click="+8" src="../images/dev-stack-scala.svg" style="width: 50%" />
   </div>
   <div>
     <img v-click="+6" src="../images/dev-stack-scalajs.svg" style="width: 50%" />
@@ -273,6 +273,8 @@ export default defineConfig({
     }
 });
 ```
+
+<!-- Vite must configure to listen to the ScalaJS transpiler -->
 
 ---
 

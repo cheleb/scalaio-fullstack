@@ -82,8 +82,16 @@ def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
 
 def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
 
-val program: UIO[String] = simple.flatMap(i => whatIsTheAnswer(i))
+val program: UIO[Int] = simple
+```
+```scala
+val simple:                     UIO[Int]     = ZIO.succeed(42) // ~ Runable[A]
 
+def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+
+def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+
+val program: UIO[String] = simple.flatMap(i => whatIsTheAnswer(i))
 ```
 ```scala
 val simple:                     UIO[Int]     = ZIO.succeed(42) // ~ Runable[A]
@@ -94,6 +102,49 @@ def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
 
 val program: Task[Unit] = simple.flatMap(i => whatIsTheAnswer(i))
                                 .flatMap(str => sayIntLoud(str))
+```
+```scala
+val simple:                     UIO[Int]     = ZIO.succeed(42) // ~ Runable[A]
+
+def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+
+def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+
+val program: Task[Unit] = simple.flatMap(whatIsTheAnswer)
+                                .flatMap(sayIntLoud)
+```
+```scala
+val simple:                     UIO[Int]     = ZIO.succeed(42) // ~ Runable[A]
+
+def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+
+def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+
+val program: Task[Unit] = simple flatMap whatIsTheAnswer flatMap sayIntLoud
+```
+```scala
+val simple:                     UIO[Int]     = ZIO.succeed(42) // ~ Runable[A]
+
+def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+
+def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+
+val program: Task[Unit] = simple flatMap whatIsTheAnswer
+                              💥 flatMap sayIntLoud
+```
+```scala
+
+val simple:                     UIO[Int]     = ZIO.succeed(42) // ~ Runable[A]
+
+def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+
+def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+
+extension [A, E, B](zio: ZIO[A, E, B])
+    def |>[C, E2 <: E](f: B => ZIO[A, E2, C]): ZIO[A, E, C] = zio.flatMap(f)
+
+val program: Task[Unit] = simple |> whatIsTheAnswer
+                                 |> flatMap sayIntLoud
 ```
 ```scala
 val simple:                             UIO[Int]     = ZIO.succeed(42) // ~ Runable[A]
@@ -120,7 +171,7 @@ def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer 
 def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(message).repeatN(i%2)
 
 val program: Task[Unit] = simple.flatMap(i => whatIsTheAnswer(i))
-                                .flatMap(str => sayIntLoud(str, i)) // Won't compile
+                                .flatMap(str => sayIntLoud(str, 💥i)) // Won't compile
 ```
 ```scala
 val simple:                             UIO[Int]     = ZIO.succeed(42) // ~ Runable[A]
@@ -152,15 +203,37 @@ val program: Task[Unit] = for { // For comprehension
 ```
 
 ```scala
-private val program =
+private val program   =
     for {
       _ <- runMigrations
       _ <- startServer
     } yield ()
 ```
+```scala
+private val program  =
+    for {
+      _ <- runMigrations //  ZIO[FlywayService, Throwable, Unit]
+      _ <- startServer
+    } yield ()
+```
+```scala
+private val program =
+    for {
+      _ <- runMigrations //  ZIO[FlywayService, Throwable, Unit]
+      _ <- startServer   //  ZIO[UserService & OrganisationService & JWTService & Server, IOException, Unit]
+    } yield ()
+```
 
 ```scala
-val runMigrations = for {
+private val program : ZIO[FlywayService & UserService & OrganisationService & JWTService & Server, Throwable, Unit]  =
+    for {
+      _ <- runMigrations //  ZIO[FlywayService, Throwable, Unit]
+      _ <- startServer   //  ZIO[UserService & OrganisationService & JWTService & Server, IOException, Unit]
+    } yield ()
+```
+
+```scala
+val runMigrations : ZIO[FlywayService, Throwable, Unit] = for {
     flyway <- ZIO.service[FlywayService]
     _ <- flyway.runMigrations().catchSome { case e =>
            ZIO.logError(s"Error running migrations: ${e.getMessage()}")
@@ -170,7 +243,7 @@ val runMigrations = for {
 ```
 
 ```scala
-private val startServer =
+private val startServer: : ZIO[UserService & OrganisationService & JWTService & Server, IOException, Unit] =
     for {
       _                               <- Console.printLine("Starting server...")
       (apiEndpoints, streamEndpoints) <- HttpApi.endpointsZIO

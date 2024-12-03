@@ -153,20 +153,29 @@ TODO: Pipeline picture.
 <v-clicks depth="2">
    
    - Frontend:
-     - Laminar: Type-safe, reactive UI library
-     - Chart.js: Charting library, Scalablytyped generated facade
-     - Tapir client: Type-safe HTTP client
+     - Laminar: <span v-mark="{type:'underline', color:'orange', at:12, delay:1000}">Type-safe</span>, reactive UI library
+     - Chart.js: Charting library, Scalably<span v-mark="{type:'underline', color:'orange', at:12, delay:2000}">type</span>d generated facade
+     - Tapir client: <span v-mark="{type:'underline', color:'orange', at:12, delay:2400}">Type-safe</span> HTTP client
    - Shared:
-     - ZIO-Json: JSON serialization
-     - Tapir: Type-safe HTTP endpoint definitions
+     - ZIO-Json: <span v-mark="{type:'underline', color:'orange', at:12, delay:3000}">Type-Safe</span>JSON serialization
+     - Tapir: <span v-mark="{type:'underline', color:'orange', at:12, delay:3000}">Type-safe</span> HTTP endpoint definitions
    - Backend:  
-     - Tapir:   Type-safe HTTP server
-     - ZIO:     Type-safe, composable asynchronous and concurrent programming
-     - Quill:   Type-Safe,  Compile-time SQL query generation
+     - Tapir:   <span v-mark="{type:'underline', color:'orange', at:12, delay:3000}">Type-safe</span> HTTP server
+     - ZIO:     <span v-mark="{type:'underline', color:'orange', at:12, delay:3000}">Type-safe</span>, composable asynchronous and concurrent programming
+     - Quill:   <span v-mark="{type:'underline', color:'orange', at:12, delay:3000}">Type-Safe</span>,  Compile-time SQL query generation
 </v-clicks>
 </div>
 
-// TODO hightlight "type" here :D
+<!-- 
+Quizz time: What is the common/redundant point between all these libraries?
+
+- Type-safe
+
+Ok typesafe is not a feature, it's a quality, but it's a quality that is a feature of the Scala language, and that is leveraged by the libraries.
+
+Not to say, it is an obsession of the Scala community.
+
+ -->
 
 
 ---
@@ -221,6 +230,15 @@ TODO: Pipeline picture.
 <div></div><div></div><div></div>
 </div>
 
+<!-- 
+
+Scala is a language that can be compiled to:
+
+* the JVM
+* to JavaScript targeting both Node and the browser
+* to LLVM
+* to WASM (experimental)
+ -->
 
 ---
 src: ./pages/01_ono-at-ledger.md
@@ -628,18 +646,47 @@ Oneliners
 
 ## Resources
 
-* [ScalaJS](https://www.scala-js.org)  by ScalaCenter / Sebastien Doeraene
-* [SBT](https://www.scala-sbt.org)
-* [Scalablytyped](https://scalablytyped.org)
-#### Depencencies:
-* [ZIO](https://zio.dev) by Ziverge
-* [Laminar](https://laminar.dev) by raquo
-* [Tapir](https://tapir.softwaremill.com) by SoftwareMill
-#### Tools:
+### Languages && Librairies
+
+<div grid="~ cols-2">
+ <v-clicks>
+
+  - [ScalaJS](https://www.scala-js.org)  by ScalaCenter / Sebastien Doeraene
+  - [SBT](https://www.scala-sbt.org)
+  - [Scalablytyped](https://scalablytyped.org)
+</v-clicks>
+<v-clicks>
+
+  - [ZIO](https://zio.dev) by Ziverge
+  - [Laminar](https://laminar.dev) by raquo
+  - [Tapir](https://tapir.softwaremill.com) by SoftwareMill
+</v-clicks>
+</div>
+
+
+
+#### Tools && Mentors
+
+
+<div grid="~ cols-2">
+ <v-clicks>
+
+
 * [Vite](https://vitejs.dev) 
 * [Docker](https://www.docker.com)
 * [VSCode](https://code.visualstudio.com)
 * [Metals](https://scalameta.org/metals/)
-#### Mentors:
+</v-clicks>
+<v-clicks>
+
 * [RTJVM](https://rockthejvm.com) by Daniel Ciociarlan
 * [Incredible Kit Langton](https://www.youtube.com/watch?v=JHriftPO62I)
+</v-clicks>
+</div>
+
+
+---
+
+# Thank you
+
+# Questions?

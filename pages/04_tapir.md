@@ -421,18 +421,38 @@ ZLayer is a another ZIO DataType that can be used to compose services.
 ````md magic-move {lines:true}
 
 ```scala
-object PersonServiceLive {
-  val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], PersonService] =
-    ZLayer.derive[PersonServiceLive]
-}
+object PersonServiceLive:
+
+  val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], PersonService] = ???
+
 ```
 ```scala {*|3|4}
-object PersonServiceLive {
+object PersonServiceLive:
   val layer: RLayer[
     UserRepository & PetRepository & JWTService & Postgres[SnakeCase],
-    PersonService] =
-      ZLayer.derive[PersonServiceLive]
-}
+    PersonService] = ???
+
+```
+```scala
+object PersonServiceLive:
+
+  val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], PersonService] =
+    ZLayer.derive[PersonServiceLive]
+
+```
+
+```scala
+object PersonServiceLive:
+  // Expands to:
+  val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], PersonService] = ZLayer{
+    for
+      userRepository  <- ZIO.service[UserRepository]
+      petRepository   <- ZIO.service[PetRepository]
+      jwtService      <- ZIO.service[JWTService]
+      pgService       <- ZIO.service[Postgres[SnakeCase]]
+    yield new PersonServiceLive(userRepository, petRepository, jwtService, pgService)
+  }
+
 ```
 ````
 
@@ -474,7 +494,7 @@ override def run =
 ```
 ````
 
-[Mermaid](https://mermaid-js.github.io/mermaid-live-editor/edit/#pako:eNp9kcFOwzAMQH8l8gmkrWIbcOiBA2IcUA6IDXHJxWrcLVqbVG4yVE37d9ytqL3AIZJlvzw7zgmKYAly2DE2e_W8NV7f3RjYEB-JM0slpioauJX8QvIf1ITWxcBdZjGixo5Yqmo-f1J6KcA7xZHR7khZNTC94cqthPtsif8G74V4-9r2U7iCLtUi-NLtEpPVE6Gc1VX6cGnObfDTWxPncuB6_RguxvBRDK9V943d_31hBjVxjc7K3k7GK2Ug7qkmA7mEFvlgwPizcKmRLdHa9o-EvMSqpRlgimHT-QLyyIl-oReH8gf1QJ1_AL7HiI4)
+[Mermaid](https://mermaid-js.github.io/mermaid-live-editor/edit/#pako:eNp9kcFOwzAMhl-l8gmkrYLBmNQDBwQcUCUkNsQlF6vxuog2qdxkKJr27ji0qIA0br_tz7_t5ACV0wQF1IzdLrvbKFtenClYE--Jc01bDI1XcC75S8k_NvEDY6qaikqzp7xydmvqwKRLjMQDuhD0mWu0pkdvnH2hzvXGO45fPc1IZvP5bVZe_YF_ujeT57Vgk0-u0WP5y2cpwGtPfGJYshjAhcjlIG_GnhMzV1J-etv8f-_oNPknuUohzKAlbtFoeeGDslmmwO-oJQWFSI38rkDZo3Chk4PoQae9ofAcaAYYvFtHW33HA3NvUD6rHZLHT8ZQl94)
 
 
 ---

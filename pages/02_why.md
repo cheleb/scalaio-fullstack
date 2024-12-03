@@ -57,7 +57,20 @@ From Rock the JVM.
   </div>
 </div>
 
+<!-- 
 
+Rock the JVM, not only ... JS too.
+
+But ...
+
+* tedious setup
+* painful to start dev environment:
+  * sbt X 2
+  * vite
+  * docker
+
+
+ -->
 
 
 
