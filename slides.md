@@ -49,6 +49,106 @@ The last comment block of each slide will be treated as slide notes. It will be 
 transition: fade-out
 ---
 
+# Scala Full Stack
+
+
+<div grid="~ cols-2">
+<div>
+<h2>Complexity && Setup</h2>
+<hr style="margin: 1em"/> 
+<v-clicks depth="2">
+
+  * Is scala a complex language?
+    - Yes
+    - But can/should be used in a simple way.
+</v-clicks>
+<div style="margin: 2em" v-click>
+<img style="margin: 2em" src="./images/power.jpg" width="40%" />
+Principle of Least Power
+</div>
+</div>
+<div>
+<h2>Types && Compiler</h2>
+<hr style="margin: 1em"/> 
+
+<v-clicks depth="2">
+
+  * Tame the complexity with types.
+    - Type safety 101.
+    - <span v-mark="{type:'underline', color:'orange', at:6, delay:2000}">ADT then derive</span>.
+</v-clicks>
+</div>
+</div>
+
+<!-- 
+
+- Scala is a complex language, but it is also a language that can be used in a simple way.
+- The tooling around Scala is complex, but it is also a tooling that can be used in a simple way.
+- The libraries around Scala are complex, but they are also libraries that can be used in a simple way.
+- The compiler is your friend, it will:
+  - catch errors early.
+  - allow refactor your code with confidence.
+  - derivation, will generate code for you.
+
+ -->
+
+---
+
+# ADT: Algebraic Data Type
+
+
+---
+
+# Scala Full Stack
+
+
+<div grid="~ cols-2">
+<div>
+<h2>Complexity && Setup</h2>
+<hr style="margin: 1em"/> 
+<v-clicks depth="2">
+
+  * Is scala a complex language?
+    - Yes
+    - But can/should be used in a simple way.
+  * Automate the boring stuff.
+    - Scaffolding
+    - Development environment
+    - <span v-mark="{type:'underline', color:'orange', at:15, delay:3000}">Derivation</span> of code
+</v-clicks>
+</div>
+<div>
+<h2>Types && Compiler</h2>
+<hr style="margin: 1em"/> 
+
+<v-clicks depth="2">
+
+  * Tame the complexity with types.
+    - TypeSafety the holy grail.
+    - ADT then <span v-mark="{type:'underline', color:'orange', at:15, delay:2000}">derive</span>.
+  * Compiler is your friend. 
+    - Catch errors early.
+    - Refactor with confidence.
+    - <span v-mark="{type:'underline', color:'orange', at:15, delay:1000}">Derivation</span>, generate code for you.
+</v-clicks>
+</div>
+</div>
+
+<!-- 
+
+- Scala is a complex language, but it is also a language that can be used in a simple way.
+- The tooling around Scala is complex, but it is also a tooling that can be used in a simple way.
+- The libraries around Scala are complex, but they are also libraries that can be used in a simple way.
+- The compiler is your friend, it will:
+  - catch errors early.
+  - allow refactor your code with confidence.
+  - derivation, will generate code for you.
+
+ -->
+
+
+---
+
 # Scala Full Stack (lazy guide to)
 
 <v-click>
@@ -56,7 +156,7 @@ transition: fade-out
 </v-click>
 
 <table>
-
+<tbody>
 <tr>
 <td style="vertical-align: top;">
 <v-clicks depth="3">
@@ -117,6 +217,7 @@ transition: fade-out
 </div>
 </td>
 </tr>
+</tbody>
 </table>
 
 
@@ -132,7 +233,7 @@ transition: fade-out
    - Scala
    - ScalaJS:
      - Vanilla Scala transpiled to JavaScript
-     - TypeScript, Transpiler to Scala facade, then to JavaScript
+     - TypeScript, transpiled to Scala facades, then to JavaScript
    - And associated tool chain configuration:
      - Build: SBT, NPM
      - IDE: VSCode / Metals
@@ -141,14 +242,14 @@ transition: fade-out
       
 </v-clicks>
 
-TODO: Pipeline picture.
+<!-- TODO: Pipeline picture. -->
 
 
 ---
 
 # Scala Full Stack: What insisde?
 
-## Librairies && Insfrastructure
+## Librairies
 <div>
 <v-clicks depth="2">
    
