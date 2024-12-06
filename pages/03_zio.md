@@ -2,21 +2,38 @@
 
 ZIO is a library for asynchronous and concurrent programming in Scala. 
 
-<div v-click="+1">
+
 Simplified, ZIO is a data type that represents a computation:
+````md magic-move
+
+```java
+Future<T> // A computation that may produce a T or fail with an exception of type Throwable
+```
+
 ```scala
 trait ZIO[-R, +E, +A]
 ```
-<div v-click="+2">
+```scala {*|1,4|1,3|1,2}
+trait ZIO[
+  -R, // that may require an `R`
+  +E, // that may fail with an error of type `E`
+  +A  // that may succeed with a value of type `A`
+]
+```
+````
+<div v-click>
+ZIO is a functional effect system:
+</div>
+<v-clicks depth="2">
 
-<ul>
-  <li v-click="+2">that may require an environment of type `R`</li>
-  <li v-click="+3">that may fail with an error of type `E`</li>
-  <li v-click="+4">that may succeed with a value of type `A`
-</li>
-</ul>
-</div>
-</div>
+ * describe the effects of a program in a purely functional way
+   - no side effects
+   - Hence `Runable[A]` is a better analogy than `Future[A]`
+ * compose effects in a purely functional way.
+ * run effects with an interpreter.
+
+</v-clicks>
+
 
 ---
 
@@ -25,12 +42,13 @@ trait ZIO[-R, +E, +A]
 
 A simple mental model is to think of ZIO as a function:
 ```scala
-type ZIO[R,E,A] = R => Either[E, A]
+type ZIO[R,E,A] = 
+                    R => Either[E, A]
 ```
 <div v-click="+1">
 Many aliases are provided for common use cases:
 
-```scala {*|*|2-3}
+```scala {*|1|2|3|4|5}
 type IO[+E, +A]   = ZIO[Any, E, A]         // Succeed with an `A`, may fail with `E`        , no requirements.
 type Task[+A]     = ZIO[Any, Throwable, A] // Succeed with an `A`, may fail with `Throwable`, no requirements.
 type RIO[-R, +A]  = ZIO[R, Throwable, A]   // Succeed with an `A`, may fail with `Throwable`, requires an `R`.
@@ -132,7 +150,7 @@ def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
 val program: Task[Unit] = simple flatMap whatIsTheAnswer
                               💥 flatMap sayIntLoud
 ```
-```scala
+```scala {*|7-8|7-11}
 
 val simple:                     UIO[Int]     = ZIO.succeed(42) // ~ Runable[A]
 
@@ -145,6 +163,18 @@ extension [A, E, B](zio: ZIO[A, E, B])
 
 val program: Task[Unit] = simple |> whatIsTheAnswer
                                  |> flatMap sayIntLoud
+```
+```scala {*|1|9-10}
+import zorglub.flatmapthatshit.*
+
+val simple:                     UIO[Int]     = ZIO.succeed(42) // ~ Runable[A]
+
+def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+
+def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+
+val program: Task[Unit] = simple |> whatIsTheAnswer
+                                |> flatMap sayIntLoud
 ```
 ```scala
 val simple:                             UIO[Int]     = ZIO.succeed(42) // ~ Runable[A]
@@ -231,32 +261,6 @@ private val program : ZIO[FlywayService & UserService & OrganisationService & JW
       _ <- startServer   //  ZIO[UserService & OrganisationService & JWTService & Server, IOException, Unit]
     } yield ()
 ```
-
-```scala
-val runMigrations : ZIO[FlywayService, Throwable, Unit] = for {
-    flyway <- ZIO.service[FlywayService]
-    _ <- flyway.runMigrations().catchSome { case e =>
-           ZIO.logError(s"Error running migrations: ${e.getMessage()}")
-             *> flyway.runRepair() *> flyway.runMigrations()
-         }
-  } yield ()
-```
-
-```scala
-private val startServer: : ZIO[UserService & OrganisationService & JWTService & Server, IOException, Unit] =
-    for {
-      _                               <- Console.printLine("Starting server...")
-      (apiEndpoints, streamEndpoints) <- HttpApi.endpointsZIO
-      docEndpoints = SwaggerInterpreter()
-                       .fromServerEndpoints(apiEndpoints ::: streamEndpoints, "zio-laminar-demo", "1.0.0")
-      _ <- serveEndpoints(apiEndpoints, streamEndpoints, docEndpoints)
-    } yield ()
-```
-
-
-
-
-
 ````
 
 

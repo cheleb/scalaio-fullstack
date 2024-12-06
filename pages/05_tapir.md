@@ -1,3 +1,13 @@
+
+<img src="../images/architecture.svg" style="width: 100%" />
+<img src="../images/youarehere.png" width="50"  v-motion
+  :initial="{ x: 0, y:0 }"
+  :enter="{ x: 250, y:-550 }"
+  :leave="{ x: 50 }"/>
+
+---
+
+
 # Tapir Client Side
 
 With another bunch of imports, we can implement the client side of the API, in one liner:
@@ -147,6 +157,15 @@ extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 ````
 
 </div>
+
+---
+
+<img src="../images/architecture.svg" style="width: 100%" />
+<img src="../images/youarehere.png" width="50"  v-motion
+  :initial="{ x: 0, y:0 }"
+  :enter="{ x: 200, y:-450 }"
+  :leave="{ x: 50 }"/>
+
 
 
 ---

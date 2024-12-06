@@ -149,7 +149,7 @@ val user = User(firstname, lastname, email, password, age)
 
 </div>
 
-<!- 
+<!--
 
 - The compiler is your friend, it will:
   - catch errors early.
@@ -364,17 +364,29 @@ object User:
 
 case class User(email: User.Email, password: User.Password)
 ```
-```scala
+```scala {*|6-8}{at:22}
 object User:
   opaque type Password = String
   def password(str: String): Either[String, Password] =
     Either.cond(str.length >= 8, str, "Password too short")
 
-  opaque type Email = String
+  object Password:
+    given Show[Password] with
+      def show(_: Password): String = "******"
 
-  def email(value: String): Either[String, User.Email] =
-    if value.contains("@") then Right(value)
-    else Left("Invalid email")
+
+case class User(email: User.Email, password: User.Password)
+```
+```scala {6-8}
+object User:
+  opaque type Password = String
+  def password(str: String): Either[String, Password] =
+    Either.cond(str.length >= 8, str, "Password too short")
+
+  object Password:
+    given Show[Password] with // 👈 Show[A] is a TypeClass
+      def show(_: Password): String = "******"
+
 
 case class User(email: User.Email, password: User.Password)
 ```
@@ -382,17 +394,20 @@ case class User(email: User.Email, password: User.Password)
 </div>
 <div>
 <h3>Not for the user</h3>
-<v-click>
-````md magic-move
+````md magic-move {at:1}
 ```scala
-val user = User("", "")
+val user = User("not an email", "short") // 😒
+```
+```scala
+val user = User(💥"", 💥"")
+```
+```scala
+// val user = User(💥"", 💥"")
 val user2 = for
    email <- User.email("@")
    password <- User.password("notsecured")
 yield User(email, password)
-
 ```
 ````
-</v-click>
 </div>
 </div>

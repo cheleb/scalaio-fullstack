@@ -1,6 +1,17 @@
+<img src="../images/architecture.svg" style="width: 100%" />
+<img src="../images/youarehere.png" width="50"  v-motion
+  :initial="{ x: 50, y:-180 }"
+  :enter="{ x: 350, y:-490 }"
+  :leave="{ x: 50 }"/>
+
+
+---
+
 # Controller: Tapir 101 by SoftwareMill
 
 First step is to define the API endpoints as <span v-mark="{type:'circle', color:'orange', at:0, delay:2000}">values</span>.
+
+
 
 <div v-click="+1">
 
@@ -37,9 +48,9 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
     .out(jsonBody[User])  // Response is JSON-encoded User
 ```
 
-```scala {3-6}
-//                                   In      Error     Out 
-//                                    ☟        ☟        ☟
+```scala {1,3-6}
+//                                           Error
+//                                             ☟
 val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = endpoint
     .errorOut(statusCode and plainBody[String])
     .mapErrorOut[Throwable](HttpError.decode)(HttpError.encode)
@@ -89,39 +100,7 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 
 </div>
 
-------
 
-# Tapir
-
-Tapir stands between Http transport and effect or direct style.
-<div grid="~ cols-3 gap-4">
- <div>
-  <h3>Http server</h3>
-  <hr />
-  <ul>
-  <li v-click="+1" delay="1000"><span v-mark="{type:'circle', color:'orange', at:3}">ZIO-HTTP</span></li>
-  <li v-click="+1" delay="2000">HTTP4S</li>
-  <li v-click="+1" delay="3000">Netty</li>
-  <li v-click="+1" delay="4000">Play</li>
-  <li v-click="+1" delay="5000">...</li>
-  </ul>
- </div>
- <div>
-   <img v-click="+2" src="../images/tapir-zio.png" style="width: 100%;" />
- </div>
- <div>
-  <h3>Effect or direct style</h3>
-  <hr />
-  <ul>
-  <li v-click="+1" delay="6000"><span v-mark="{type:'circle', color:'orange', at:3}">ZIO</span></li>
-  <li v-click="+1" delay="7000">Cat Effects</li>
-  <li v-click="+1" delay="8000">Future</li>
-  <li v-click="+1" delay="8000">Direct style</li>
-  <li v-click="+1" delay="9000">...</li>
-  </ul>
-
- </div>
-</div>
 
 ---
 
@@ -146,6 +125,15 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 
 ---
 
+<img src="../images/architecture.svg" style="width: 100%" />
+<img src="../images/youarehere.png" width="50"  v-motion
+  :initial="{ x: 50, y:-180 }"
+  :enter="{ x: 650, y:-490 }"
+  :leave="{ x: 50 }"/>
+
+
+---
+
 # Controller: Tapir / HTTP Server
 ```scala
 val create: PublicEndpoint[Person, Throwable, User, Any] = ???
@@ -167,13 +155,6 @@ Given:
 // Scala
 trait PersonService:
   def register(person: Person): Task[User]
-
-```
-```java
-// Java
-interface PersonService {
-  Task<Person> register(Person: person)
-}
 
 ```
 ```scala
@@ -508,7 +489,9 @@ override def run =
 <img src="../images/tapir-api-server.svg" style="width:30%;" />
 
 
+
 ---
+
 
 # Tapir / Sttp Client
 

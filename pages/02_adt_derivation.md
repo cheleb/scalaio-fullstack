@@ -14,16 +14,6 @@
     - Generic Derivation.
 </v-clicks>
 
-<!-- 
-
-- Type safety means that you can catch errors at compile time.
-- "Show" the types, and the compiler will do the rest. 
-
-  given Show[Password] with
-    def show(p: Password): String = "******"
-
-
- -->
 
 ---
 
@@ -117,22 +107,54 @@ case class Drawing(owner: Owner, shapes: Shape, color: Color)
 
 # ADT: Generic Derivation
 
-<v-clicks>
+<v-clicks depth="1">
 
-* ADT can describe any datastructure, with products and sum types.
-* Scala 3, can natively derive typeclass instances from that.
+ * ADT can describe any datastructure, with products and sum types.
+ * Scala 3, can natively derive typeclass instances from that.
 
-If for any computation, we can handle:
+```scala
+  object Password:
+    given Show[Password] with // 👈 Show[A] is a TypeClass
+      def show(_: Password): String = "******"
+```
+
 </v-clicks>
+
+
+<div grid="~ cols-[35%_70%] gap-2">
+  <div>
+
+<div v-click style="margin-top:2em">
+ If for any computation, we can handle:
+</div>
 
 <v-clicks depth="4">
 
    * an Int
    * a String
-     * Then we can handle a Shape or a Owner
+     * Then we can handle an Owner
      * ... etc shapes, colors and owners.
 </v-clicks>  
+</div>
+<div v-click style="margin:1em">
 
+  We can derive the Debug instance for any ADT.
+
+````md magic-move {at:9}
+```scala
+case class Owner(name: String, password: Password, age: Int)
+```
+```scala
+case class Owner(name: String, password: Password, age: Int) derives Debug
+```
+```scala
+case class Owner(name: String, password: Password, age: Int) derives Debug
+
+john.show // => Owner("John", "******", 42)
+```
+````
+</div>
+</div>
 
 ---
 
@@ -142,13 +164,13 @@ If for any computation, we can handle:
 
 ````md magic-move
 ```scala
-case class Owner(name: String, age: Int)
+case class Owner(name: String, password: Password, age: Int)
 ```
 ```scala
-case class Owner(name: String, age: Int) derives JsonCodec
+case class Owner(name: String, password: Password, age: Int) derives JsonCodec
 ```
 ```scala
-case class Owner(name: String, age: Int) derives JsonCodec
+case class Owner(name: String, password: Password, age: Int) derives JsonCodec
 case class Color derives JsonCodec:
     case Red, Green, Blue
     case Yellow(dark: Boolean)

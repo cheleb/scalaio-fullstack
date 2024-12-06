@@ -49,7 +49,19 @@ The last comment block of each slide will be treated as slide notes. It will be 
 transition: fade-out
 ---
 
-Disclaimer
+# Agenda
+
+<v-clicks>
+  
+  - Scala, complex ?
+  - Setup && Tooling
+  - Full Stack App
+    - Communication
+    - Backend
+    - Frontend
+  - Deployment
+</v-clicks>
+
 ---
 src: ./pages/00_intro.md
 ---
@@ -64,18 +76,12 @@ src: ./pages/02_adt_derivation.md
 
 ---
 
----
-
 # Scala Full Stack (lazy guide to)
 
 <v-click>
  <h2>Oneliners strike back.</h2>
 </v-click>
 
-<table>
-<tbody>
-<tr>
-<td style="vertical-align: top;">
 <v-clicks depth="3">
 
 * One line to setup a new project
@@ -89,53 +95,46 @@ src: ./pages/02_adt_derivation.md
 </v-clicks>
 
 
-</td>
-<td>
 <div v-click="[1, 2]"  v-motion
-  :initial="{ x: -50 }"
-  :enter="{ x: 0 }"
+  :enter="{ x: 250, y:-150 }"
   :leave="{ x: 50 }"
 >
-  <img src="./images/larry.jpeg" width="100%" style="float:both"/>
+  <img src="./images/larry.jpeg" width="500" style="position:absolute"/>
 </div>
 <div v-click="[2, 3]"  v-motion
-  :initial="{ x: -50, y:-180 }"
-  :enter="{ x: 0 }"
+  :initial="{ x: 50, y:-180 }"
+  :enter="{ x: 250, y:-150 }"
   :leave="{ x: 50 }">
-  <img src="./images/bilou.jpeg" width="80%" style="float:both"/>
+  <img src="./images/bilou.jpeg" width="500" style="position:absolute"/>
 </div>
 <div v-click="[3, 4]"  v-motion
   :initial="{ x: -50, y:-370 }"
-  :enter="{ x: 0 }"
+  :enter="{ x: 350, y:-150 }"
   :leave="{ x: 50 }"
 >
-  <img src="./images/gotowork.webp" width="60%" style="float:both"/>
+  <img src="./images/gotowork.webp" width="400" style="position:absolute"/>
 </div>
 <div v-click="[4, 5]"  v-motion
   :initial="{ x: -50, y:-500 }"
-  :enter="{ x: 0 }"
+  :enter="{ x: 350, y:-150 }"
   :leave="{ x: 50 }"
 >
-  <img src="./images/UI5_bindings.png" width="60%" style="float:both"/>
+  <img src="./images/UI5_bindings.png" width="400" style="position:absolute"/>
 </div>
 <div v-click="[5, 7]"  v-motion
-  :initial="{ x: -50, y:-650 }"
-  :enter="{ x: 0 }"
+  :initial="{ x: -50, y:0 }"
+  :enter="{ x: 350, y:-150 }"
   :leave="{ x: 50 }"
 >
-  <img src="./images/rest.png" width="60%" style="float:both"/>
+  <img src="./images/rest.png" width="400" style="position:absolute"/>
 </div>
 <div v-click="7"  v-motion
-  :initial="{ x: -50, y:-800 }"
-  :enter="{ x: 0 }"
+  :initial="{ x: -50, y:-0 }"
+  :enter="{ x: 300, y:-150 }"
   :leave="{ x: 50 }"
 >
-  <img src="./images/deploy.webp" width="60%" style="float:both"/>
+  <img src="./images/deploy.webp" width="400" style="position:absolute"/>
 </div>
-</td>
-</tr>
-</tbody>
-</table>
 
 
 
@@ -402,74 +401,18 @@ object ScalaFullStack:
 ```
 ````
 
-
 ---
 src: ./pages/03_zio.md
 ---
 
 ---
 
-# The App structure
+# The App architecture
 
-````md magic-move {lines: true}
-```scala
-object ScalaFullStack:
-  
-  object Frontend
 
-  object Backend  
-```
-```scala
-object ScalaFullStack: // Runtime
-  
-  object Frontend      // Pure SPA (js, css, html)
+<img src="./images/architecture.svg" style="width: 60%; height: auto;" />
 
-  object Backend       // Pure Scala / JVM
-```
-```scala
-object ScalaFullStack: // Runtime
-  
-  object Frontend
 
-  object Backend:
-    val BFF = "Backend for Frontend"
-    val API = "REST API
-```
-```scala
-object ScalaFullStack: // Build time
-  
-  object Frontend
-
-  object Backend:
-    val BFF = "Backend for Frontend"
-    val API = "REST API
-```
-```scala
-object ScalaFullStack: // Build time
-  
-  object Frontend
-
-  object Shared        // Shared between the client and the server
-    
-  object Backend:
-    val BFF = "Backend for Frontend"
-    val API = "REST API
-```
-```scala {*|5|10-11}
-object ScalaFullStack: // Build time
-  
-  object Frontend      //   ←-------------------+ 
-                       //                       |
-  object Shared        // Shared between the client and the server
-                       //                                      |
-  object Backend:      //   ←----------------------------------+ 
-    val BFF = "Backend for Frontend"
-    object `API API`:
-      val controller  = "Tapir: Type-safe HTTP Controller"
-      val service     = "ZIO, business logic"
-      val persistance = "DB Layer (repository)" 
-```
-````
 
 ---
 

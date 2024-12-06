@@ -1,0 +1,52 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/25.0.2 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="25.0.2">
+  <diagram name="Page-1" id="W5aWvr-JOlksgqP9IC1i">
+    <mxGraphModel dx="1036" dy="1962" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="kPPqslosOgzzgx3B9v7w-3" value="" style="dashed=0;outlineConnect=0;html=1;align=center;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.weblogos.chrome" vertex="1" parent="1">
+          <mxGeometry x="140" y="-60" width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-9" value="HTTP Server Transport&lt;br&gt;&lt;br&gt;ZIO-HTTP, Netty, HTTP4S&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="300" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-10" value="ServerLogic Logic" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="80" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-13" value="HTTP Client Transport&lt;br&gt;&lt;br&gt;Fetch, Curl, ZIO-HTTP" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="300" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="433.5" y="503" as="sourcePoint" />
+            <mxPoint x="433.5" y="503" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-15" value="ZIO Powered Controller" style="rounded=1;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="560" y="170" width="210" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-16" value="Tapir REST API&lt;div&gt;Defintion&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="170" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-17" value="ZIO Powered Controller" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="170" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-18" value="" style="image;html=1;image=img/lib/clip_art/computers/Database_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="600" y="-80" width="90" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-19" value="Laminar UI Client" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-21" value="" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/internet_cloud.svg;" vertex="1" parent="1">
+          <mxGeometry x="250" y="380" width="269.84" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-22" value="&lt;div&gt;Sttp tapir&amp;nbsp;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="39" y="250" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="kPPqslosOgzzgx3B9v7w-23" value="Tapir Server Adapter" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="250" width="280" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
