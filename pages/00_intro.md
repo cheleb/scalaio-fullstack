@@ -149,7 +149,7 @@ val user = User(firstname, lastname, email, password, age)
 
 </div>
 
-<!-- 
+<!- 
 
 - The compiler is your friend, it will:
   - catch errors early.
@@ -172,7 +172,7 @@ val user = User(firstname, lastname, email, password, age)
   * Not at all.
     - Just added validation step.
   * But:
-    * <span v-mark="{type:'underline', color:'orange', at:14}">Boxing / Unboxing</span>
+    * <span v-mark="{type:'underline', color:'orange', at:15}">Boxing / Unboxing</span>
 </v-clicks>
 <div>
 
@@ -189,21 +189,36 @@ object Email:
     if value.contains("@") then Right(Email(value))
     else Left("Invalid email")
 ```
+```scala {*|10}
+case class Email(value: String)
+object Email:
+  def attempt(value: String): Either[String, Email] =
+    if value.contains("@") then Right(Email(value))
+    else Left("Invalid email")
+
+case class Age(value: Int)
+object Age:
+  def attempt(value: Int): Either[String, Age] =
+    if value > 0 then Right(Age(value))
+    else Left("Invalid age")
+```
 ```scala
 val user = for
   firstname <- Firstname.attempt("John")
-  lastname <- Lastname.attempt("Doe")
-  email <- Email.attempt("john.does@foo.bar")
-  password <- Password.attempt("notsecured")
-yield User(firstname, lastname, email, password, Age(42))
+  lastname  <- Lastname.attempt("Doe")
+  email     <- Email.attempt("john.does@foo.bar")
+  password  <- Password.attempt("notsecured")
+  age       <- Age.attempt(42)
+yield User(firstname, lastname, email, password, age)
 ```
 ```scala
 val user: Either[String, User] = for
   firstname <- Firstname.attempt("John")
-  lastname <- Lastname.attempt("Doe")
-  email <- Email.attempt("john.does@foo.bar")
-  password <- Password.attempt("notsecured")
-yield User(firstname, lastname, email, password, Age(42))
+  lastname  <- Lastname.attempt("Doe")
+  email     <- Email.attempt("john.does@foo.bar")
+  password  <- Password.attempt("notsecured")
+  age       <- Age.attempt(42)
+yield User(firstname, lastname, email, password, age)
 ```
 ````
 </div>
@@ -247,6 +262,15 @@ We just want to handle and validate the data, before using it.
 ```
 
 ```scala
+case class Email(value: String) // Boxing 100% overhead
+```
+```scala
+case class Email(value: String) extends AnyVal // Boxing can happen
+```
+```scala
+opaque type Email = String // No boxing at all
+```
+```scala
 case class Email(value: String)
 object Email:
   def attempt(value: String): Either[String, Email] =
@@ -285,4 +309,90 @@ Type safe is a compilation garanty
   <br />
   With no runtime overhead.
 <br />
+</div>
+
+<!--
+
+- We can avoid boxing / unboxing with value class.
+  - no real garanties.
+- We can avoid boxing / unboxing with opaque type.
+  - real garanties at compilation time (compilation error if not respected).
+- Note that:
+  - the API is strictly the same.
+  - the usage is strictly the same.
+  - Email is a Email at compile time.
+  - Email is a String at runtime.
+  - Email now is just a type alias for String
+   
+
+-->
+
+---
+
+# Scala Full Stack
+
+## Ok a little bit more complex.
+
+<div grid="~ cols-[50%_50%] gap-2">
+<div>
+<h3>For the library author</h3>
+````md magic-move
+```scala
+opaque type Email = String
+opaque type Password = String
+
+case class User(email: Email, password: Password)
+```
+```scala
+object User:
+  opaque type Email = String
+  opaque type Password = String
+
+case class User(email: User.Email, password: User.Password)
+```
+```scala
+object User:
+  opaque type Password = String
+  def password(str: String): Either[String, Password] =
+    Either.cond(str.length >= 8, str, "Password too short")
+
+  opaque type Email = String
+
+  def email(value: String): Either[String, User.Email] =
+    if value.contains("@") then Right(value)
+    else Left("Invalid email")
+
+case class User(email: User.Email, password: User.Password)
+```
+```scala
+object User:
+  opaque type Password = String
+  def password(str: String): Either[String, Password] =
+    Either.cond(str.length >= 8, str, "Password too short")
+
+  opaque type Email = String
+
+  def email(value: String): Either[String, User.Email] =
+    if value.contains("@") then Right(value)
+    else Left("Invalid email")
+
+case class User(email: User.Email, password: User.Password)
+```
+````
+</div>
+<div>
+<h3>Not for the user</h3>
+<v-click>
+````md magic-move
+```scala
+val user = User("", "")
+val user2 = for
+   email <- User.email("@")
+   password <- User.password("notsecured")
+yield User(email, password)
+
+```
+````
+</v-click>
+</div>
 </div>

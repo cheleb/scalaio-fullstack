@@ -17,6 +17,11 @@
 <!-- 
 
 - Type safety means that you can catch errors at compile time.
+- "Show" the types, and the compiler will do the rest. 
+
+  given Show[Password] with
+    def show(p: Password): String = "******"
+
 
  -->
 
