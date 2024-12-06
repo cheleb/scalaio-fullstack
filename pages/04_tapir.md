@@ -1,3 +1,4 @@
+
 <img src="../images/architecture.svg" style="width: 100%" />
 <img src="../images/youarehere.png" width="50"  v-motion
   :initial="{ x: 50, y:-180 }"

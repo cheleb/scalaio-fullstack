@@ -1,3 +1,14 @@
+
+<img src="../images/architecture.svg" style="width: 100%" />
+<img src="../images/youarehere.png" width="50"  v-motion
+  :initial="{ x: 50, y:-180 }"
+  :enter="{ x: 260, y:-550 }"
+  :leave="{ x: 50 }"/>
+
+
+---
+
+
 # Laminar: 100% Scala, Reactive UI
 
 <div grid="~ cols-2 gap-3">

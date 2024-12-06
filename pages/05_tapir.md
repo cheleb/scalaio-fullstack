@@ -1,9 +1,10 @@
 
 <img src="../images/architecture.svg" style="width: 100%" />
 <img src="../images/youarehere.png" width="50"  v-motion
-  :initial="{ x: 0, y:0 }"
-  :enter="{ x: 250, y:-550 }"
+  :initial="{ x: 50, y:-180 }"
+  :enter="{ x: 350, y:-490 }"
   :leave="{ x: 50 }"/>
+
 
 ---
 
