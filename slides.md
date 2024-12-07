@@ -51,23 +51,39 @@ transition: fade-out
 
 # Agenda
 
-<v-clicks>
-  
-  - Scala, complex ?
-  - Setup && Tooling
-  - Full Stack App
-    - Communication
-    - Backend
-    - Frontend
-  - Deployment
+<v-clicks depth="2">
+
+  - Why this talk ?
+  - Architecture && Librairies
+  - Demo time.
+  - Deep dive:
+    - End User Experience.
+    - Library internals.
+    - Scala derivation metaprogramming.
+  - Deployment.
 </v-clicks>
 
 ---
-src: ./pages/00_intro.md
+src: ./pages/01_why.md
 ---
 
 ---
-src: ./pages/01_ono-at-ledger.md
+src: ./pages/02_ono-at-ledger.md
+---
+
+---
+src: ./pages/03_action.md
+---
+
+---
+src: ./pages/04_architecture.md
+---
+
+---
+
+
+---
+src: ./pages/00_intro.md
 ---
 
 ---
@@ -267,8 +283,6 @@ src: ./pages/02_why.md
 
 # Agenda
 
-<div grid="~ cols-[50%_50%] gap-1">
-  <div>
 
 ````md magic-move
 ```scala
@@ -332,11 +346,7 @@ object ScalaFullStack:
 ```
 
 ````
-</div>
-  <div>
-    <img v-click="+2" src="./images/runtime-stack.svg" style="width: 50%; height: auto;" />
-  </div>
-</div>
+
 
 ---
 src: ./pages/03_setup.md
@@ -407,10 +417,6 @@ src: ./pages/03_zio.md
 
 ---
 
-# The App architecture
-
-
-<img src="./images/architecture.svg" style="width: 60%; height: auto;" />
 
 
 

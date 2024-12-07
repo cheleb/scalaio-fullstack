@@ -5,10 +5,10 @@
 <div grid="~ cols-[50%_50%] gap-1">
   <div>
     <ul style="margin-top:1em">
-      <li v-click="+1">I&nbsp; ❤️ Web apps for 25+ years aka cgi-bin era</li>
-      <li v-click="+2">I&nbsp; ❤️ Scala for 12+ years</li>
-      <li v-click="+3">I&nbsp; ❤️ ScalaJs since v0.6</li>
-      <li v-click="+4">I&nbsp; ❤️ Effect system 5+ years</li>
+      <li v-click="+1">In&nbsp; ❤️ with Web apps for 25+ years aka cgi-bin era</li>
+      <li v-click="+2">In&nbsp; ❤️ with Scala for 12+ years</li>
+      <li v-click="+3">In&nbsp; ❤️ with ScalaJs since v0.6</li>
+      <li v-click="+4">In&nbsp; ❤️ with Effect system 5+ years</li>
     </ul>
    </div>
    <div v-click="+5">
@@ -36,28 +36,35 @@ From Rock the JVM.
 <div grid="~ cols-2 gap-4">
   <div>
     <ul>
-      <li v-click="+1">Scala Backend</li>
-      <li v-click="+2">ScalaJs</li>
-      <li v-click="+3">ZIO, Tapir, Laminar</li>
-      <li v-click="+4">Postgres, ChatGPT, Stripe</li>
+      <li v-click>Scala Backend</li>
+      <li v-click>ScalaJs</li>
+      <li v-click>ZIO, Tapir, Laminar</li>
+      <li v-click>Postgres, ChatGPT, Stripe</li>
     </ul>
   </div>
   <div>
-    <img  v-click="+5" src="../images/gandalf-wip.gif" alt="Rite of Passage" style="width: 40%; height: auto;" />
+    <img  v-click="+5" src="../images/gandalf-wip.gif" alt="Rite of Passage" style="width: 35%; height: auto;" />
   </div>
   <div>
-    <img  v-click="+6" src="../images/zio-rop.png" alt="ZIO" style="width: 40%; height: auto;" />
+    <span v-click>Few weeks later...</span>
+    <img  v-click src="../images/zio-rop.png" alt="ZIO" style="width: 40%; height: auto;" />
   </div>
-  <div>
-    <ul>
-      <li style="list-style-type: '❤️';" v-click="+7">Scala definitively Rocks the JVM</li>
-      <li style="list-style-type: '😴';" v-click="+8">Setup new project</li>
-      <li style="list-style-type: '😔';" v-click="+9">Starting dev environment</li>
-    </ul>
+  <div v-click>
+
+```
+The good: 
+  - DX awesome, feedback loop
+  - Integration: ZIO, Tapir and Laminar libraries
+The bad:
+  - Integration: Quite a few lines of code.
+The Ugly:
+  - Setup a new project
+  - Start development environment
+```
   </div>
 </div>
 
-<!-- 
+<!--
 
 Rock the JVM, not only ... JS too.
 

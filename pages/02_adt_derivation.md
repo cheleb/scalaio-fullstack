@@ -114,8 +114,8 @@ case class Drawing(owner: Owner, shapes: Shape, color: Color)
 
 ```scala
   object Password:
-    given Show[Password] with // 👈 Show[A] is a TypeClass
-      def show(_: Password): String = "******"
+    given Debug[Password] with // 👈 Show[A] is a TypeClass
+      def debug(value: Password): Repr = Repr.String("*****")
 ```
 
 </v-clicks>
@@ -125,13 +125,14 @@ case class Drawing(owner: Owner, shapes: Shape, color: Color)
   <div>
 
 <div v-click style="margin-top:2em">
- If for any computation, we can handle:
+ If we know how Debug:
 </div>
 
 <v-clicks depth="4">
 
    * an Int
    * a String
+   * a Password
      * Then we can handle an Owner
      * ... etc shapes, colors and owners.
 </v-clicks>  
@@ -150,7 +151,7 @@ case class Owner(name: String, password: Password, age: Int) derives Debug
 ```scala
 case class Owner(name: String, password: Password, age: Int) derives Debug
 
-john.show // => Owner("John", "******", 42)
+john.render // => Owner("John", "******", 42)
 ```
 ````
 </div>

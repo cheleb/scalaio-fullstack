@@ -6,7 +6,7 @@
 <v-clicks depth="2">
 
   * Is scala a complex language?
-    - Yes
+    - Somewhat.
     - But can/should be used in a simple way.
 </v-clicks>
 <div style="margin: 2em" v-motion v-click
@@ -43,7 +43,10 @@ Principle of Least Power
 
 <!-- 
 
-- Type safety means that you can catch errors at compile time.
+- Type safety simple use case.
+- Algebraic Data Type (ADT) to model your domain.
+- Generic Derivation to avoid boilerplate.
+
 
  -->
 
@@ -151,12 +154,17 @@ val user = User(firstname, lastname, email, password, age)
 
 <!--
 
-- The compiler is your friend, it will:
-  - catch errors early.
-  - allow refactor your code with confidence.
-- But it comes with a cost:
-  - boilerplate, you have to write more code.
-  - Boxing / Unboxing, you have to convert your data to the right type.
+- Scala case: Kotlin data class, Java record.
+- Easy to use, but easy to misuse.
+   - minor error
+   - major error
+- Type safety
+    - a compilation check.
+    - a runtime garanty.
+- But:
+  - Boilerplate
+  - Boxing / Unboxing
+
 
  -->
 
@@ -167,21 +175,35 @@ val user = User(firstname, lastname, email, password, age)
 ## Boilerplate, really ?
 
 <div grid="~ cols-[40%_60%]">
-<v-clicks depth="2" style="margin: 2em">
+<div>
+ <v-clicks depth="2" style="margin: 2em">
 
   * Not at all.
-    - Just added validation step.
+    - tag the data.
+    - or added validation step.
+
+ </v-clicks>
+
+ <div v-click="14">
   * But:
     * <span v-mark="{type:'underline', color:'orange', at:15}">Boxing / Unboxing</span>
-</v-clicks>
+ </div>
+</div>
 <div>
 
 ````md magic-move
-
 ```scala
 //
 ```
-
+```scala {*|1|3|4|5}{at:1}
+case class Firstname(value: String)
+```
+```scala {*|1|3|4|5}
+object Firstname:
+  def attempt(value: String): Either[String, Firstname] =
+    if value.nonEmpty then Right(Firstname(value))
+    else Left("Invalid firstname")
+```
 ```scala {*|1|3|4|5}
 case class Email(value: String)
 object Email:
@@ -371,8 +393,8 @@ object User:
     Either.cond(str.length >= 8, str, "Password too short")
 
   object Password:
-    given Show[Password] with
-      def show(_: Password): String = "******"
+    given Debug[Password] with
+      def debug(value: Password): Repr = Repr.String("*****")
 
 
 case class User(email: User.Email, password: User.Password)
@@ -384,8 +406,8 @@ object User:
     Either.cond(str.length >= 8, str, "Password too short")
 
   object Password:
-    given Show[Password] with // 👈 Show[A] is a TypeClass
-      def show(_: Password): String = "******"
+    given Debug[Password] with // 👈 Show[A] is a TypeClass
+      def debug(value: Password): Repr = Repr.String("*****")
 
 
 case class User(email: User.Email, password: User.Password)
