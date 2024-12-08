@@ -1,9 +1,31 @@
 # Setup
 
+<div grid="~ cols-[50%_25%_25%] gap-1">
+  <div>
+   <v-clicks depth="3">
+
+   - Build tools
+     - NPM
+       - Node Package Manager.
+       - <span v-mark="{type:'underline', color:'orange', at:9, delay:2000}">Vite: Hot reload of UI.</span>
+     - SBT
+       - <span v-mark="{type:'underline', color:'orange', at:9}">Scala JS</span>
+       - Scala JVM
+   - Docker
+   - Kubernetes
+   </v-clicks>
+  </div>
+  <div>
+    <img v-click="+8" src="../images/dev-stack-scala.svg" style="width: 50%" />
+  </div>
+  <div>
+    <img v-click="+6" src="../images/dev-stack-scalajs.svg" style="width: 50%" />
+  </div>
+</div>
 
 ---
 
-# Setup / Demo
+# Demo
 
 Dozen of tools to setup ... 
 
@@ -33,6 +55,8 @@ sbt new cheleb/zio-scalajs-laminar.g8 --name=devoxx-fullstack-demo
 # One line to go to work
 
 <div  v-click>
+  <img src="../images/gotowork.webp" width="400" />
+
 ```bash
 code devoxx-fullstack-demo
 ```
@@ -112,45 +136,29 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vsco
 <div grid="~ cols-3">
   <div></div>
   <div v-click="2">
-    <h4>CrossProject shared</h4>
-    <img src="../images/sbt-project.svg" style="width: 50%" />
+    <img src="../images/crossproject.drawio.svg" style="width: 50%" />
   </div>
   <div></div>
   <div>
     <h4>server</h4>
-    <img src="../images/scala-project.svg" style="width: 50%" />
+    <img src="../images/scala.drawio.svg" style="width: 50%" />
   </div>
   <div v-click="+3">
-    <img src="../images/crossproject.svg" style="margin-left:19px; margin-top:30px; width: 55%" /></div>
+    <img src="../images/scala-jvm-js.drawio.svg" style="width: 50%" /></div>
   <div>
     <h4>client</h4>
-    <img src="../images/scalajs-project.svg" style="width: 50%" />
+    <img src="../images/scalajs.drawio.svg" style="width: 50%" />
   </div>
 </div>
 
+<div v-click="4"  style="position:absolute"  v-motion
+  :initial="{ x: 0, y: -100 }"
+  :enter="{ x: 160, y: -85 }"
+  >
+  <img src="../images/scala-jvm-js-deps.drawio.svg" alt="ZIO" style="width: 50%; height: auto;" />
+</div>
 
----
 
-
-# SBT Cross Project
-
-* plugins.sbt
-```scala
-addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.3.2")
-```
-
-* build.sbt
-```scala {*|1|8-9}
-lazy val shared: CrossProject = crossProject(JSPlatform, JVMPlatform)
-  .crossType(CrossType.Pure)
-  .disablePlugins(RevolverPlugin)
-  .in(file("modules/shared"))
-  /* [...] */
-  .settings(publish / skip := true)
-  
-lazy val sharedJvm: Project = shared.jvm
-lazy val sharedJs: Project  = shared.js
-```
 
 ---
 
@@ -259,3 +267,16 @@ export default defineConfig({
 # Setup / Frontend
 
 <img src="../images/completed.webp" />
+
+
+<div v-click v-motion style="position:absolute"  
+  :initial="{ x: 0, y: -100 }"
+  :enter="{ x: 400, y: -100 }"
+  :leave="{ x: 50 }"
+>
+ Enjoy the ride 🚀
+
+ - Hot reload of UI
+ - Warm reload of Backend
+
+</div>

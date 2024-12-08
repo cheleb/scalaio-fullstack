@@ -72,8 +72,32 @@ src: ./pages/02_ono-at-ledger.md
 ---
 
 ---
+
+# Monolith 3-tiers architecture
+
+<img src="../images/apps.svg" style="width: 30%; height: auto; margin:2em" />
+
+---
 src: ./pages/03_action.md
 ---
+
+---
+src: ./pages/04_setup.md
+---
+
+---
+
+# Agenda
+
+
+  - Why this talk ?
+  - Architecture && Librairies
+  - Demo time.
+  - Deep dive: 👈
+    - End User Experience.
+    - Library internals.
+    - Scala derivation metaprogramming.
+  - Deployment.
 
 ---
 src: ./pages/04_architecture.md
@@ -81,27 +105,13 @@ src: ./pages/04_architecture.md
 
 ---
 
-
----
-src: ./pages/00_intro.md
----
-
----
-src: ./pages/02_adt_derivation.md
----
-
----
-
 # Scala Full Stack (lazy guide to)
 
-<v-click>
- <h2>Oneliners strike back.</h2>
-</v-click>
 
 <v-clicks depth="3">
 
-* One line to setup a new project
-* One line to start the dev environment
+* One line to setup a new project ✅
+* One line to start the dev environment ✅
 * One line to bind data in the UI
 * One line to expose API
 * One line to consume API
@@ -118,33 +128,27 @@ src: ./pages/02_adt_derivation.md
   <img src="./images/larry.jpeg" width="500" style="position:absolute"/>
 </div>
 <div v-click="[2, 3]"  v-motion
-  :initial="{ x: 50, y:-180 }"
-  :enter="{ x: 250, y:-150 }"
-  :leave="{ x: 50 }">
-  <img src="./images/bilou.jpeg" width="500" style="position:absolute"/>
-</div>
-<div v-click="[3, 4]"  v-motion
   :initial="{ x: -50, y:-370 }"
   :enter="{ x: 350, y:-150 }"
   :leave="{ x: 50 }"
 >
   <img src="./images/gotowork.webp" width="400" style="position:absolute"/>
 </div>
-<div v-click="[4, 5]"  v-motion
+<div v-click="[3, 4]"  v-motion
   :initial="{ x: -50, y:-500 }"
   :enter="{ x: 350, y:-150 }"
   :leave="{ x: 50 }"
 >
   <img src="./images/UI5_bindings.png" width="400" style="position:absolute"/>
 </div>
-<div v-click="[5, 7]"  v-motion
+<div v-click="[4, 6]"  v-motion
   :initial="{ x: -50, y:0 }"
   :enter="{ x: 350, y:-150 }"
   :leave="{ x: 50 }"
 >
   <img src="./images/rest.png" width="400" style="position:absolute"/>
 </div>
-<div v-click="7"  v-motion
+<div v-click="6"  v-motion
   :initial="{ x: -50, y:-0 }"
   :enter="{ x: 300, y:-150 }"
   :leave="{ x: 50 }"
@@ -153,132 +157,8 @@ src: ./pages/02_adt_derivation.md
 </div>
 
 
-
-
-
 ---
 
-# Scala Full Stack: What is inside?
-
-<v-clicks depth="2">
-
-   - Scala
-   - ScalaJS:
-     - Vanilla Scala transpiled to JavaScript
-     - TypeScript, transpiled to Scala facades, then to JavaScript
-   - And associated tool chain configuration:
-     - Build: SBT, NPM
-     - IDE: VSCode / Metals
-     - Infra: Docker, Kubernetes
-     - CI/CD: GitHub Actions, ArgoCD
-      
-</v-clicks>
-
-<!-- TODO: Pipeline picture. -->
-
-
----
-
-# Scala Full Stack: What insisde?
-
-## Librairies
-<div>
-<v-clicks depth="2">
-   
-   - Frontend:
-     - Laminar: <span v-mark="{type:'underline', color:'orange', at:12, delay:1000}">Type-safe</span>, reactive UI library
-     - Chart.js: Charting library, Scalably<span v-mark="{type:'underline', color:'orange', at:12, delay:2000}">type</span>d generated facade
-     - Tapir client: <span v-mark="{type:'underline', color:'orange', at:12, delay:2400}">Type-safe</span> HTTP client
-   - Shared:
-     - ZIO-Json: <span v-mark="{type:'underline', color:'orange', at:12, delay:3000}">Type-Safe</span>JSON serialization
-     - Tapir: <span v-mark="{type:'underline', color:'orange', at:12, delay:3000}">Type-safe</span> HTTP endpoint definitions
-   - Backend:  
-     - Tapir:   <span v-mark="{type:'underline', color:'orange', at:12, delay:3000}">Type-safe</span> HTTP server
-     - ZIO:     <span v-mark="{type:'underline', color:'orange', at:12, delay:3000}">Type-safe</span>, composable asynchronous and concurrent programming
-     - Quill:   <span v-mark="{type:'underline', color:'orange', at:12, delay:3000}">Type-Safe</span>,  Compile-time SQL query generation
-</v-clicks>
-</div>
-
-<!-- 
-Quizz time: What is the common/redundant point between all these libraries?
-
-- Type-safe
-
-Ok typesafe is not a feature, it's a quality, but it's a quality that is a feature of the Scala language, and that is leveraged by the libraries.
-
-Not to say, it is an obsession of the Scala community.
-
- -->
-
-
----
-
-# Scala Full Stack
-
-<div grid="~ cols-6 gap-1">
-<div></div>
-<div></div>
- <div v-click="+3">
-  <img src="./images/binary.jpeg" style="width: 30%; height: auto;"  />
- LLVM
- </div>
- <div></div>
- <div v-click="+4"><img src="./images/wasm.png" style="width: 60%; height: auto; float:both" /></div>
- <div></div>
- <div></div>
- <div></div>
- <div v-click="+3">
-  &nbsp;&nbsp; ↑
-  <div style="margin-left:-25px;">Scala Native<img src="./images/scalanative.webp" style="margin-left:30px; width: 15%; height: auto; float:both" /></div>
-  &nbsp;&nbsp;&nbsp;⏐
- </div>
- <div>
- </div>
- <div  v-click="+5">
-   &nbsp;&nbsp; ↑
-
-  &nbsp;&nbsp;&nbsp;⏐
- </div> 
- <div></div> 
-<div v-click="+1">
-  <img src="./images/jvm.png" style="width: 30%; height: auto;" />
-  Scala JVM
-</div>
- <div v-click="+1">
-<-- Scalac ---
- </div>
-<div>
-  <img src="./images/scala.png" style="margin-left:10px; width: 10%; height: auto;" />
-   Scala
-</div>
- <div  v-click="+2">
- --- ScalaJS -->
-  <img src="./images/scalajs.png" style="margin-left:30px; width: 15%; height: auto;" />
- </div> 
- <div v-click="+5">SJIR &nbsp;&nbsp;  ---></div>
-<div v-click="+2">
-  <img src="./images/chrome.jpeg" style="width: 25%; height: auto; float:left" />
-  <img src="./images/node.png" style="margin-left:10px; width: 25%; height: auto; float:left" />
-</div>
-<div></div><div></div><div></div>
-</div>
-
-<!-- 
-
-Scala is a language that can be compiled to:
-
-* the JVM
-* to JavaScript targeting both Node and the browser
-* to LLVM
-* to WASM (experimental)
- -->
-
-
----
-src: ./pages/02_why.md
----
-
----
 
 
 # Agenda
