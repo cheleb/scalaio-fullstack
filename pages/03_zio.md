@@ -263,4 +263,24 @@ private val program : ZIO[FlywayService & UserService & OrganisationService & JW
 ```
 ````
 
+<div v-click="+28">
+````md magic-move
+```scala
+val runMigrations = for {
+    flyway <- ZIO.service[FlywayService]
+    _ <- flyway.runMigrations().catchSome { case e =>
+           ZIO.logError(s"Error running migrations: ${e.getMessage()}")
+             *> flyway.runRepair() *> flyway.runMigrations()
+         }
+  } yield ()
+```
+````
+</div>
+
+--- 
+
+# ZLayer
+
+TODO
+
 

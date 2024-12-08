@@ -1,3 +1,13 @@
+# Agenda
+
+* One line to setup a new project ✅
+* One line to start the dev environment ✅
+* One line to bind data in the UI ✅
+* One line to expose API 👈
+* One line to consume API
+* One line to deploy
+
+---
 
 <img src="../images/architecture.svg" style="width: 100%" />
 <img src="../images/youarehere.png" width="50"  v-motion
@@ -132,6 +142,18 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
   :enter="{ x: 650, y:-490 }"
   :leave="{ x: 50 }"/>
 
+<div v-click v-motion style="position:absolute; border: 2px solid red; border-radius: 5px" 
+  :initial="{ x: 0, y: -100 }"
+  :enter="{ x: 570, y: -480 }"
+  :leave="{ x: 50 }">
+(1)
+</div>  
+<div v-click v-motion style="position:absolute; border: 2px solid red; border-radius: 5px" 
+  :initial="{ x: 0, y: -100 }"
+  :enter="{ x: 750, y: -550 }"
+  :leave="{ x: 50 }">
+(2)
+</div>  
 
 ---
 

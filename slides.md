@@ -56,6 +56,7 @@ transition: fade-out
   - Why this talk ?
   - Architecture && Librairies
   - Demo time.
+  - ZIO
   - Deep dive:
     - End User Experience.
     - Library internals.
@@ -75,7 +76,7 @@ src: ./pages/02_ono-at-ledger.md
 
 # Monolith 3-tiers architecture
 
-<img src="../images/apps.svg" style="width: 30%; height: auto; margin:2em" />
+<img src="./images/apps.svg" style="width: 30%; height: auto; margin:2em" />
 
 ---
 src: ./pages/03_action.md
@@ -86,6 +87,10 @@ src: ./pages/04_setup.md
 ---
 
 ---
+src: ./pages/04_architecture.md
+---
+
+---
 
 # Agenda
 
@@ -93,14 +98,15 @@ src: ./pages/04_setup.md
   - Why this talk ?
   - Architecture && Librairies
   - Demo time.
-  - Deep dive: 👈
+  - ZIO 👈
+  - Deep dive: 
     - End User Experience.
     - Library internals.
     - Scala derivation metaprogramming.
   - Deployment.
 
 ---
-src: ./pages/04_architecture.md
+src: ./pages/03_zio.md
 ---
 
 ---
@@ -158,82 +164,14 @@ src: ./pages/04_architecture.md
 
 
 ---
-
-
-
-# Agenda
-
-
-````md magic-move
-```scala
-
-object ScalaFullStack:
-  
-  object SetUp
-
-  object Projects
-
-  object Deployement 
-
-```
-
-```scala
-
-object ScalaFullStack:
-  
-  object SetUp:
-
-    val ide = "VSCode / Metals 🤘🏼"
-
-    val build = ("sbt", "npm/Vite", "Docker")
-
-  object Projects
-
-  object Deployement
-
-```
-```scala
-
-object ScalaFullStack:
-  
-  object setup
-
-  object Projects:
-
-     object Frontend
-
-     object Backend
-
-  object Deployement
-
-```
-```scala
-
-object ScalaFullStack:
-  
-  object SetUp
-
-  object Projects
-  
-  object Deployement:
-  
-      object standalone
-  
-      object Docker
-  
-      object Kubernetes
-
-```
-
-````
-
-
----
-src: ./pages/03_setup.md
+src: ./pages/05_ui.md
 ---
 
 ---
+src: ./pages/06_tapir.md
+---
 
+---
 
 ````md magic-move {lines: true}
 
@@ -318,9 +256,6 @@ What can be shared between the client and the server?
 <div v-click class="right-31%">(kinda code centrict-contract first)</div>
 
 
----
-src: ./pages/04_tapir.md
----
 
 ---
 src: ./pages/05_tapir.md
