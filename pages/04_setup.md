@@ -95,7 +95,7 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vsco
 }
 ```
 
-```json {*|2|4|8}
+```json {*|4|8}
 {
     "label": "setup",
     "type": "shell",
@@ -109,7 +109,7 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vsco
 }
 ```
 
-```json {*|2|3|5-8}
+```json {*|3|5-8}
 {
     "label": "runDemo",
     "dependsOrder": "parallel",

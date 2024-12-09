@@ -24,7 +24,7 @@ First step is to define the API endpoints as <span v-mark="{type:'circle', color
 
 
 
-<div v-click="+1">
+<div v-click>
 
 ````md magic-move {at:2}
 
@@ -91,11 +91,11 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 ````
 <div grid="~ cols-2 gap-4">
 <div v-click="+10">
-  From this definition, Tapir will generate:
+  From this definition, Tapir will support:
     <ul>
-        <li v-click><a href="localhost:8080/docs/"><span v-mark="{type:'circle', color:'orange', at:10}">OpenAPI documentation</span></a></li>
-        <li v-click><span v-mark="{type:'circle', color:'orange', at:11}">Http server</span> squeleton</li>
-        <li v-click><span v-mark="{type:'circle', color:'orange', at:12}">Sttp client</span></li>
+        <li v-click><a href="localhost:8080/docs/"><span v-mark="{type:'circle', color:'orange', at:[13,14]}">OpenAPI documentation</span></a></li>
+        <li v-click><span v-mark="{type:'circle', color:'orange', at:[14,15]}">Http server</span> squeleton</li>
+        <li v-click><span v-mark="{type:'circle', color:'orange', at:[15,16]}">Sttp client</span></li>
     </ul>
 </div>
 <div v-click="+12">
@@ -144,13 +144,13 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 
 <div v-click v-motion style="position:absolute; border: 2px solid red; border-radius: 5px" 
   :initial="{ x: 0, y: -100 }"
-  :enter="{ x: 570, y: -480 }"
+  :enter="{ x: 750, y: -550 }"
   :leave="{ x: 50 }">
 (1)
 </div>  
 <div v-click v-motion style="position:absolute; border: 2px solid red; border-radius: 5px" 
   :initial="{ x: 0, y: -100 }"
-  :enter="{ x: 750, y: -550 }"
+  :enter="{ x: 570, y: -480 }"
   :leave="{ x: 50 }">
 (2)
 </div>  
@@ -158,9 +158,6 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 ---
 
 # Controller: Tapir / HTTP Server
-```scala
-val create: PublicEndpoint[Person, Throwable, User, Any] = ???
-```
 <div v-click>Very classically, we will inject a service layer.</div>
 
 <div grid="~ cols-[20%_70%] gap-0">
@@ -169,42 +166,32 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = ???
   <img src="../images/backend-box.svg" style="width:100%; margin-top:-0.5em; z-index:1"/>
 </div>
 
-<div v-click="+1">
-
-Given:
+<div>
 
 ````md magic-move
 ```scala
 // Scala
 trait PersonService:
   def register(person: Person): Task[User]
-
 ```
-```scala
-// Scala
-trait PersonService:
-  def register(person: Person): ZIO[Any, Throwable, User]
 
-```
 ```scala
-// Scala
 trait PersonService:
   def register(person: Person): Task[User]
-
+// ...
+class PersonController
 ```
-````
-
-<v-click>
-Controller implementation:
-
-
-````md magic-move
-
 ```scala
+trait PersonService:
+  def register(person: Person): Task[User]
+// ...
 class PersonController private (personService: PersonService, jwtService: JWTService)
 ```
 
 ```scala
+trait PersonService:
+  def register(person: Person): Task[User]
+// ...
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
   PersonEndpoint.create // PublicEndpoint[Person, Throwable, User, Any]
@@ -212,18 +199,19 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 ```
 
 ```scala {5-9}
+trait PersonService:
+  def register(person: Person): Task[User]
+// ...
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
   PersonEndpoint.create // PublicEndpoint[Person, Throwable, User, Any]
 
-  //
-  // Tapir sttp provides `zServerLogic` as an extension method on
-  //
-  extension [In, Out, R](e: Endpoint[In, Throwable, Out, R])
-    def zServerLogic(logic: In => Task[Out]): ServerEndpoint[In, Task] = ???
 ```
 
 ```scala
+trait PersonService:
+  def register(person: Person): Task[User]
+// ...
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
   PersonEndpoint.create
@@ -233,6 +221,9 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 ```
 
 ```scala
+trait PersonService:
+  def register(person: Person): Task[User]
+// ...
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
   PersonEndpoint.create
@@ -242,6 +233,9 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 ```
 
 ```scala
+trait PersonService:
+  def register(person: Person): Task[User]
+// ...
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
   PersonEndpoint.create
@@ -250,6 +244,9 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 ```
 
 ```scala
+trait PersonService:
+  def register(person: Person): Task[User]
+// ...
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
   PersonEndpoint.create
@@ -257,6 +254,9 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
       personService.register
 ```
 ```scala
+trait PersonService:
+  def register(person: Person): Task[User]
+// ...
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
   val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
@@ -265,18 +265,30 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 ```
 ````
 
-</v-click>
+
 </div>
+</div>
+
+<div v-click=[5,7]  v-motion style="position:absolute; border: 2px solid green; border-radius: 5px"
+  :initial="{ x: 50, y:-180 }"
+  :enter="{ x: 200, y:-100 }"
+  :leave="{ x: 50 }">
+```scala
+  //
+  // Tapir sttp provides `zServerLogic` as an extension method on
+  //
+  extension [In, Out, R](e: Endpoint[In, Throwable, Out, R])
+    def zServerLogic(logic: In => Task[Out]): ServerEndpoint[In, Task] = ???
+```
 </div>
 
 ---
 
 # Tapir / HTTP Server
 
-```scala {*|5,9,16|20-21|1-3}{lines:true}
+```scala {*|4,8,15|19-20|1-2}{lines:true}
 class PersonController private (personService: PersonService, jwtService: JWTService)
-    extends BaseController
-    with SecuredBaseController[String, UserID](jwtService.verifyToken) {
+    extends SecuredBaseController[String, UserID](jwtService.verifyToken) {
 
   val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
     .zServerLogic:
