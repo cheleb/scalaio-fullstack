@@ -23,21 +23,18 @@
 First step is to define the API endpoints as <span v-mark="{type:'circle', color:'orange', at:0, delay:2000}">values</span>.
 
 
-
-<div v-click>
-
 ````md magic-move {at:2}
 
 ```scala
 //                                   In      Error     Out 
 //                                    ☟        ☟        ☟
-val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = ???
+val create: PublicEndpoint[Person, Throwable, User, Any] = ???
 ```
 
 ```scala {4|5|3,6|1,3,7-9}
 //                                   In 
 //                                    ☟
-val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
+val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
     .name("person")
     .post                 // POST method
     .in("person")         // Endpoint path is /person
@@ -49,7 +46,7 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 ```scala {1,3,10}
 //                                                    Out 
 //                                                     ☟
-val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
+val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
     .name("person")
     .post                 // POST method
     .in("person")         // Endpoint path is /person
@@ -62,7 +59,7 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 ```scala {1,3-6}
 //                                           Error
 //                                             ☟
-val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = endpoint
+val create: PublicEndpoint[Person, Throwable, User, Any] = endpoint
     .errorOut(statusCode and plainBody[String])
     .mapErrorOut[Throwable](HttpError.decode)(HttpError.encode)
     .prependIn("api")
@@ -78,7 +75,7 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = endpoint
 ```scala
 //                                   In      Error     Out 
 //                                    ☟        ☟        ☟
-val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
+val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
     .name("person")
     .post                 // POST method
     .in("person")         // Endpoint path is /person
@@ -90,15 +87,15 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 
 ````
 <div grid="~ cols-2 gap-4">
-<div v-click="+10">
+<div v-click="+9">
   From this definition, Tapir will support:
     <ul>
-        <li v-click><a href="localhost:8080/docs/"><span v-mark="{type:'circle', color:'orange', at:[13,14]}">OpenAPI documentation</span></a></li>
-        <li v-click><span v-mark="{type:'circle', color:'orange', at:[14,15]}">Http server</span> squeleton</li>
-        <li v-click><span v-mark="{type:'circle', color:'orange', at:[15,16]}">Sttp client</span></li>
+        <li><a href="localhost:8080/docs/"><span v-mark="{type:'circle', color:'orange', at:[11,12]}">OpenAPI documentation</span></a></li>
+        <li><span v-mark="{type:'underline', color:'orange', at:12}">Http server</span> squeleton</li>
+        <li><span v-mark="{type:'underline', color:'orange', at:12}">Sttp client</span></li>
     </ul>
 </div>
-<div v-click="+12">
+<div v-click="+10">
   POST /person HTTP/1.1
   
     {
@@ -109,7 +106,7 @@ val createEndpoint: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 </div>
 </div>
 
-</div>
+
 
 
 
@@ -139,10 +136,11 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 <img src="../images/architecture.svg" style="width: 100%" />
 <img src="../images/youarehere.png" width="50"  v-motion
   :initial="{ x: 50, y:-180 }"
-  :enter="{ x: 650, y:-490 }"
-  :leave="{ x: 50 }"/>
+  :enter="{ x: 350, y:-490 }"
+  :click-1="{ x: 650, y: -490 }"
+  />
 
-<div v-click v-motion style="position:absolute; border: 2px solid red; border-radius: 5px" 
+<div v-click="+1" v-motion style="position:absolute; border: 2px solid red; border-radius: 5px" 
   :initial="{ x: 0, y: -100 }"
   :enter="{ x: 750, y: -550 }"
   :leave="{ x: 50 }">
@@ -174,7 +172,6 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 trait PersonService:
   def register(person: Person): Task[User]
 ```
-
 ```scala
 trait PersonService:
   def register(person: Person): Task[User]
@@ -187,17 +184,14 @@ trait PersonService:
 // ...
 class PersonController private (personService: PersonService, jwtService: JWTService)
 ```
-
 ```scala
 trait PersonService:
   def register(person: Person): Task[User]
 // ...
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
-  PersonEndpoint.create // PublicEndpoint[Person, Throwable, User, Any]
-     
+  PersonEndpoint.create // PublicEndpoint[Person, Throwable, User, Any]  
 ```
-
 ```scala {5-9}
 trait PersonService:
   def register(person: Person): Task[User]
@@ -205,9 +199,7 @@ trait PersonService:
 class PersonController private (personService: PersonService, jwtService: JWTService):
 
   PersonEndpoint.create // PublicEndpoint[Person, Throwable, User, Any]
-
 ```
-
 ```scala
 trait PersonService:
   def register(person: Person): Task[User]
@@ -219,7 +211,6 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
         // Logic here ..
     }   
 ```
-
 ```scala
 trait PersonService:
   def register(person: Person): Task[User]
@@ -231,7 +222,6 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
       personService.register(p) 
     }   
 ```
-
 ```scala
 trait PersonService:
   def register(person: Person): Task[User]
@@ -242,7 +232,6 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
     .zServerLogic: (p: Person) =>
       personService.register(p)
 ```
-
 ```scala
 trait PersonService:
   def register(person: Person): Task[User]
@@ -264,8 +253,6 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
       personService.register
 ```
 ````
-
-
 </div>
 </div>
 
@@ -273,6 +260,7 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
   :initial="{ x: 50, y:-180 }"
   :enter="{ x: 200, y:-100 }"
   :leave="{ x: 50 }">
+
 ```scala
   //
   // Tapir sttp provides `zServerLogic` as an extension method on

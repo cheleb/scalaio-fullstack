@@ -118,6 +118,7 @@ src: ./pages/03_zio.md
 
 * One line to setup a new project ✅
 * One line to start the dev environment ✅
+* One ZIO layer to rule them all ✅
 * One line to bind data in the UI
 * One line to expose API
 * One line to consume API
@@ -140,21 +141,21 @@ src: ./pages/03_zio.md
 >
   <img src="./images/gotowork.webp" width="400" style="position:absolute"/>
 </div>
-<div v-click="[3, 4]"  v-motion
+<div v-click="[4, 5]"  v-motion
   :initial="{ x: -50, y:-500 }"
   :enter="{ x: 350, y:-150 }"
   :leave="{ x: 50 }"
 >
   <img src="./images/UI5_bindings.png" width="400" style="position:absolute"/>
 </div>
-<div v-click="[4, 6]"  v-motion
+<div v-click="[5, 7]"  v-motion
   :initial="{ x: -50, y:0 }"
   :enter="{ x: 350, y:-150 }"
   :leave="{ x: 50 }"
 >
   <img src="./images/rest.png" width="400" style="position:absolute"/>
 </div>
-<div v-click="6"  v-motion
+<div v-click="7"  v-motion
   :initial="{ x: -50, y:-0 }"
   :enter="{ x: 300, y:-150 }"
   :leave="{ x: 50 }"
@@ -228,14 +229,6 @@ object ScalaFullStack:
 
 ```
 ````
-
----
-src: ./pages/03_zio.md
----
-
----
-
-
 
 
 ---
