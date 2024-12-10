@@ -118,7 +118,10 @@ extension [I, E <: Throwable, O](endpoint: Endpoint[Unit, I, E, O, Any])
 # Under the hood - Http Request
 
 ```scala
- Endpoint --> I --> RIO[SameOriginBackendClient, O]
+val person = Person("john.doe@foo.bar", "notsecured")
+// From our endpoint definition that Person ~~> User
+PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, User]
+              .emitTo(userBus, errorBus) // (2) Then run it, and process the result in UI.
 ```
 
 <div v-click="+1">
