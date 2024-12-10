@@ -169,42 +169,42 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 ````md magic-move
 ```scala
 // Scala
-trait PersonService:
+trait UserService:
   def register(person: Person): Task[User]
 ```
 ```scala
-trait PersonService:
+trait UserService:
   def register(person: Person): Task[User]
 // ...
-class PersonController
+class UserController
 ```
 ```scala
-trait PersonService:
+trait UserService:
   def register(person: Person): Task[User]
 // ...
-class PersonController private (personService: PersonService, jwtService: JWTService)
+class UserController private (userService: UserService, jwtService: JWTService)
 ```
 ```scala
-trait PersonService:
+trait UserService:
   def register(person: Person): Task[User]
 // ...
-class PersonController private (personService: PersonService, jwtService: JWTService):
+class UserController private (userService: UserService, jwtService: JWTService):
 
   PersonEndpoint.create // PublicEndpoint[Person, Throwable, User, Any]  
 ```
 ```scala {5-9}
-trait PersonService:
+trait UserService:
   def register(person: Person): Task[User]
 // ...
-class PersonController private (personService: PersonService, jwtService: JWTService):
+class UserController private (userService: UserService, jwtService: JWTService):
 
   PersonEndpoint.create // PublicEndpoint[Person, Throwable, User, Any]
 ```
 ```scala
-trait PersonService:
+trait UserService:
   def register(person: Person): Task[User]
 // ...
-class PersonController private (personService: PersonService, jwtService: JWTService):
+class UserController private (userService: UserService, jwtService: JWTService):
 
   PersonEndpoint.create
     .zServerLogic { 
@@ -212,45 +212,45 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
     }   
 ```
 ```scala
-trait PersonService:
+trait UserService:
   def register(person: Person): Task[User]
 // ...
-class PersonController private (personService: PersonService, jwtService: JWTService):
+class UserController private (userService: UserService, jwtService: JWTService):
 
   PersonEndpoint.create
     .zServerLogic { (p: Person) => 
-      personService.register(p) 
+      UserService.register(p) 
     }   
 ```
 ```scala
-trait PersonService:
+trait UserService:
   def register(person: Person): Task[User]
 // ...
-class PersonController private (personService: PersonService, jwtService: JWTService):
+class UserController private (userService: UserService, jwtService: JWTService):
 
   PersonEndpoint.create
     .zServerLogic: (p: Person) =>
-      personService.register(p)
+      UserService.register(p)
 ```
 ```scala
-trait PersonService:
+trait UserService:
   def register(person: Person): Task[User]
 // ...
-class PersonController private (personService: PersonService, jwtService: JWTService):
+class UserController private (userService: UserService, jwtService: JWTService):
 
   PersonEndpoint.create
     .zServerLogic:
-      personService.register
+      UserService.register
 ```
 ```scala
-trait PersonService:
+trait UserService:
   def register(person: Person): Task[User]
 // ...
-class PersonController private (personService: PersonService, jwtService: JWTService):
+class UserController private (userService: UserService, jwtService: JWTService):
 
   val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
     .zServerLogic:
-      personService.register
+      UserService.register
 ```
 ````
 </div>
@@ -275,22 +275,22 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 # Tapir / HTTP Server
 
 ```scala {*|4,8,15|19-20|1-2}{lines:true}
-class PersonController private (personService: PersonService, jwtService: JWTService)
+class UserController private (userService: UserService, jwtService: JWTService)
     extends SecuredBaseController[String, UserID](jwtService.verifyToken) {
 
   val create: ServerEndpoint[Any, Task] = PersonEndpoint.create
     .zServerLogic:
-      personService.register
+      UserService.register
 
   val login: ServerEndpoint[Any, Task] = PersonEndpoint.login.zServerLogic { lp =>
     for {
-      user  <- personService.login(lp.login, lp.password)
+      user  <- UserService.login(lp.login, lp.password)
       token <- jwtService.createToken(user)
     } yield token
   }
 
   val profile: ServerEndpoint[Any, Task] = PersonEndpoint.profile.securedServerLogic { userId => withPet =>
-    personService.getProfile(userId, withPet)
+    UserService.getProfile(userId, withPet)
   }
 
   val routes: List[ServerEndpoint[Any, Task]] =
@@ -309,8 +309,8 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
   <div>
    <v-clicks depth="2">
 
-   - PersonController
-   - PersonService
+   - UserController
+   - UserService
    - JWTService
 
    </v-clicks>
@@ -333,84 +333,88 @@ class PersonController private (personService: PersonService, jwtService: JWTSer
 
 ---
 
-# Tapir / HTTP Server / ZIO
+# Tapir / HTTP Server / ZLayer
 
 ````md magic-move {lines:true}
-
 ```scala
-val personService: PersonService = ???
-```
-```scala
-val personService: PersonService = ???
-val jwtService: JWTService = ???
+class UserController private (userService: UserService, jwtService: JWTService)    
 ```
 ```scala
-val personService: PersonService = ???
-val jwtService: JWTService = ???
-
-val personController = new PersonController(personService, jwtService)
+class UserController private (userService: UserService, jwtService: JWTService)    
+class UserServiceLive
 ```
-
-````
-
-<div v-click>
-The equivalent in ZIO:
-
-
-````md magic-move {lines:true, at:4}
-
 ```scala
-URIO[PersonService & JWTService, PersonController] // A ZIO effect ZIO[-R, +E, +A]
-                                                   // to produce a PersonController
+class UserController private (userService: UserService, jwtService: JWTService)    
+class UserServiceLive extends UserService
 ```
-
-
-```scala {*|2|3}
-URIO[
-  PersonService & JWTService, // Requires PersonService and JWTService
-  PersonController            // Produces a PersonController
-]
-```
-
-```scala {*|2|2,6|4,5}
-object PersonController:
-  def makeZIO: URIO[PersonService & JWTService, PersonController] =
-    for
-      jwtService    <- ZIO.service[JWTService]
-      personService <- ZIO.service[PersonService]
-    yield new PersonController(personService, jwtService)
-```
-
 ```scala
-object PersonController:
-  def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
-```
-```scala {*|4|5|6|7}
-object PersonController:
-  def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
-
-class PersonServiceLive private (
+class UserController private (userService: UserService, jwtService: JWTService)    
+class UserServiceLive(
   userRepository: UserRepository,
   petRepository: PetRepository,
   jwtService: JWTService,
   quill: Quill.Postgres[SnakeCase]
-) extends PersonService
-
+) extends UserService
 ```
 ```scala
-object PersonController:
-  def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
-
-class PersonServiceLive private ( ... ) extends PersonService
-class JWTServiceLive private ( ... ) extends JWTService
+class UserController private (userService: UserService, jwtService: JWTService)    
+class UserServiceLive( userRepository: UserRepository, petRepository: PetRepository, /* ... */ ) extends UserService
 ```
 ```scala
-object PersonController:
-  def makeZIO: URIO[PersonService & JWTService, PersonController] = ???
+class UserController private (userService: UserService, jwtService: JWTService)    
+class UserServiceLive( userRepository: UserRepository, petRepository: PetRepository, /* ... */ ) extends UserService
+class JWTServiceLive( /* ... */ ) extends JWTService
+```
+````
 
-class PersonServiceLive private ( ... ) extends PersonService
-class JWTServiceLive private ( ... ) extends JWTService
+<div v-click>
+The wiring is done with ZLayer:
 
+
+````md magic-move {lines:true, at:7}
+
+```scala
+object UserController:
+```
+```scala
+object UserController:
+  def makeZIO: URIO[UserService & JWTService, UserController] =
+```
+```scala
+object UserController:
+  def makeZIO: URIO[UserService & JWTService, UserController] =
+    for
+      jwtService    <- ZIO.service[JWTService]
+      userService <- ZIO.service[UserService]
+    yield new UserController(UserService, jwtService)
+```
+
+```scala
+ private def makeControllers: ??? = for {
+    healthController       <- HealthController.makeZIO
+    userController         <- UserController.makeZIO
+    organisationController <- OrganisationController.makeZIO
+  } yield List(healthController, UserController, organisationController)
+```
+```scala
+ private def makeControllers : ZIO[UserService & JWTService & OrganisationService, Nothing, List[BaseController]] = for {
+    healthController       <- HealthController.makeZIO
+    userController         <- UserController.makeZIO
+    organisationController <- OrganisationController.makeZIO
+  } yield List(healthController, UserController, organisationController)
+```
+```scala
+ private def makeControllers : URIO[UserService & JWTService & OrganisationService, List[BaseController]] = for {
+    healthController       <- HealthController.makeZIO
+    userController         <- UserController.makeZIO
+    organisationController <- OrganisationController.makeZIO
+  } yield List(healthController, UserController, organisationController)
+```
+```scala
+val program: ZIO[FlywayService & UserService & OrganisationService & JWTService & Server, Throwable, Unit] = ???
+```
+```scala
+val program: RIO[FlywayService & UserService & OrganisationService & JWTService & Server, Unit] = ???
 ```
 ````
 </div>
@@ -419,42 +423,69 @@ class JWTServiceLive private ( ... ) extends JWTService
 
 # ZLayer
 
-ZLayer is a another ZIO DataType that can be used to compose services.
 
 
 ````md magic-move {lines:true}
 
 ```scala
-object PersonServiceLive:
+val program: RIO[FlywayService & UserService & OrganisationService & JWTService & Server, Unit] = ???
 
-  val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], PersonService] = ???
+override def run =
+    program
+```
+```scala {*|1,6,8-11}
+val program: RIO[FlywayService & UserService & OrganisationService & JWTService & Server, Unit] = ???
+
+override def run =
+    program
+      .provide(
+        Server.default,
+        // Service layers
+        UserServiceLive.layer,
+        OrganisationServiceLive.layer,
+        FlywayServiceLive.configuredLayer,
+        JWTServiceLive.configuredLayer,
+        // Repository layers
+        UserRepositoryLive.layer,
+        OrganisationRepositoryLive.layer,
+        Repository.dataLayer
+        // ,ZLayer.Debug.mermaid
+      )
+```
+
+
+
+```scala
+object UserServiceLive:
+
+  val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], UserService] = ???
 
 ```
 ```scala {*|3|4}
-object PersonServiceLive:
+object UserServiceLive:
   val layer: RLayer[
     UserRepository & PetRepository & JWTService & Postgres[SnakeCase],
-    PersonService] = ???
+    UserService] = ???
 
 ```
 ```scala
-object PersonServiceLive:
+object UserServiceLive:
 
-  val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], PersonService] =
-    ZLayer.derive[PersonServiceLive]
+  val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], UserService] =
+    ZLayer.derive[UserServiceLive]
 
 ```
 
 ```scala
-object PersonServiceLive:
+object UserServiceLive:
   // Expands to:
-  val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], PersonService] = ZLayer{
+  val layer: RLayer[UserRepository & PetRepository & JWTService & Postgres[SnakeCase], UserService] = ZLayer{
     for
       userRepository  <- ZIO.service[UserRepository]
       petRepository   <- ZIO.service[PetRepository]
       jwtService      <- ZIO.service[JWTService]
       pgService       <- ZIO.service[Postgres[SnakeCase]]
-    yield new PersonServiceLive(userRepository, petRepository, jwtService, pgService)
+    yield new UserServiceLive(userRepository, petRepository, jwtService, pgService)
   }
 
 ```
@@ -469,14 +500,14 @@ object PersonServiceLive:
 ````md magic-move {lines:true}
 
 ```scala
-private val program: RIO[FlywayService & PersonService & JWTService & Server, Unit] =
+private val program: RIO[FlywayService & UserService & JWTService & Server, Unit] =
     for {
       _ <- runMigrations
       _ <- server
     } yield ()
 ```
 ```scala
-private val program: RIO[FlywayService & PersonService & JWTService & Server, Unit] =
+private val program: RIO[FlywayService & UserService & JWTService & Server, Unit] =
     for {
       _ <- runMigrations
       _ <- server
@@ -487,7 +518,7 @@ override def run =
       .provide(
         Server.default,
         // Service layers
-        PersonServiceLive.layer,
+        UserServiceLive.layer,
         FlywayServiceLive.configuredLayer,
         JWTServiceLive.configuredLayer,
         // Repository layers
