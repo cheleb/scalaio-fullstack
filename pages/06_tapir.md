@@ -358,14 +358,6 @@ class UserController private (userService: UserService, jwtService: JWTService)
 ```
 ```scala
 class UserController private (userService: UserService, jwtService: JWTService)    
-class UserServiceLive
-```
-```scala
-class UserController private (userService: UserService, jwtService: JWTService)    
-class UserServiceLive extends UserService
-```
-```scala
-class UserController private (userService: UserService, jwtService: JWTService)    
 class UserServiceLive(
   userRepository: UserRepository,
   petRepository: PetRepository,
@@ -388,7 +380,7 @@ class JWTServiceLive( /* ... */ ) extends JWTService
 The wiring is done with ZLayer:
 
 
-````md magic-move {lines:true, at:7}
+````md magic-move {lines:true, at:5}
 
 ```scala
 object UserController:
@@ -405,6 +397,11 @@ object UserController:
       userService <- ZIO.service[UserService]
     yield new UserController(userService, jwtService)
 
+```
+```scala
+private def makeControllers: : URIO[UserService & JWTService, List[UserController]] = for {
+    userController         <- UserController.makeZIO
+  } yield List(userController)
 ```
 ```scala
 private def makeControllers = for {
@@ -553,6 +550,18 @@ object UserServiceLive:
 
 # ZLayer: Manual Wiring
 
+````md magic-move {lines:true}
+```scala
+
+object JWTServiceLive {
+  val layer: URLayer[JWTConfig, JWTServiceLive] = ZLayer(
+    for
+      jwtConfig <- ZIO.service[JWTConfig]
+      clock     <- Clock.javaClock
+    yield JWTServiceLive(jwtConfig, clock)
+  )
+}
+```
 ```scala
 
 object JWTServiceLive {
@@ -563,11 +572,55 @@ object JWTServiceLive {
     yield JWTServiceLive(jwtConfig, clock)
   )
 
-  val configuredLayer =
+  val jwtConfigLayer: TaskLayer[JWTConfig] = Configs.makeConfigLayer[JWTConfig]("jwt")
+
+}
+```
+```scala
+
+object JWTServiceLive {
+  val layer: URLayer[JWTConfig, JWTServiceLive] = ZLayer(
+    for
+      jwtConfig <- ZIO.service[JWTConfig]
+      clock     <- Clock.javaClock
+    yield JWTServiceLive(jwtConfig, clock)
+  )
+
+  val jwtConfigLayer: TaskLayer[JWTConfig] = Configs.makeConfigLayer[JWTConfig]("jwt")
+
+  val configuredLayer: URLayer[JWTConfig, JWTServiceLive] = JWTServiceLive.layer
+}
+```
+```scala
+
+object JWTServiceLive {
+  val layer: URLayer[JWTConfig, JWTServiceLive] = ZLayer(
+    for
+      jwtConfig <- ZIO.service[JWTConfig]
+      clock     <- Clock.javaClock
+    yield JWTServiceLive(jwtConfig, clock)
+  )
+
+  val jwtConfigLayer: TaskLayer[JWTConfig] = Configs.makeConfigLayer[JWTConfig]("jwt")
+
+  val configuredLayer: TaskLayer[JWTConfig] = jwtConfigLayer >>> JWTServiceLive.layer
+}
+```
+```scala
+
+object JWTServiceLive {
+  val layer: URLayer[JWTConfig, JWTServiceLive] = ZLayer(
+    for
+      jwtConfig <- ZIO.service[JWTConfig]
+      clock     <- Clock.javaClock
+    yield JWTServiceLive(jwtConfig, clock)
+  )
+
+  val configuredLayer: URLayer[JWTServiceLive] =
     Configs.makeConfigLayer[JWTConfig]("jwt") >>> JWTServiceLive.layer
 }
 ```
-
+````
 
 
 ---
