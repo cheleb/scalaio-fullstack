@@ -2,7 +2,8 @@
 <img src="../images/architecture.svg" style="width: 100%" />
 <img src="../images/youarehere.png" width="50"  v-motion
   :initial="{ x: 50, y:-180 }"
-  :enter="{ x: 100, y:-490 }"
+  :enter="{ x: 700, y:-490 }"
+  :click-1="{ x: 200, y:-490 }"
   :leave="{ x: 50 }"/>
 
 

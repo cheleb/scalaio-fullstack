@@ -201,7 +201,7 @@ val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(s"$message and isEven: ${i % 2 == 0}"o)
+def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(s"$message and isEven: ${i % 2 == 0}")
                                                        
 
 ```
@@ -272,15 +272,17 @@ val simple:                             UIO[Int]     = ZIO.succeed(42)
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
 def writeToDB(message: String, i: Int): ???    = 
-  ZIO.service[Database].flatMap(_.insert(message))
+  ZIO.service[Database]  // getBean :D ?
+    .flatMap(db => db.insert(message))
 ```
 ```scala
 val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def writeToDB(message: String, i: Int): ZIO[Database, Throwable, Int]    = 
-  ZIO.service[Database].flatMap(_.insert(message))
+def writeToDB(message: String, i: Int): ZIO[Database, Throwable, Int]   = 
+  ZIO.service[Database] // UIO[Database, Database]
+    .flatMap(db => db.insert(message))
 ```
 ```scala
 val simple:                             UIO[Int]            = ZIO.succeed(42)
@@ -288,7 +290,8 @@ val simple:                             UIO[Int]            = ZIO.succeed(42)
 def whatIsTheAnswer(i: Int):            UIO[String]         = ZIO.succeed(s"The answer is $i")
 
 def writeToDB(message: String, i: Int): RIO[Database, Int]  = 
-  ZIO.service[Database].flatMap(_.insert(message))
+  ZIO.service[Database]
+    .flatMap(db => db.insert(message))
 ```
 ```scala
 val simple:                             UIO[Int]            = ZIO.succeed(42)
@@ -340,11 +343,11 @@ val program: RIO[Database, Int] = for { // For comprehension
 
 ```
 ```scala
-val simple:                             UIO[Int]            = ZIO.succeed(42)
+val simple:                             UIO[Int]               = ZIO.succeed(42)
 
-def whatIsTheAnswer(i: Int):            UIO[String]         = ZIO.succeed(s"The answer is $i")
+def whatIsTheAnswer(i: Int):            UIO[String]            = ZIO.succeed(s"The answer is $i")
 
-def writeToDB(message: String, i: Int): RIO[Database, Int]  = Database.insert(message)
+def writeToDB(message: String, i: Int): RIO[Database, Int]     = Database.insert(message)
 
 def writeToRabbit(message: String, i: Int): RIO[Rabbit, Unit]  = Rabbit.offer(message)
 

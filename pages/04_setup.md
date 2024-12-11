@@ -40,11 +40,9 @@ package.json, vite.config.js, build.sbt, plugins.sbt, Dockerfile, Kubernetes, ..
 
 # One line to setup a new project
 
-<img v-click src="../images/lazyness.png" width="20%" />
+<img src="../images/lazyness.png" width="20%" />
 
-<div  v-click>Let's automate it with a template</div>
-
-<div  v-click>
+<div  v-click>Let's automate it with a template
 ```bash
 sbt new cheleb/zio-scalajs-laminar.g8 --name=devoxx-fullstack-demo
 ```
