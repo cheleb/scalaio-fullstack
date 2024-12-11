@@ -84,13 +84,6 @@ def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
 def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
 ```
 ```scala
-val simple:                     UIO[Int]     = ZIO.succeed(42)
-
-def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
-
-def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
-```
-```scala
 val simple:                     UIO[Int]     = ZIO.succeed(42)                   // UIO[Int]
 
 def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
@@ -208,7 +201,8 @@ val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(message).repeatN(i%2)
+def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(s"$message and isEven: ${i % 2 == 0}"o)
+                                                       
 
 ```
 ```scala
