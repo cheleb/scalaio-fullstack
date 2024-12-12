@@ -133,7 +133,7 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vsco
 
 <div grid="~ cols-3">
   <div></div>
-  <div v-click="2">
+  <div v-click>
     <img src="../images/crossproject.drawio.svg" style="width: 50%" />
   </div>
   <div></div>
@@ -141,7 +141,7 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vsco
     <h4>server</h4>
     <img src="../images/scala.drawio.svg" style="width: 50%" />
   </div>
-  <div v-click="+3">
+  <div v-click>
     <img src="../images/scala-jvm-js.drawio.svg" style="width: 50%" /></div>
   <div>
     <h4>client</h4>
@@ -149,7 +149,7 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vsco
   </div>
 </div>
 
-<div v-click="4"  style="position:absolute"  v-motion
+<div v-click  style="position:absolute"  v-motion
   :initial="{ x: 0, y: -100 }"
   :enter="{ x: 160, y: -85 }"
   >
