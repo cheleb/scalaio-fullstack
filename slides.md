@@ -51,11 +51,12 @@ transition: fade-out
 
 # Agenda
 
-<v-clicks depth="2">
+<v-clicks depth="1">
 
   - Why this talk ?
-  - Architecture && Librairies
-  - Demo time.
+  - Overview:
+    - Architecture && Librairies
+    - Demo time.
   - ZIO
   - Deep dive:
     - End User Experience.
