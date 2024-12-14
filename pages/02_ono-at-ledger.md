@@ -56,3 +56,12 @@ Are all products of Ledger.
 Ledger is hiring, in almost all positions/stacks, check out our [job offers (https://www.ledger.fr/jobs/)](https://www.ledger.fr/jobs/).
 
 
+<!--
+
+20+ Scala developers
+Hardware, firmware, software, web, mobile, blockchain, security, cryptography, etc.
+Product, R&D, etc.
+
+700+ employees worldwide, 300+ as engineers
+
+-->

@@ -86,5 +86,15 @@ The good:
     * Incremental compilation (Scala JS / JVM)
     * hot reload of UI Frontend (Vite)
     * warm reload of Backend (SBT)
+* Integration: UI, Effect System, HTTP client/server
+  * ZIO <-> Laminar
+  * ZIO <-> Tapir
+  * ZIO <-> Quill (Database)
+
+
+* Integration: Quite a few lines of code.
+  * extraction to an external library
+* I'm not going to lie, the setup is quite a few lines of code.
+  * extraction to a scaffold template
 
 -->

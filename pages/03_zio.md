@@ -2,10 +2,38 @@
 
 ZIO is a library for asynchronous and concurrent programming in Scala. 
 
+<div v-click>
+Meh, another one?
+</div>
+
+<v-clicks depth="2">
+
+ * ZIO is a data type
+ * ZIO is a functional effect system
+ * ZIO is a library
+ * ZIO is a framework
+</v-clicks>
+
+<div v-click>
+Meh ...
+</div>
+
+---
+
+# ZIO 101: ZIO is a data type
 
 ZIO is a data type that represents a computation:
 ````md magic-move
 
+```scala
+trait ZIO[A] // "A": Success type, that may be produced by the effect
+```
+```java
+Future<A> // "A": Success type, that may be produced by the Future
+```
+```scala
+trait ZIO[A]
+```
 ```scala
 trait ZIO[-R, +E, +A]
 ```
@@ -31,6 +59,15 @@ ZIO is a functional effect system:
 
 </v-clicks>
 
+<!--
+
+Should remind of Future, but with more power
+  * more control
+  * more flexibility
+  * more safety
+
+
+-->
 
 ---
 
@@ -46,12 +83,21 @@ trait ZIO[-R, +E, +A] {
   def run(r: R): Either[E, A]
 }
 ```
+```scala
+trait ZIO[-R, +E, +A]
+```
 ````
+<div v-click>
+Wait, what if:
+
+* you don't care about the environment?
+* you can't fail?
+</div>
 
 <div v-click>
 Many aliases are provided for common use cases:
 
-```scala {*|1|2|3|4|5}{at:3}
+```scala {*|1|2|3|4|5}{at:4}
 type UIO[+A]      = ZIO[Any, Nothing, A]   // Succeed with an `A`, cannot fail              , no requirements.
 type URIO[-R, +A] = ZIO[R, Nothing, A]     // Succeed with an `A`, cannot fail              , requires an `R`.
 type Task[+A]     = ZIO[Any, Throwable, A] // Succeed with an `A`, may fail with `Throwable`, no requirements.
@@ -59,6 +105,12 @@ type IO[+E, +A]   = ZIO[Any, E, A]         // Succeed with an `A`, may fail with
 type RIO[-R, +A]  = ZIO[R, Throwable, A]   // Succeed with an `A`, may fail with `Throwable`, requires an `R`.
 ```
 </div>
+
+<!--
+
+Sound abstract, but in practice, it's quite simple to use. Wait for the examples.
+
+-->
 
 ---
 
@@ -84,18 +136,32 @@ def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
 def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
 ```
 ```scala
-val simple:                     UIO[Int]     = ZIO.succeed(42)                   // UIO[Int]
+val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
 
-def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
+def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")       // Int => UIO[String]
 
-def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)        // String => Task[Unit]
+def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)             // String => Task[Unit]
 ```
 ```scala
-val simple:                     UIO[Int]     = ZIO.succeed(42)                   // UIO[Int]
+val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
 
-def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
+val whatIsTheAnswer: Int    =>  UIO[String]  = i => ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
 
-def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)        // String => Task[Unit]
+val sayItLoud:       String =>  Task[Unit]   = message => Console.printLine(message)  // String => Task[Unit]
+```
+```scala
+val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
+
+def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")       // Int => UIO[String]
+
+def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)             // String => Task[Unit]
+```
+```scala
+val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
+
+def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")       // Int => UIO[String]
+
+def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)             // String => Task[Unit]
 
 val program: UIO[Int] = simple
 ```
@@ -119,41 +185,41 @@ val program: Task[Unit] = simple.flatMap(i => whatIsTheAnswer(i))
                                 .flatMap(str => sayIntLoud(str))
 ```
 ```scala
-val simple:                     UIO[Int]     = ZIO.succeed(42)
+val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
 
-def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+val whatIsTheAnswer: Int    =>  UIO[String]  = i => ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
 
-def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+val sayItLoud:       String =>  Task[Unit]   = message => Console.printLine(message)  // String => Task[Unit]
 
 val program: Task[Unit] = simple.flatMap(whatIsTheAnswer)
                                 .flatMap(sayIntLoud)
 ```
 ```scala
-val simple:                     UIO[Int]     = ZIO.succeed(42)
+val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
 
-def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+val whatIsTheAnswer: Int    =>  UIO[String]  = i => ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
 
-def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+val sayItLoud:       String =>  Task[Unit]   = message => Console.printLine(message)  // String => Task[Unit]
 
 val program: Task[Unit] = simple flatMap whatIsTheAnswer flatMap sayIntLoud
 ```
 ```scala
-val simple:                     UIO[Int]     = ZIO.succeed(42)
+val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
 
-def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+val whatIsTheAnswer: Int    =>  UIO[String]  = i => ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
 
-def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+val sayItLoud:       String =>  Task[Unit]   = message => Console.printLine(message)  // String => Task[Unit]
 
 val program: Task[Unit] = simple flatMap whatIsTheAnswer
                               💥 flatMap sayIntLoud
 ```
 ```scala
 
-val simple:                     UIO[Int]     = ZIO.succeed(42)
+val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
 
-def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+val whatIsTheAnswer: Int    =>  UIO[String]  = i => ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
 
-def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+val sayItLoud:       String =>  Task[Unit]   = message => Console.printLine(message)  // String => Task[Unit]
 
 extension [R, E, A](zio: ZIO[R, E, A])
     def |>[R1, E1 <: E, B](f: A => ZIO[R1, E1, B]): ZIO[R1, E1, B] = zio.flatMap(f)
@@ -163,11 +229,11 @@ val program: Task[Unit] = simple flatMap whatIsTheAnswer
 ```
 ```scala
 
-val simple:                     UIO[Int]     = ZIO.succeed(42)
+val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
 
-def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+val whatIsTheAnswer: Int    =>  UIO[String]  = i => ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
 
-def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+val sayItLoud:       String =>  Task[Unit]   = message => Console.printLine(message)  // String => Task[Unit]
 
 extension [R, E, A](zio: ZIO[R, E, A])
     def |>[R1, E1 <: E, B](f: A => ZIO[R1, E1, B]): ZIO[R1, E1, B] = zio.flatMap(f)
@@ -178,11 +244,11 @@ val program: Task[Unit] = simple |> whatIsTheAnswer
 ```scala {*|1}
 import zorglub.flatmapthatshit.*
 
-val simple:                     UIO[Int]     = ZIO.succeed(42)
+val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
 
-def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
+val whatIsTheAnswer: Int    =>  UIO[String]  = i => ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
 
-def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)
+val sayItLoud:       String =>  Task[Unit]   = message => Console.printLine(message)  // String => Task[Unit]
 
 val program: Task[Unit] = simple |> whatIsTheAnswer
                                 |> flatMap sayIntLoud
@@ -411,6 +477,12 @@ object MyApp extends ZIOAppDefault {
 <!--
 
 What is the issue with Database.insert(message) ?
+
+The big difference with Console, is that Database is a service
+  - that needs to be provided
+  - can fail
+  - must be configured
+  - must be closed ...
 
 -->
 

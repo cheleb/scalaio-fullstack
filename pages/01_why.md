@@ -5,24 +5,24 @@
 <div grid="~ cols-[50%_50%] gap-1">
   <div>
     <ul style="margin-top:1em">
-      <li v-click="+1">In&nbsp; ❤️ with Web apps for 25+ years aka cgi-bin era</li>
-      <li v-click="+2">In&nbsp; ❤️ with Scala for 12+ years</li>
-      <li v-click="+3">In&nbsp; ❤️ with ScalaJs since v0.6</li>
-      <li v-click="+4">In&nbsp; ❤️ with Effect system 5+ years</li>
+      <li v-click="+1" delay="1s">In&nbsp; ❤️ with Web apps for 25+ years aka cgi-bin era</li>
+      <li v-click="+1" delay="3s">In&nbsp; ❤️ with Scala for 12+ years</li>
+      <li v-click="+1" delay="5s">In&nbsp; ❤️ with ScalaJs since v0.6</li>
+      <li v-click="+1" delay="7s">In&nbsp; ❤️ with Effect system 5+ years</li>
     </ul>
    </div>
-   <div v-click="+5">
+   <div v-click="+2">
      <img src="../images/gandalf.gif" alt="Scala Full Stack" style="width: 50%; height: auto;">
     </div>
     <div style="margin-top:1em">
-        <h2 v-click="+6">Yet in another dimension...</h2>
+        <h2 v-click="+3">Yet in another dimension...</h2>
         <ul style="margin-top:1em">
-            <li v-click="+7">Angular#, React, vus, ember ...</li>
-            <li v-click="+8">npm, grunt, yarn ...</li>
+            <li v-click="+3" delay="1s">Angular#, React, vus, ember ...</li>
+            <li v-click="+3" delay="2s">npm, grunt, yarn ...</li>
         </ul>
     </div>
     <div>
-      <img v-click="+9" src="../images/confused-john-travolta.gif" alt="Lost" style="width: 40%; height: auto">
+      <img v-click="+3"  delay="3s" src="../images/confused-john-travolta.gif" alt="Lost" style="width: 40%; height: auto">
     </div>
 </div>
 
@@ -35,45 +35,45 @@
 <div grid="~ cols-6 gap-1">
 <div></div>
 <div></div>
- <div v-click="+3">
+ <div v-click="+1" delay="4s">
   <img src="../images/binary.jpeg" style="width: 30%; height: auto;"  />
  LLVM
  </div>
  <div></div>
- <div v-click="+4"><img src="../images/wasm.png" style="width: 60%; height: auto; float:both" /></div>
+ <div v-click="+1" delay="5s"><img src="../images/wasm.png" style="width: 60%; height: auto; float:both" /></div>
  <div></div>
  <div></div>
  <div></div>
- <div v-click="+3">
+ <div v-click="+1" delay="3s">
   &nbsp;&nbsp; ↑
   <div style="margin-left:-25px;">Scala Native<img src="../images/scalanative.webp" style="margin-left:30px; width: 15%; height: auto; float:both" /></div>
   &nbsp;&nbsp;&nbsp;⏐
  </div>
  <div>
  </div>
- <div  v-click="+5">
+ <div  v-click="+2">
    &nbsp;&nbsp; ↑
 
   &nbsp;&nbsp;&nbsp;⏐
  </div> 
  <div></div> 
-<div v-click="+1">
+<div v-click="+1" delay="1s">
   <img src="../images/jvm.png" style="width: 30%; height: auto;" />
   Scala JVM
 </div>
- <div v-click="+1">
+ <div v-click="+1" delay="1s">
 <-- Scalac ---
  </div>
 <div>
   <img src="../images/scala.png" style="margin-left:10px; width: 10%; height: auto;" />
    Scala
 </div>
- <div  v-click="+2">
+ <div  v-click="+1" delay="2s">
  --- ScalaJS -->
   <img src="../images/scalajs.png" style="margin-left:30px; width: 15%; height: auto;" />
  </div> 
- <div v-click="+5">SJIR &nbsp;&nbsp;  ---></div>
-<div v-click="+2">
+ <div v-click="+2">SJIR &nbsp;&nbsp;  ---></div>
+<div v-click="+1" delay="2s">
   <img src="../images/chrome.jpeg" style="width: 25%; height: auto; float:left" />
   <img src="../images/node.png" style="margin-left:10px; width: 25%; height: auto; float:left" />
 </div>
@@ -86,11 +86,26 @@ Scala is a language that can be compiled to:
 
 * the JVM
 * to JavaScript targeting both Node and the browser
-* to LLVM
+* to LLVM then to binary
 * to WASM (experimental)
  -->
 
+---
 
+# Monolith 3-tiers architecture
+
+<img src="../images/apps.svg" style="width: 30%; height: auto; margin:2em" />
+
+<!--
+
+* Frontend: SPA
+* Backend:
+  * BFF
+  * REST API
+* Database: Postgres
+
+
+-->
 
 
 ---

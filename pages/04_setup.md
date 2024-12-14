@@ -48,6 +48,18 @@ sbt new cheleb/zio-scalajs-laminar.g8 --name=devoxx-fullstack-demo
 ```
 </div>
 
+<div v-click>
+Or with K8S / ArgoCD support.
+
+
+```bash
+sbt new cheleb/zio-scalajs-laminar.g8  --name=zio-laminar-demo-k8s\
+                                       --githubUser=cheleb --with-argocd=true --version=0.0.6 --force
+
+```
+</div>
+
+
 ---
 
 # One line to go to work
@@ -59,9 +71,26 @@ sbt new cheleb/zio-scalajs-laminar.g8 --name=devoxx-fullstack-demo
 code devoxx-fullstack-demo
 ```
 </div>
+<div v-click>
+Or with K8S / ArgoCD support.
+```bash
+code devoxx-fullstack-demo-k8s
+```
+</div>
 
+<!--
 
+ Now we have a project with a fullstack setup.
 
+ With a few commands, we can start the development environment.
+
+ * sbt X 2 (backend, frontend)
+ * vite
+ * docker
+
+Or just open the project in VSCode.
+
+-->
 
 ---
 
@@ -126,6 +155,17 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vsco
 
 ````
 
+<!--
+
+Who wants to type the same commands over and over again?
+Who knows about tasks.json in VSCode ?
+  * Just a few lines of JSON to automate tasks.
+
+
+When folder opens, run the setup script, then run the demo.
+
+-->
+
 ---
 
 
@@ -156,6 +196,19 @@ Task automation with <span v-mark="{type:'circle', color:'orange', at:1}">`.vsco
   <img src="../images/scala-jvm-js-deps.drawio.svg" alt="ZIO" style="width: 50%; height: auto;" />
 </div>
 
+<!-- 
+
+In the end we have a project structure with a backend and a frontend.
+
+But how to share code between the two, after all, we are in the Scala ecosystem on both sides of the wire.
+
+Here comes the SBT Cross Project.
+
+This project element will only exist at compile time, it will not be published, but it will be casted to the JVM and JS projects.
+
+The JVM project will depend on the shared project, and the JS project will depend on the shared project.
+
+-->
 
 
 ---
@@ -189,6 +242,15 @@ lazy val client = project
 ```
 </div>
 </div>
+
+<!--
+
+This how we define the shared project in SBT. It is rather simple, we define a CrossProject that will be casted to the JVM and JS projects.
+
+Add backends and frontends dependencies to the shared project variant according to the platform.
+
+-->
+
 
 ---
 
@@ -228,6 +290,15 @@ lazy val client = project
 }
 ```
 
+<!--
+
+This is the package.json file for the frontend project.
+
+Build time dependencies are vite and scala-js plugin.
+
+Development time dependencies are typescript and chart.js to illustrate how to use a JS library in a ScalaJS project.
+
+-->
 
 ---
 

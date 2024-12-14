@@ -41,9 +41,6 @@ With ZIO, Tapir && Laminar
   </a>
 </div>
 
-<!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
--->
 
 ---
 transition: fade-out
@@ -59,11 +56,19 @@ transition: fade-out
     - Demo time.
   - ZIO
   - Deep dive:
-    - End User Experience.
+    - End ~~User~~ Developer  Experience.
     - Library internals.
     - Scala derivation metaprogramming.
   - Deployment.
 </v-clicks>
+
+<!--
+
+ - ZIO is central to the architecture:
+    - the glue between the layers.
+    - orchestrating the side effects.
+
+-->
 
 ---
 src: ./pages/01_why.md
@@ -72,12 +77,6 @@ src: ./pages/01_why.md
 ---
 src: ./pages/02_ono-at-ledger.md
 ---
-
----
-
-# Monolith 3-tiers architecture
-
-<img src="./images/apps.svg" style="width: 30%; height: auto; margin:2em" />
 
 ---
 src: ./pages/03_action.md
@@ -105,6 +104,13 @@ src: ./pages/04_architecture.md
     - Library internals.
     - Scala derivation metaprogramming.
   - Deployment.
+
+
+<!--
+
+Need now to talk about ZIO, the glue between the layers.
+
+-->
 
 ---
 src: ./pages/03_zio.md
