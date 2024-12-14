@@ -94,7 +94,31 @@ Scala is a language that can be compiled to:
 
 # Monolith 3-tiers architecture
 
-<img src="../images/apps.svg" style="width: 30%; height: auto; margin:2em" />
+<div grid="~ cols-[30%_40%_30%] gap-4">
+  <div>
+
+  Frontend: SPA
+  * [ScalaJs](https://www.scala-js.org)
+  * [ZIO](https://zio.dev)
+  * [Laminar](https://laminar.dev)
+  * [UI5](https://github.com/sherpal/LaminarSAPUI5Bindings) Web Components
+
+ </div>
+  <div>
+    <img src="../images/apps.svg" style="width: 80%; height: auto; margin:2em" />
+  </div>
+  <div>
+
+  Backend:
+   * [Scala](https://www.scala-lang.org)
+   * [ZIO](https://zio.dev)
+   * [Tapir](https://tapir.softwaremill.com/en/latest/) REST API
+   * [Flyway](https://github.com/flyway/flyway) migrations
+   * [Quill](https://getquill.io) SQL queries
+   * [Postgres](https://www.postgresql.org)
+ </div>
+
+</div>
 
 <!--
 
