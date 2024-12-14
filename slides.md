@@ -41,354 +41,150 @@ With ZIO, Tapir && Laminar
   </a>
 </div>
 
-<!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
--->
 
 ---
 transition: fade-out
 ---
 
-# Scala Full Stack: What inside?
+# Agenda
 
-## Languages && Build tools
+<v-clicks depth="1">
 
-<div>
-<v-clicks depth="3">
-
-   - Languages:
-     - Scala
-     - ScalaJS
-     - TypeScript: Scala.js facade with Scalablytyped
-
-   - Build tools:
-     - NPM
-       - Node Package Manager.
-       - Vite: Hot reload of UI.
-     - SBT (Scala Build Tool)
+  - Why this talk ?
+  - Overview:
+    - Architecture && Librairies
+    - Demo time.
+  - ZIO
+  - Deep dive:
+    - End ~~User~~ Developer  Experience.
+    - Library internals.
+    - Scala derivation metaprogramming.
+  - Deployment.
 </v-clicks>
-</div>
 
+<!--
 
----
+ - ZIO is central to the architecture:
+    - the glue between the layers.
+    - orchestrating the side effects.
 
-# Scala Full Stack: What insisde?
-
-## Librairies && Insfrastructure
-<div>
-<v-clicks depth="2">
-   
-   - Libraries:
-     - Laminar: Type-safe, reactive UI library
-     - Tapir:   Type-safe HTTP client and server
-     - ZIO:     Type-safe, composable asynchronous and concurrent programming
-     - Quill:   Type-Safe,  Compile-time SQL query generation
-     - Chart.js: Charting library, Scalablytyped generated facade
-   - Infrastructure:
-     - PostgreSQL: THE database
-     - Docker
-     - Kubernetes
-</v-clicks>
-</div>
-
+-->
 
 ---
-
-# Scala Full Stack
-
-<div grid="~ cols-6 gap-1">
-<div></div>
-<div></div>
- <div v-click="+3">
-  <img src="./images/binary.jpeg" style="width: 30%; height: auto;"  />
- LLVM
- </div>
- <div></div>
- <div v-click="+4"><img src="./images/wasm.png" style="width: 60%; height: auto; float:both" /></div>
- <div></div>
- <div></div>
- <div></div>
- <div v-click="+3">
-  &nbsp;&nbsp; ↑
-  <div style="margin-left:-25px;">Scala Native<img src="./images/scalanative.webp" style="margin-left:30px; width: 15%; height: auto; float:both" /></div>
-  &nbsp;&nbsp;&nbsp;⏐
- </div>
- <div>
- </div>
- <div  v-click="+5">
-   &nbsp;&nbsp; ↑
-
-  &nbsp;&nbsp;&nbsp;⏐
- </div> 
- <div></div> 
-<div v-click="+1">
-  <img src="./images/jvm.png" style="width: 30%; height: auto;" />
-  Scala JVM
-</div>
- <div v-click="+1">
-<-- Scalac ---
- </div>
-<div>
-  <img src="./images/scala.png" style="margin-left:10px; width: 10%; height: auto;" />
-   Scala
-</div>
- <div  v-click="+2">
- --- ScalaJS -->
-  <img src="./images/scalajs.png" style="margin-left:30px; width: 15%; height: auto;" />
- </div> 
- <div v-click="+5">SJIR &nbsp;&nbsp;  ---></div>
-<div v-click="+2">
-  <img src="./images/chrome.jpeg" style="width: 25%; height: auto; float:left" />
-  <img src="./images/node.png" style="margin-left:10px; width: 25%; height: auto; float:left" />
-</div>
-<div></div><div></div><div></div>
-</div>
-
-
----
-src: ./pages/01_ono-at-ledger.md
+src: ./pages/01_why.md
 ---
 
 ---
-src: ./pages/02_why.md
+src: ./pages/02_ono-at-ledger.md
 ---
 
 ---
+src: ./pages/03_action.md
+---
 
+---
+src: ./pages/04_setup.md
+---
+
+---
+src: ./pages/04_architecture.md
+---
+
+---
 
 # Agenda
 
-<div grid="~ cols-[50%_50%] gap-1">
-  <div>
 
-````md magic-move
-```scala
+  - Why this talk ?
+  - Architecture && Librairies
+  - Demo time.
+  - ZIO 👈
+  - Deep dive: 
+    - End User Experience.
+    - Library internals.
+    - Scala derivation metaprogramming.
+  - Deployment.
 
-object ScalaFullStack:
-  
-  object SetUp
 
-  object Projects
+<!--
 
-  object Deployement 
+Need now to talk about ZIO, the glue between the layers.
 
-```
+-->
 
-```scala
+---
+src: ./pages/05_zio.md
+---
 
-object ScalaFullStack:
-  
-  object SetUp:
+---
 
-    val ide = "VSCode / Metals 🤘🏼"
+# Scala Full Stack (lazy guide to)
 
-    val build = ("sbt", "npm/Vite", "Docker")
 
-  object Projects
+<v-clicks depth="3">
 
-  object Deployement
+* One line to setup a new project ✅
+* One line to start the dev environment ✅
+* One ZIO layer to rule them all ✅
+* One line to bind data in the UI
+* One line to expose API
+* One line to consume API
+* One line to deploy
 
-```
-```scala
 
-object ScalaFullStack:
-  
-  object setup
+</v-clicks>
 
-  object Projects:
 
-     object Frontend
-
-     object Backend
-
-  object Deployement
-
-```
-```scala
-
-object ScalaFullStack:
-  
-  object SetUp
-
-  object Projects
-  
-  object Deployement:
-  
-      object standalone
-  
-      object Docker
-  
-      object Kubernetes
-
-```
-
-````
+<div v-click="[1, 2]"  v-motion
+  :enter="{ x: 250, y:-150 }"
+  :leave="{ x: 50 }"
+>
+  <img src="./images/larry.jpeg" width="500" style="position:absolute"/>
 </div>
-  <div>
-    <img v-click="+2" src="./images/runtime-stack.svg" style="width: 50%; height: auto;" />
-  </div>
+<div v-click="[2, 3]"  v-motion
+  :initial="{ x: -50, y:-370 }"
+  :enter="{ x: 350, y:-150 }"
+  :leave="{ x: 50 }"
+>
+  <img src="./images/gotowork.webp" width="400" style="position:absolute"/>
+</div>
+<div v-click="[4, 5]"  v-motion
+  :initial="{ x: -50, y:-500 }"
+  :enter="{ x: 350, y:-150 }"
+  :leave="{ x: 50 }"
+>
+  <img src="./images/UI5_bindings.png" width="400" style="position:absolute"/>
+</div>
+<div v-click="[5, 7]"  v-motion
+  :initial="{ x: -50, y:0 }"
+  :enter="{ x: 350, y:-150 }"
+  :leave="{ x: 50 }"
+>
+  <img src="./images/rest.png" width="400" style="position:absolute"/>
+</div>
+<div v-click="7"  v-motion
+  :initial="{ x: -50, y:-0 }"
+  :enter="{ x: 300, y:-150 }"
+  :leave="{ x: 50 }"
+>
+  <img src="./images/deploy.webp" width="400" style="position:absolute"/>
 </div>
 
----
-src: ./pages/03_setup.md
----
 
 ---
-
-
-````md magic-move {lines: true}
-
-
-```scala
-object ScalaFullStack:
-  
-  object Frontend
-
-  object Backend  
-```
-
-```scala {3-6}
-object ScalaFullStack:
-  
-  object Frontend:
-    val laminar = "Type-safe, reactive UI library"
-    val zio = "Type-safe, composable asynchronous and  concurrent programming"
-    val tapir = "Type-safe HTTP client generator"
-
-  object Backend:
-```
-
-```scala {8-11}
-object ScalaFullStack:
-  
-  object Frontend:
-    val laminar = "Type-safe, reactive UI library"
-    val zio = "Type-safe, composable asynchronous and  concurrent programming"
-    val tapir = "Type-safe HTTP client"
-
-  object Backend:
-    val tapir = "Type-safe HTTP Controller"
-    val zio = "Type-safe, composable asynchronous and concurrent programming"
-    val quill = "Compile-time query generation"  
-```
-
-```scala {*|5,9,14|6,10,13}
-object ScalaFullStack:
-  
-  object Frontend:
-    val laminar = "Type-safe, reactive UI library"
-    val zio = "Type-safe, composable asynchronous and  concurrent programming"
-    val tapir = "Type-safe HTTP client"
-
-  object Shared:
-    val zio = "ZIO-Json"
-    val tapir = "Type-safe HTTP endpoint definitions"
-
-  object Server:
-    val tapir = "Type-safe HTTP Controller"
-    val zio = "Type-safe, composable asynchronous and  concurrent programming"
-    val quill = "Compile-time query generation"
-
-```
-````
-
-
----
-src: ./pages/03_zio.md
+src: ./pages/06_ui.md
 ---
 
 ---
-
-# The App structure
-
-````md magic-move {lines: true}
-```scala
-object ScalaFullStack:
-  
-  object Frontend
-
-  object Backend  
-```
-```scala
-object ScalaFullStack: // Runtime
-  
-  object Frontend      // Pure SPA (js, css, html)
-
-  object Backend       // Pure Scala / JVM
-```
-```scala
-object ScalaFullStack: // Runtime
-  
-  object Frontend
-
-  object Backend:
-    val BFF = "Backend for Frontend"
-    val API = "REST API
-```
-```scala
-object ScalaFullStack: // Build time
-  
-  object Frontend
-
-  object Backend:
-    val BFF = "Backend for Frontend"
-    val API = "REST API
-```
-```scala
-object ScalaFullStack: // Build time
-  
-  object Frontend
-
-  object Shared        // Shared between the client and the server
-    
-  object Backend:
-    val BFF = "Backend for Frontend"
-    val API = "REST API
-```
-```scala {*|5|10-11}
-object ScalaFullStack: // Build time
-  
-  object Frontend      //   ←-------------------+ 
-                       //                       |
-  object Shared        // Shared between the client and the server
-                       //                                      |
-  object Backend:      //   ←----------------------------------+ 
-    val BFF = "Backend for Frontend"
-    object `API API`:
-      val controller  = "Tapir: Type-safe HTTP Controller"
-      val service     = "ZIO, business logic"
-      val persistance = "DB Layer (repository)" 
-```
-````
-
----
-
-# Shared
-
-What can be shared between the client and the server?
-
-<ul>
- <li v-click>Payloads</li>
- <li v-click>Business logic</li>
- <li v-click>Validation</li>
- <li v-click>Error handling</li>
-</ul>
-
-<div v-click class="left-30%"> And ... </div>
-<ul><li v-click><span v-mark="{type:'circle', color:'orange', at:8}">REST API definition</span></li></ul>
-<div v-click class="right-31%">(kinda code centrict-contract first)</div>
-
-
----
-src: ./pages/04_tapir.md
+src: ./pages/071_tapir_server.md
 ---
 
 ---
-src: ./pages/05_tapir.md
+src: ./pages/072_tapir_client.md
 ---
 
 ---
-src: ./pages/06_laminar.md
+src: ./pages/08_all_together.md
 ---
 ---
 
@@ -551,18 +347,47 @@ Oneliners
 
 ## Resources
 
-* [ScalaJS](https://www.scala-js.org)  by ScalaCenter / Sebastien Doeraene
-* [SBT](https://www.scala-sbt.org)
-* [Scalablytyped](https://scalablytyped.org)
-#### Depencencies:
-* [ZIO](https://zio.dev) by Ziverge
-* [Laminar](https://laminar.dev) by raquo
-* [Tapir](https://tapir.softwaremill.com) by SoftwareMill
-#### Tools:
+### Languages && Librairies
+
+<div grid="~ cols-2">
+ <v-clicks>
+
+  - [ScalaJS](https://www.scala-js.org)  by ScalaCenter / Sebastien Doeraene
+  - [SBT](https://www.scala-sbt.org)
+  - [Scalablytyped](https://scalablytyped.org)
+</v-clicks>
+<v-clicks>
+
+  - [ZIO](https://zio.dev) by Ziverge
+  - [Laminar](https://laminar.dev) by raquo
+  - [Tapir](https://tapir.softwaremill.com) by SoftwareMill
+</v-clicks>
+</div>
+
+
+
+#### Tools && Mentors
+
+
+<div grid="~ cols-2">
+ <v-clicks>
+
+
 * [Vite](https://vitejs.dev) 
 * [Docker](https://www.docker.com)
 * [VSCode](https://code.visualstudio.com)
 * [Metals](https://scalameta.org/metals/)
-#### Mentors:
+</v-clicks>
+<v-clicks>
+
 * [RTJVM](https://rockthejvm.com) by Daniel Ciociarlan
 * [Incredible Kit Langton](https://www.youtube.com/watch?v=JHriftPO62I)
+</v-clicks>
+</div>
+
+
+---
+
+# Thank you
+
+# Questions?
