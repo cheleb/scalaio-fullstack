@@ -113,7 +113,7 @@ Need now to talk about ZIO, the glue between the layers.
 -->
 
 ---
-src: ./pages/03_zio.md
+src: ./pages/05_zio.md
 ---
 
 ---
@@ -172,15 +172,15 @@ src: ./pages/03_zio.md
 
 
 ---
-src: ./pages/05_ui.md
+src: ./pages/06_ui.md
 ---
 
 ---
-src: ./pages/06_tapir.md
+src: ./pages/071_tapir_server.md
 ---
 
 ---
-src: ./pages/07_tapir.md
+src: ./pages/072_tapir_client.md
 ---
 
 ---

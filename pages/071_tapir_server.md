@@ -10,11 +10,24 @@
 ---
 
 <img src="../images/architecture.svg" style="width: 100%" />
-<img src="../images/youarehere.png" width="50"  v-motion duration="300ms" 
+<img src="../images/youarehere.png" width="50"  v-motion 
   :initial="{ x: 0, y:0 }"
   :enter="{ x: 350, y:-490 }"
- />
+  :click-1="{ x: 650, y:-490 }"
+  :click-2="{ x: 60, y:-490 }"
+  :leave="{ x: 300 }" />
+ 
+<div v-click="+2">
+  We are going to implement the API endpoints.
+</div>
 
+<!--
+
+1. We will use Tapir to declare the API endpoints.
+2. We will implement the server logic.
+3. We will support the client side.
+
+-->
 
 ---
 
@@ -107,6 +120,19 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
 </div>
 
 
+<!--
+
+Tapir provides a type-safe way through a clean DSL to define API endpoints.
+
+- `baseEndpoint` is a value that represents the root of the API, with common settings (error handling).
+
+From API definition, Tapir will generate:
+- OpenAPI documentation
+- HTTP server squeleton
+- Sttp client
+
+
+-->
 
 
 
@@ -306,7 +332,7 @@ class UserController private (userService: UserService, jwtService: JWTService)
     } yield token
   }
 
-  val profile: ServerEndpoint[Any, Task] = PersonEndpoint.profile.securedServerLogic { userId => withPet =>
+  val profile: ServerEndpoint[Any, Task] = PersonEndpoint.profile.zServerAutenticatedLogic { userId => withPet =>
     UserService.getProfile(userId, withPet)
   }
 
@@ -314,6 +340,12 @@ class UserController private (userService: UserService, jwtService: JWTService)
     List(create, login, profile)
 }
 ```
+
+<!--
+We apply the same pattern for the other endpoints.
+Note that extending `SecuredBaseController` will handle the JWT token verification (profile endoint)
+
+-->
 
 ---
 
@@ -346,6 +378,12 @@ class UserController private (userService: UserService, jwtService: JWTService)
   </div>
   
 </div>
+
+<!-- 
+
+We need now to assemble the pieces.
+
+-->
 
 
 ---
@@ -434,6 +472,14 @@ val program: RIO[FlywayService & UserService & OrganisationService & JWTService 
 ````
 </div>
 
+
+<!-- 
+
+ZLayer is a way to wire the different services together.
+ZLayer data type also composes !
+
+-->
+
 ---
 
 # ZLayer
@@ -474,6 +520,12 @@ override def run =
 [Mermaid](https://mermaid-js.github.io/mermaid-live-editor/edit/#pako:eNp9kcFOwzAMhl-l8gmkrYLBmNQDBwQcUCUkNsQlF6vxuog2qdxkKJr27ji0qIA0br_tz7_t5ACV0wQF1IzdLrvbKFtenClYE--Jc01bDI1XcC75S8k_NvEDY6qaikqzp7xydmvqwKRLjMQDuhD0mWu0pkdvnH2hzvXGO45fPc1IZvP5bVZe_YF_ujeT57Vgk0-u0WP5y2cpwGtPfGJYshjAhcjlIG_GnhMzV1J-etv8f-_oNPknuUohzKAlbtFoeeGDslmmwO-oJQWFSI38rkDZo3Chk4PoQae9ofAcaAYYvFtHW33HA3NvUD6rHZLHT8ZQl94)
 </div>
 
+
+<!--
+
+Mermaid is a diagramming and charting tool that produces good looking diagrams. ZIO provides a way to generate a diagram of the layers, and compile time.
+
+-->
 
 ---
 
@@ -545,6 +597,14 @@ object UserServiceLive:
 
 ```
 ````
+
+<!-- 
+
+For simple cases, ZIO provides a way to generate a layer from a service implementation. Macro expansion is a good way to understand what is going on.
+
+
+
+-->
 
 ---
 
@@ -622,6 +682,12 @@ object JWTServiceLive {
 ```
 ````
 
+<!--
+
+We can also wire the layers manually, generating a layer from a configuration for exmaple.
+
+-->
+
 
 ---
 
@@ -633,19 +699,3 @@ object JWTServiceLive {
 
 <img src="../images/tapir-api-server.svg" style="width:30%;" />
 
-
-
----
-
-# Tapir / Sttp Client
-
-In the same way, we can implement the client side of the API.
-
-And we want to process the result in the UI.
-
-<ul>
-  <li v-click="+1">stay in the Scala world</li>
-  <li v-click="+2">use a type-safe API</li>
-  <li v-click="+3">use reactive stuff both http client and UI side</li>
-  <li v-click="+4">with a minimal of boilerplate</li>
-</ul>

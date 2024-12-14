@@ -1,10 +1,30 @@
+# Tapir / Sttp Client
+
+In the same way, we can implement the client side of the API.
+
+And we want to process the result in the UI.
+
+<ul>
+  <li v-click="+1">stay in the Scala world</li>
+  <li v-click="+2">use a type-safe API</li>
+  <li v-click="+3">use reactive stuff both http client and UI side</li>
+  <li v-click="+4">with a minimal of boilerplate</li>
+</ul>
+
+
+---
+
 
 <img src="../images/architecture.svg" style="width: 100%" />
-<img src="../images/youarehere.png" width="50"  v-motion
+<img src="../images/youarehere.png" width="50" v-motion
   :initial="{ x: 50, y:-180 }"
   :enter="{ x: 700, y:-490 }"
   :click-1="{ x: 200, y:-490 }"
   :leave="{ x: 50 }"/>
+
+<div v-click="+1">
+.
+</div>
 
 
 ---
@@ -50,9 +70,19 @@ PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, Use
 
 
 <ul>
+  <li v-click="+3">First extention allow to consume the payload, and produce an RIO that depends on HttpClient</li>
   <li v-click="+4">`emitTo` is another extension method, we will detail shortly</li>
-  <li v-click="+5"> Question: there is another extention in action here, where ?</li>
 </ul>
+
+<!--
+
+Ideally, we would like to process the result in the UI, with a minimal of boilerplate.
+
+We have an endpoint definition, what would be nice would be to call it with a payload, and process the result in the UI.
+
+Guess what, we can do that with ...  few extension methods.
+
+-->
 
 ---
 
@@ -71,6 +101,15 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
     .out(jsonBody[User])  // Response is JSON-encoded User
 ```
 
+<!--
+
+The value is even not related to HttpClient, it's just an endpoint definition.
+
+However, we can call it with a payload, and process the result in the UI.
+
+Where is the magic?
+
+-->
 
 
 ---
@@ -113,6 +152,14 @@ extension [I, E <: Throwable, O](endpoint: Endpoint[Unit, I, E, O, Any])
 ```
 ````
 </div>
+
+
+<!--
+
+In Scala, we an object has an "apply" method, we can call it without the method name, hence it become a function.
+The function signature is `I => RIO[SameOriginBackendClient, O]`.
+
+-->
 
 ---
 
