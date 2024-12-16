@@ -70,7 +70,7 @@ PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, Use
 
 
 <ul>
-  <li v-click="+3">First extention allow to consume the payload, and produce an RIO that depends on HttpClient</li>
+  <li v-click="+3">First extention allows to consume the payload, and produce an RIO that depends on HttpClient</li>
   <li v-click="+4">`emitTo` is another extension method, we will detail shortly</li>
 </ul>
 
@@ -210,14 +210,6 @@ extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 
 </div>
 
----
-
-<img src="../images/architecture.svg" style="width: 100%" />
-<img src="../images/youarehere.png" width="50"  v-motion
-  :initial="{ x: 0, y:0 }"
-  :enter="{ x: 200, y:-450 }"
-  :leave="{ x: 50 }"/>
-
 
 
 ---
@@ -240,7 +232,6 @@ For the curious, the `profile` endpoint is defined as:
 ```scala
 val profile: Endpoint[String, Boolean, Throwable, (User, Option[Pet]), Any]
 ```
-
 
 </div>
 
