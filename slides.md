@@ -23,13 +23,11 @@ mdc: true
 overviewSnapshots: true
 ---
 
-# Scala Full Stack
+## Scala Full Stack
 
 With ZIO, Tapir && Laminar
 
-
 (https://github.com/cheleb/zio-scalajs-laminar.g8)
-
 
 <div class="abs-br m-6 flex gap-2">
   <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
@@ -44,23 +42,24 @@ With ZIO, Tapir && Laminar
 
 ---
 transition: fade-out
+
 ---
 
-# Agenda
+## Agenda
 
 <v-clicks depth="2">
 
-  - Scala, a complex language  ?
-  - Scala types and values.
-    - 101 Syntax
-    - Type safety.
-  - OOP vs FP
-  - Effect system: ZIO
-  - Demo time: scaffolding and IDE magic.
-    - End ~~User~~ Developer  Experience.
-    - Library internals.
-    - Scala derivation metaprogramming.
-  - Deployment.
+- Scala, a complex language  ?
+- Scala types and values.
+  - 101 Syntax
+  - Type safety.
+- OOP vs FP
+- Effect system: ZIO
+- Demo time: scaffolding and IDE magic.
+  - End ~~User~~ Developer  Experience.
+  - Library internals.
+  - Scala derivation metaprogramming.
+- Deployment.
 </v-clicks>
 
 <!--
@@ -73,42 +72,47 @@ transition: fade-out
 
 ---
 src: ./pages/01_scala_complex.md
+
 ---
 
 ---
 src: ./pages/02_ono-at-ledger.md
----
 
----
-src: ./pages/03_type_safety.md
 ---
 
 ---
 src: ./pages/02_1_syntax.md
+
+---
+src: ./pages/03_type_safety.md
+
+---
+
 ---
 
 ---
 src: ./pages/04_setup.md
+
 ---
 
 ---
 src: ./pages/04_architecture.md
----
 
 ---
 
-# Agenda
+---
 
+## Agenda / ZIO
 
-  - Why this talk ?
-  - Architecture && Librairies
-  - Demo time.
-  - ZIO 👈
-  - Deep dive: 
-    - End User Experience.
-    - Library internals.
-    - Scala derivation metaprogramming.
-  - Deployment.
+- Why this talk ?
+- Architecture && Librairies
+- Demo time.
+- ZIO 👈
+- Deep dive: 
+  - End User Experience.
+  - Library internals.
+  - Scala derivation metaprogramming.
+- Deployment.
 
 
 <!--

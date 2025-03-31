@@ -21,16 +21,261 @@ case class Cat(name: String) extends Animal
 ```
 ```scala
 // Method 
-case class Cat(name: String) extends Animal:
-    def callMyName: String = s"$name says Woof!"
+case class Cat(name: String) extends Animal {
+
+    def hello(): String = {
+       s"Hello, $name!"
+    }
+
+}
 ```
 ```scala
 // Method 
-case class Cat(name: String, weight: Int, color: Color) extends Animal:
-    
-    def callMyName: String = s"$name says Woof!"
-    
-    def highOrderFunction(predicate: String => Boolean): Boolean = predicate(name)
+case class Cat(name: String) extends Animal:
+
+    def hello(): String = s"Hello, $name!"
+
+```
+```scala
+// Method 
+case class Cat(name: String) extends Animal:
+
+    def hello: String = s"Hello, $name!"
+
+```
+```scala
+// Method 
+case class Cat(name: String) extends Animal:
+
+    def hello = s"Hello, $name!"
+
+```
+````
+
+---
+
+## Scala Syntax - Flatmap that shit
+
+````md magic-move
+```text
+Don't fear the monad!
+```
+```text
+ Who don't know what is an Option ? ✋
+```
+
+```scala
+sealed trait Option[+A]
+
+case class Some[+A](value: A) extends Option[A]
+
+case object None              extends Option[Nothing]
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne = roman2arabic("I") // ???
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne = roman2arabic("I") // 1
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne = roman2arabic("") // ???
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne = roman2arabic("") // throw new NoSuchElementException
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne: Option[Int] = arabic2roman.get("I")
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne: Option[Int] = arabic2roman.get("I") // Some(1)
+val maybeZero: Option[Int] = arabic2roman.get("") // None
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne:   Option[Int] = arabic2roman.get("I")     // Some(1)
+val maybeZero:  Option[Int] = arabic2roman.get("II")    // Some(2)
+val mayBeThree: Option[Int] = arabic2roman.get("III")   // Some(3)
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne:   Option[Int] = arabic2roman.get("I")     // Some(1)
+val maybeZero:  Option[Int] = arabic2roman.get("II")    // Some(2)
+val mayBeThree: Option[Int] = arabic2roman.get("III")   // Some(3)
+
+val sum = // maybeOne + maybeZero + mayBeThree
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne:   Option[Int] = arabic2roman.get("I")     // Some(1)
+val maybeZero:  Option[Int] = arabic2roman.get("II")    // Some(2)
+val mayBeThree: Option[Int] = arabic2roman.get("III")   // Some(3)
+
+val sum = // maybeOne + maybeZero + mayBeThree
+
+val sum = maybeOne.get + maybeZero.get + mayBeThree.get
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne:   Option[Int] = arabic2roman.get("I")     // Some(1)
+val maybeTwo:   Option[Int] = arabic2roman.get("II")    // Some(2)
+val mayBeThree: Option[Int] = arabic2roman.get("💥")    // Some(3)
+
+val sum = // maybeOne + maybeTwo + mayBethree
+
+val sum = maybeOne.get + maybeTwo.get + mayBeThree.get  // 💥 java.util.NoSuchElementException: None.get
+
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne:   Option[Int] = arabic2roman.get("I")     // Some(1)
+val maybeTwo:   Option[Int] = arabic2roman.get("II")    // Some(2)
+val mayBeThree: Option[Int] = arabic2roman.get("💥")    // Some(3)
+
+val sum = // maybeOne? + maybeTwo? + mayBethree?
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne:   Option[Int] = arabic2roman.get("I")     // Some(1)
+val maybeTwo:   Option[Int] = arabic2roman.get("II")    // Some(2)
+val mayBeThree: Option[Int] = arabic2roman.get("💥")    // Some(3)
+
+val sum = maybeOne.flatMap( one => ??? )
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne:   Option[Int] = arabic2roman.get("I")     // Some(1)
+val maybeTwo:  Option[Int] = arabic2roman.get("II")     // Some(2)
+val mayBeThree: Option[Int] = arabic2roman.get("💥")    // Some(3)
+
+val sum = maybeOne.flatMap( one => 
+             maybeTwo.flatMap( two => 
+                mayBeThree.map( three => one + two + three )
+             )
+         )
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne:   Option[Int] = arabic2roman.get("I")     // Some(1)
+val maybeTwo:  Option[Int] = arabic2roman.get("II")     // Some(2)
+val mayBeThree: Option[Int] = arabic2roman.get("💥")    // Some(3)
+
+val sum: Option[Int] = maybeOne.flatMap( one => 
+             maybeTwo.flatMap( two => 
+                mayBeThree.map( three => one + two + three )
+             )
+         ) // None
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne:   Option[Int] = arabic2roman.get("I")     // Some(1)
+val maybeTwo:   Option[Int] = arabic2roman.get("II")    // Some(2)
+val mayBeThree: Option[Int] = arabic2roman.get("III")   // Some(3)
+
+val sum: Option[Int] = maybeOne.flatMap( one => 
+             maybeTwo.flatMap( two => 
+                mayBeThree.map( three => one + two + three )
+             )
+         ) // Some(6)
+```
+```scala
+val roman2arabic: Map[String,Int] = Map("I" -> 1, "II" -> 2, "III" -> 3, "IV" -> 4, "V" -> 5)
+
+val maybeOne:   Option[Int] = arabic2roman.get("I")     // Some(1)
+val maybeTwo:   Option[Int] = arabic2roman.get("II")    // Some(2)
+val mayBeThree: Option[Int] = arabic2roman.get("III")   // Some(3)
+
+val sum: Option[Int] = 
+    for {
+        one <- maybeOne
+        two <- maybeTwo
+        three <- mayBeThree
+    } yield one + two + three // Some(6)
+```
+```scala
+val res: Option[Int] = 
+    for {
+        one   <- arabic2roman.get("I")
+        two   <- maybarabic2roman.get("II")
+        three <- arabic2roman.get("III")
+    } yield one + two + three // Some(6)
+```
+```scala
+val res: Option[Int] = 
+    for {
+        one   <- arabic2roman.get("I")        // Option
+        two   <- maybarabic2roman.get("II")   // Option
+        three <- arabic2roman.get("III")      // Option
+    } yield one + two + three // Some(6)
+```
+```scala
+
+val res: Future[Int] = 
+    for {
+        one   <- httpClient.get("http://api.com/one") // Future
+        two   <- database.read(one)                   // Future
+        three <- logger.write(two)                    // Future
+    } yield two
+```
+```scala
+val res: IO[Int] = 
+    for {
+        one   <- httpClient.get("http://api.com/one") // IO
+        two   <- database.read(one)                   // IO
+        three <- logger.write(two)                    // IO
+    } yield two
+```
+```scala
+val res: UIO[Int] = 
+    for {
+        one   <- httpClient.get("http://api.com/one") // ZIO
+        two   <- database.read(one)                   // ZIO
+        three <- logger.write(two)                    // ZIO
+    } yield two
+```
+````
+
+---
+
+## Scala Syntax - Function first citizen
+
+````md magic-move {lines: true, at:1}
+```scala
+// Method
+def hello(name: String): String = s"Hello, $name!"
+```
+```scala
+// Function
+val hello: String => String = name => s"Hello, $name!"
+```
+```scala
+// Method
+def hello(name: String) : String = s"Hello, $name!"
+// Function
+val hello:      String => String = name => s"Hello, $name!"
 ```
 ```scala
 // Enum
@@ -51,102 +296,63 @@ case class Cat(name: String, weight: Int, color: Color) extends Animal:
 
 ---
 
-# Scala Syntax - the hard part
+## Scala Syntax - the hard part
 
 <v-clicks>
 
-  - opaque types
-  - type classes
-  - implicits
-  - extension methods
+- opaque types
+- type classes
+- implicits
+- extension methods
 
 </v-clicks>
 
 
 ---
 
-# Scala Syntax - the hard part
+## Scala Syntax - the hard part / Opaque types
 
 
+````md magic-move
 ```scala
  case class User(fullname: String,
                  email: String,
                  password: String,
                  age: Int)
 ```
-
-<v-clicks>
-
-  - type safety concern
-  - privacy concern
-  - serialization topics
-
-</v-clicks>
-
----
-
-# Scala Syntax - Type safety concern
-
 ```scala
  case class User(fullname: String,
                  email: String,
                  password: String,
                  age: Int)
-```
 
-Usage:
-
-````md magic-move {lines: true, at:1}
-```scala
-//
-def newUser(fullname: String,
-         email: String,
-         password: String,
-         age: Int): User = 
-    // Check the values
-    User(fullname, email, password, age)
-
-//
+// Usage:
 val john = newUser("john doe", "john.doe@foo.bar", "notsecured", 42)
 ```
 ```scala
-// V1
-def newUser(fullname: String,
-         email: String,
-         password: String,
-         age: Int): User = 
-    // Check the values
-    User(fullname, password, email, age)
+ case class User(fullname: String,
+                 email: String,
+                 password: String,
+                 age: Int)
 
-//                   💥                 💥              💥        💥
-val john = newUser("notsecured", "john.doe@foo.bar", "john doe", -42)
+// Usage:
+val john = User("notsecured", "john.doe@foo.bar", "john doe", -42)
 ```
-````
----
-
-# Scala Syntax - Type safety concern
-
 ```scala
 case class User(fullname: Fullname,
                  email: Email,
                  password: Password,
                  age: Age)
-```
-Usage:
-````md magic-move {lines: true, at:1}
-```scala
+//Usage:
 // V1
 case class Fullname (name: String)
 case class Email (email: String)
 case class Password (password: String)
 
-val john = newUser(Fullname("john doe"), Email("john.doe@foo.bar"), Password("notsecured"), Age(42))
+val john = User(Fullname("john doe"), Email("john.doe@foo.bar"), Password("notsecured"), Age(42))
 ```
 ````
 
-<div v-click="2">
-  Nice to have, but boring and boxing / unboxing ;'(
-</div>
 
 ---
 
