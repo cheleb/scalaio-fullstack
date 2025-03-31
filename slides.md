@@ -48,14 +48,15 @@ transition: fade-out
 
 # Agenda
 
-<v-clicks depth="1">
+<v-clicks depth="2">
 
-  - Why this talk ?
-  - Overview:
-    - Architecture && Librairies
-    - Demo time.
-  - ZIO
-  - Deep dive:
+  - Scala, a complex language  ?
+  - Scala types and values.
+    - 101 Syntax
+    - Type safety.
+  - OOP vs FP
+  - Effect system: ZIO
+  - Demo time: scaffolding and IDE magic.
     - End ~~User~~ Developer  Experience.
     - Library internals.
     - Scala derivation metaprogramming.
@@ -71,7 +72,7 @@ transition: fade-out
 -->
 
 ---
-src: ./pages/01_why.md
+src: ./pages/01_scala_complex.md
 ---
 
 ---
@@ -79,7 +80,11 @@ src: ./pages/02_ono-at-ledger.md
 ---
 
 ---
-src: ./pages/03_action.md
+src: ./pages/03_type_safety.md
+---
+
+---
+src: ./pages/02_1_syntax.md
 ---
 
 ---

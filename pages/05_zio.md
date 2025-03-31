@@ -123,12 +123,12 @@ val simple: ZIO[Any, Nothing, Int] = ZIO.succeed(42)
 ```scala
 val simple: UIO[Int] = ZIO.succeed(42) // Succeed with an `A`, cannot fail, no requirements.
 ```
-```scala
+```scala {3}
 val simple:                  UIO[Int]    = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int): UIO[String] = ZIO.succeed(s"The answer is $i")
 ```
-```scala
+```scala {5}
 val simple:                     UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
