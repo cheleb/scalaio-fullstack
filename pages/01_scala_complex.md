@@ -36,3 +36,18 @@ scala helloWorld.scala
 println("Hello, World!")
 ```
 ````
+
+---
+
+# Scala Complexity
+
+Then why this rumor ?
+
+<v-clicks>
+
+- Type system
+- Implicits
+- Higher-kinded types
+- Type classes
+
+</v-clicks>

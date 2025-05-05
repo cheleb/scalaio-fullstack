@@ -1,7 +1,5 @@
-# Scala Full Stack
+## Model your domain
 
-
-<h2>Complexity</h2>
 <hr style="margin: 1em"/> 
 <v-clicks depth="2">
 
@@ -27,11 +25,11 @@ Principle of Least Power
 
 ---
 
-# Scala Full Stack
+## Model your domain
 
+<h3>Complex, but Safer</h3>
 
-<h2>Complex, but Safer</h2>
-<hr style="margin: 1em"/> 
+<br /> 
 
 <v-clicks depth="2">
 
@@ -195,7 +193,7 @@ val user = User(firstname, lastname, email, password, age)
 ```scala
 //
 ```
-```scala {*|1|3|4|5}{at:1}
+```scala
 case class Firstname(value: String)
 ```
 ```scala {*|1|3|4|5}
@@ -350,14 +348,15 @@ Type safe is a compilation garanty
 -->
 
 ---
+transition: fade
+---
 
 # Scala Full Stack
 
 ## Ok a little bit more complex.
 
-<div grid="~ cols-[50%_50%] gap-2">
-<div>
-<h3>For the library author</h3>
+### For the library author
+
 ````md magic-move
 ```scala
 opaque type Email = String
@@ -386,50 +385,4 @@ object User:
 
 case class User(email: User.Email, password: User.Password)
 ```
-```scala {*|6-8}{at:22}
-object User:
-  opaque type Password = String
-  def password(str: String): Either[String, Password] =
-    Either.cond(str.length >= 8, str, "Password too short")
-
-  object Password:
-    given Debug[Password] with
-      def debug(value: Password): Repr = Repr.String("*****")
-
-
-case class User(email: User.Email, password: User.Password)
-```
-```scala {6-8}
-object User:
-  opaque type Password = String
-  def password(str: String): Either[String, Password] =
-    Either.cond(str.length >= 8, str, "Password too short")
-
-  object Password:
-    given Debug[Password] with // 👈 Show[A] is a TypeClass
-      def debug(value: Password): Repr = Repr.String("*****")
-
-
-case class User(email: User.Email, password: User.Password)
-```
 ````
-</div>
-<div>
-<h3>Not for the user</h3>
-````md magic-move {at:1}
-```scala
-val user = User("not an email", "short") // 😒
-```
-```scala
-val user = User(💥"", 💥"")
-```
-```scala
-// val user = User(💥"", 💥"")
-val user2 = for
-   email <- User.email("@")
-   password <- User.password("notsecured")
-yield User(email, password)
-```
-````
-</div>
-</div>

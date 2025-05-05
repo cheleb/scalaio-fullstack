@@ -67,19 +67,3 @@ trait Functor[F[_]] extends Invariant[F]:
 </div>
 </div>
 
-
-
-
-<!-- 
-</div>
-
-<div v-click="[6,7]" v-motion style="position:absolute" duration="1s" delay="4s"
-  :initial="{ x: 0, y: -100 }"
-  :enter="{ x: 350, y: -380 }"
-  :leave="{ x: 350 }"
->
-  Type safety.
-    <img src="../images/smart.png" style="width: 50%; height: auto" />
-</div>
- Rich type system and facilities around it:
--->

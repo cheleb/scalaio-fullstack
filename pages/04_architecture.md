@@ -4,12 +4,24 @@
 
 <img src="../images/architecture-global.drawio.svg" style="width: 60%; height: auto;" />
 
-<div v-click v-motion style="position:absolute" duration="1s"
+<div v-click="+6" v-motion style="position:absolute" duration="1s"
   :initial="{ x: 0, y: -100 }"
-  :enter="{ x: 350, y: -380 }"
+  :enter="{ x: 350, y: -360 }"
   :leave="{ x: 50 }"
 >
  <img src="../images/zio.drawio.svg" style="width: 80%; height: auto;" />
+</div>
+
+<div v-click="[2,6]" v-motion style="position:absolute" duration="1s"
+  :initial="{ x: 0, y: -100 }"
+  :enter="{ x: 210, y: -360 }"
+  :click-2="{ x: 110, y: -360 }"
+  :click-3="{ x: 110, y: -300 }"
+  :click-4="{ x: 110, y: -235 }"
+  :click-5="{ x: 110, y: -175 }"
+  :leave="{ x: 110 }"
+>
+  <img src="../images/object.svg" style="width: 40%; height: auto;" />
 </div>
 
 
@@ -25,32 +37,6 @@ Very classical layered architecture, with a a shared Transports Layer (API and P
 And
 - ZIO for the effect system
 
-
--->
-
-
----
-
-# The App architecture
-
-<img src="../images/architeture-details.drawio.svg" style="width: 90%; height: auto;" />
-
-
-<!--
-
-With more details, we can see the layers of the app.
-
-But here I want to explicit the peer to peer layers between the UI and the backend.
-
-Botton up:
-* Transport Layer
-  * Low level HTTP client and server (Fetch, Netty)
-  * Sttp client and server abstraction.
-* API Layer
-  * Tapir
-  * Server Controller
-  * Client 
-* UI and Business Logic
 
 -->
 

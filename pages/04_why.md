@@ -200,6 +200,35 @@ The Ugly:
   - Setup a new project
   - Start development environment
 ```
+```
+The good: 
+  - DX awesome, feedback loop
+  - Integration: UI, Effect System, HTTP client/server
+  - g8 scaffold
+  - VSCode automation
+The bad:
+  - Integration: Quite a few lines of code
+The Ugly
+```
+```
+The good: 
+  - DX awesome, feedback loop
+  - Integration libs: UI, Effect System, HTTP client/server
+  - g8 scaffold
+  - VSCode automation
+  - Tapir ZIO laminar integration
+The bad
+The Ugly
+```
+```
+All good: 
+  - DX awesome, feedback loop
+  - Integration libs: UI, Effect System, HTTP client/server
+    - Tapir ZIO laminar integration
+    - Laminar Forms derivation
+  - g8 scaffold
+  - VSCode automation
+```
 ````
   </div>
 </div>

@@ -1,4 +1,20 @@
-# Setup
+# Full stack as Scala Maximalist
+
+<br />
+
+<v-clicks depth="2">
+
+- Setup
+- Type
+  - Opaque types
+  - Type class
+- Effect sytem
+
+</v-clicks>
+
+---
+ 
+# Setup Full Stack
 
 <div grid="~ cols-[50%_25%_25%] gap-1">
   <div>
@@ -44,7 +60,7 @@ package.json, vite.config.js, build.sbt, plugins.sbt, Dockerfile, Kubernetes, ..
 
 <div  v-click>Let's automate it with a template
 ```bash
-sbt new cheleb/zio-scalajs-laminar.g8 --name=devoxx-fullstack-demo
+sbt new cheleb/zio-scalajs-laminar.g8 --name=scala-at-sunnytech
 ```
 </div>
 
@@ -53,8 +69,9 @@ Or with K8S / ArgoCD support.
 
 
 ```bash
-sbt new cheleb/zio-scalajs-laminar.g8  --name=zio-laminar-demo-k8s\
-                                       --githubUser=cheleb --with-argocd=true --version=0.0.6 --force
+sbt new cheleb/zio-scalajs-laminar.g8  --name=scala-at-sunnytech-k8s\
+                                       --githubUser=cheleb --with-argocd=true\
+                                       --force
 
 ```
 </div>
@@ -68,13 +85,13 @@ sbt new cheleb/zio-scalajs-laminar.g8  --name=zio-laminar-demo-k8s\
   <img src="../images/gotowork.webp" width="400" />
 
 ```bash
-code devoxx-fullstack-demo
+code scala-at-sunnytech
 ```
 </div>
 <div v-click>
 Or with K8S / ArgoCD support.
 ```bash
-code devoxx-fullstack-demo-k8s
+code scala-at-sunnytech-k8s
 ```
 </div>
 

@@ -42,7 +42,6 @@ With ZIO, Tapir && Laminar
 
 ---
 transition: fade-out
-
 ---
 
 ## Agenda
@@ -51,9 +50,8 @@ transition: fade-out
 
 - Scala, a complex language  ?
 - Scala types and values.
-  - 101 Syntax
   - Type safety.
-- OOP vs FP
+  - Type class
 - Effect system: ZIO
 - Demo time: scaffolding and IDE magic.
   - End ~~User~~ Developer  Experience.
@@ -72,48 +70,46 @@ transition: fade-out
 
 ---
 src: ./pages/01_scala_complex.md
-
 ---
 
 ---
 src: ./pages/02_ono-at-ledger.md
-
 ---
 
 ---
-src: ./pages/02_1_syntax.md
-
----
-src: ./pages/03_type_safety.md
-
+src: ./pages/03_setup.md
 ---
 
 ---
-
----
-src: ./pages/04_setup.md
-
+src: ./pages/04_why.md
 ---
 
 ---
 src: ./pages/04_architecture.md
+---
 
+---
+src: ./pages/05_adt.md
+---
+
+---
+src: ./pages/06_type_safety.md
 ---
 
 ---
 
 ## Agenda / ZIO
 
-- Why this talk ?
-- Architecture && Librairies
-- Demo time.
-- ZIO 👈
-- Deep dive: 
-  - End User Experience.
+- Scala, a complex language  ?
+- Scala types and values.
+  - Type safety.
+  - Type class
+- Effect system: ZIO 👈
+- Demo time: scaffolding and IDE magic.
+  - End ~~User~~ Developer  Experience.
   - Library internals.
   - Scala derivation metaprogramming.
 - Deployment.
-
 
 <!--
 
