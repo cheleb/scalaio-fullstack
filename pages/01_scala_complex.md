@@ -2,17 +2,15 @@
 
 ---
 
-# Scala Complexity
+## Scala Complexity / Language ?
 
 Not the language !
 
-
-<img v-click src="../images/grammars.png" style="width: 80%; height: auto" />
-
+<img alt="grammars" v-click src="../images/grammars.png" style="width: 80%; height: auto" />
 
 ---
 
-# Scala Complexity
+## Scala Complexity / Syntax ?
 
 ````md magic-move {lines: true, at:1}
 ```scala
@@ -39,7 +37,7 @@ println("Hello, World!")
 
 ---
 
-# Scala Complexity
+## Scala Complexity / Mythos
 
 Then why this rumor ?
 

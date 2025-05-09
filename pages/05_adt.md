@@ -1,19 +1,53 @@
-## Model your domain
+---
+transition: fade
+layout: two-cols
 
-<hr style="margin: 1em"/> 
+---
+
+# OOP vs FP
+
+<v-clicks depth="2" style="margin: 2em">
+
+- OOP
+  - mutable state
+  - inheritance
+  - polymorphism
+- FP
+  - immutable state
+  - composition
+  - type safety
+
+</v-clicks>
+
+::right::
+
+But:
+
+<v-clicks>
+
+- <span v-mark="{type:'underline', color:'orange', at:15}">Boilerplate</span>
+- <span v-mark="{type:'underline', color:'orange', at:16}">Boxing / Unboxing</span>
+
+</v-clicks>
+
+
+---
+
+## ADT and Generic Derivation
+
 <v-clicks depth="2">
 
-  * Is scala a complex language?
-    - Somewhat.
-    - But can/should be used in a simple way.
+- case class
+  - Kotlin data class
+  - Java Record
+- ADT
+  - algebraic data type
+  - sum type
+  - product type
+- generic derivation
+
 </v-clicks>
-<div style="margin: 2em" v-motion v-click
-  :initial="{ x: 0, y: -100 }"
-  :enter="{ x: 400 }"
-  :leave="{ x: 50 }">
-<img style="margin: 2em" src="../images/power.jpg" width="20%" />
-Principle of Least Power
-</div>
+
 
 <!-- 
 

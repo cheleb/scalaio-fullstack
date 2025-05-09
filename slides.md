@@ -23,6 +23,18 @@ mdc: true
 overviewSnapshots: true
 ---
 
+<style>
+h1, h2 {
+  background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+</style>
+
 ## Scala Full Stack
 
 With ZIO, Tapir && Laminar
@@ -42,6 +54,8 @@ With ZIO, Tapir && Laminar
 
 ---
 transition: fade-out
+layout: two-cols
+
 ---
 
 ## Agenda
@@ -49,16 +63,21 @@ transition: fade-out
 <v-clicks depth="2">
 
 - Scala, a complex language  ?
-- Scala types and values.
+- 10s demo time / 2 lines of shell:
+  - scaffolding and IDE magic.
+  - End ~~User~~ Developer  Experience.
+- OOP vs FP: Scala types and values.
   - Type safety.
   - Type class
 - Effect system: ZIO
-- Demo time: scaffolding and IDE magic.
-  - End ~~User~~ Developer  Experience.
   - Library internals.
   - Scala derivation metaprogramming.
 - Deployment.
 </v-clicks>
+
+::right::
+
+<img v-click="2" alt="Full stack apps" src="./images/apps.svg" width="70%"/>
 
 <!--
 
@@ -70,30 +89,37 @@ transition: fade-out
 
 ---
 src: ./pages/01_scala_complex.md
+
 ---
 
 ---
 src: ./pages/02_ono-at-ledger.md
+
 ---
 
 ---
 src: ./pages/03_setup.md
+
 ---
 
 ---
 src: ./pages/04_why.md
+
 ---
 
 ---
 src: ./pages/04_architecture.md
+
 ---
 
 ---
 src: ./pages/05_adt.md
+
 ---
 
 ---
 src: ./pages/06_type_safety.md
+
 ---
 
 ---
@@ -101,12 +127,13 @@ src: ./pages/06_type_safety.md
 ## Agenda / ZIO
 
 - Scala, a complex language  ?
-- Scala types and values.
+- Demo time:
+  - scaffolding and IDE magic.
+  - End ~~User~~ Developer  Experience.
+- OOP vs FP: Scala types and values.
   - Type safety.
   - Type class
 - Effect system: ZIO 👈
-- Demo time: scaffolding and IDE magic.
-  - End ~~User~~ Developer  Experience.
   - Library internals.
   - Scala derivation metaprogramming.
 - Deployment.
@@ -119,6 +146,7 @@ Need now to talk about ZIO, the glue between the layers.
 
 ---
 src: ./pages/05_zio.md
+
 ---
 
 ---
