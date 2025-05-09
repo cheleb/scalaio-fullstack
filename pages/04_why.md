@@ -211,16 +211,6 @@ The bad:
 The Ugly
 ```
 ```
-The good: 
-  - DX awesome, feedback loop
-  - Integration libs: UI, Effect System, HTTP client/server
-  - g8 scaffold
-  - VSCode automation
-  - Tapir ZIO laminar integration
-The bad
-The Ugly
-```
-```
 All good: 
   - DX awesome, feedback loop
   - Integration libs: UI, Effect System, HTTP client/server

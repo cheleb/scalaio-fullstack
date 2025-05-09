@@ -12,13 +12,13 @@
  <img src="../images/zio.drawio.svg" style="width: 80%; height: auto;" />
 </div>
 
-<div v-click="[2,6]" v-motion style="position:absolute" duration="1s"
+<div v-click="[1,6]" v-motion style="position:absolute" duration="1s"
   :initial="{ x: 0, y: -100 }"
   :enter="{ x: 210, y: -360 }"
-  :click-2="{ x: 110, y: -360 }"
-  :click-3="{ x: 110, y: -300 }"
-  :click-4="{ x: 110, y: -235 }"
-  :click-5="{ x: 110, y: -175 }"
+  :click-1="{ x: 110, y: -360 }"
+  :click-2="{ x: 110, y: -300 }"
+  :click-3="{ x: 110, y: -235 }"
+  :click-4="{ x: 110, y: -175 }"
   :leave="{ x: 110 }"
 >
   <img src="../images/object.svg" style="width: 40%; height: auto;" />
