@@ -1,110 +1,163 @@
 ---
 transition: fade
 layout: two-cols
-
 ---
 
 # OOP vs FP
 
-<v-clicks depth="2" style="margin: 2em">
+<v-clicks depth="1" style="margin: 2em">
 
 - OOP
   - mutable state
   - inheritance
   - polymorphism
+  - statements based
 - FP
   - immutable state
-  - composition
-  - type safety
+  - function composition
+  - expression based
+</v-clicks>
+
+::right::
+
+<div v-click>
+
+<h2> Scala: OOP && FP</h2>
+
+Why not both ?
+
+</div>
+
+<v-clicks>
+
+- better OOP:
+  - variances of type parameters
+  - type classes: Ad hoc polymorphism
+ 
+</v-clicks>
+
+---
+
+## OOP vs FP
+
+<img alt="OOP vs FP" src="../images/oop-vs-fp.webp" width="70%"/>
+
+
+---
+transition: fade
+layout: two-cols
+---
+
+## Scala Type system
+
+Rich type system...
+
+<v-clicks depth="2">
+
+- Generics
+- Variance
+- Intersection Types
+- Union Types
+- Algebraic Data Types
+- Opaque Types
+- Structural Types
+- Dependent Function Types
+- Other Types ?
 
 </v-clicks>
 
 ::right::
 
-But:
+````md magic-move {at:1}
 
-<v-clicks>
-
-- <span v-mark="{type:'underline', color:'orange', at:15}">Boilerplate</span>
-- <span v-mark="{type:'underline', color:'orange', at:16}">Boxing / Unboxing</span>
-
-</v-clicks>
-
-
----
-
-## ADT and Generic Derivation
-
-<v-clicks depth="2">
-
-- case class
-  - Kotlin data class
-  - Java Record
-- ADT
-  - algebraic data type
-  - sum type
-  - product type
-- generic derivation
-
-</v-clicks>
-
-
-<!-- 
-
-- Scala is a complex language, but it is also a language that can be used in a simple way.
-- The libraries around Scala are complex, but they are also libraries that can be used in a simple way.
-- The tooling around Scala is complex.
-
- -->
-
----
-
-## Model your domain
-
-<h3>Complex, but Safer</h3>
-
-<br /> 
-
-<v-clicks depth="2">
-
-  * Tame the complexity with types.
-    - Type safety 101.
-    - Algebraic Data Type.
-    - Generic Derivation.
-</v-clicks>
-
-<!-- 
-
-- Type safety simple use case.
-- Algebraic Data Type (ADT) to model your domain.
-- Generic Derivation to avoid boilerplate.
-
-
- -->
-
----
-
-# Scala Full Stack
-
-## Type Safety
-
-<div grid="~ cols-[37%_62%]">
-<v-clicks depth="2" style="margin: 2em">
-
-  * Compiler is your friend. 
-    - <span v-mark="{type:'underline', color:'orange', at:17}">Catch errors early</span>.
-    - Refactor with confidence.
-  * But:
-    * <span v-mark="{type:'underline', color:'orange', at:18}">Boilerplate</span>
-    * <span v-mark="{type:'underline', color:'orange', at:19}">Boxing / Unboxing</span>
-</v-clicks>
-<div>
-
-````md magic-move
+```
+. 
+```
 
 ```scala
 //
+class Array[A]
 ```
+```scala
+trait ZIO[-R, +E, +A]
+```
+```scala
+type A = Database & RabbitMQ
+```
+```scala
+type RegisterReponse = User | Unit
+```
+```scala
+enum Option[+A]:
+  case Some[A](value: A)
+  case None
+```
+```scala
+opaque type Email = String
+```
+```
+...
+```
+````
+
+<v-clicks>
+
+- Other Types:
+  - Type lambdas
+  - Match types
+  - Existential types
+  - Higher-kinded types
+  - Singleton types
+  - Refinement types
+  - Kind polymorphis
+</v-clicks>
+
+
+<!--
+
+This slide may be interesting to show the complexity of the type system. Intention is not to be arrogant :D
+
+But the more contraint your type system have, the more you can rely on compiler. 
+
+ -->
+
+---
+transition: fade
+layout: two-cols
+---
+## Scala types and compiler.
+
+Rich type system brings:
+
+<v-clicks depth="2">
+
+- refined types: 
+  - check error early
+  - overtyping
+- make illegal states unrepresentable
+- refactor with confidence
+
+</v-clicks>
+
+<div v-click>
+
+And in the meantime:
+
+</div>
+
+<v-clicks>
+
+- reduce boilerplate
+- no boxing / unboxing
+- enter the metaprogramming world 👈
+
+</v-clicks>
+
+
+
+::right::
+
+````md magic-move {at:1}
 
 ```scala
 case class User(firstname: String,
@@ -113,310 +166,72 @@ case class User(firstname: String,
                 password: String,
                 age: Int)
 ```
-
 ```scala
 case class User(firstname: String,
                 lastname: String,
                 email: String,
                 password: String,
-                age: Int)
-// 1000 lines later
+                age: Int :| Positive)
+```
+```scala
+case class User(firstname: String,
+                lastname: String,
+                email: String,
+                password: String,
+                age: Int :| Positive)
+
 val user = User("John",
                 "Doe",
-                "john.does@foo.bar",
+                "john.doe@gmail.com",
                 "notsecured",
-                42)
-```
-
-```scala
-case class User(firstname: String,
-                lastname: String,
-                email: String,
-                password: String,
-                age: Int)
-// 1000 lines later
-val user = User(💥"Doe",
-                💥"John",
-                 "john.does@foo.bar",
-                 "notsecured",
-                 42)
-```
-
-```scala
-case class User(firstname: String,
-                lastname: String,
-                email: String,
-                password: String,
-                age: Int)
-// 1000 lines later
-val user = User(💥"Doe",
-                💥"john.does@foo.bar",
-                💥"notsecured",
-                💥"John",
-                💥-42)
+                -42) // 💥 compilation error              
 ```
 ```scala
 case class User(firstname: Firstname,
                 lastname: Lastname,
                 email: Email,
                 password: Password,
-                age: Age)
+                age: Int :| Positive)
+
+opaque type Firstname <: String = String
+opaque type Password <: String = String
+
+
 ```
-```scala {*|1,7,13|2,8,13|3,9,13|4,10,13}
+```scala
 case class User(firstname: Firstname,
                 lastname: Lastname,
                 email: Email,
-                password: Password,                
-                age: Age)
-// 1000 lines later
-val firstname = Firstname("John")
-val lastname = Lastname("Doe")
-val email = Email("john.doe@foo.far")
-val password = Password("notsecured")
-val age = Age(42)
-// Few lines later
-val user = User(firstname, lastname, email, password, age)
+                password: Password,
+                age: Int :| Positive)
+
+opaque type Password <: String = String
+
+object Password:
+  given JsonCodec[Password] = JsonCodec.string
+    .transformOrFail[Password](
+      str =>
+      if str.length >= 12 then Right(str)
+      else Left("Password must be at least 12 characters long"),
+      identity
+  )
+  given Schema[Password] = Schema.string
 ```
-
-````
-
-</div>
-
-</div>
-
-<!--
-
-- Scala case: Kotlin data class, Java record.
-- Easy to use, but easy to misuse.
-   - minor error
-   - major error
-- Type safety
-    - a compilation check.
-    - a runtime garanty.
-- But:
-  - Boilerplate
-  - Boxing / Unboxing
-
-
- -->
-
----
-
-# Scala Full Stack
-
-## Boilerplate, really ?
-
-<div grid="~ cols-[40%_60%]">
-<div>
- <v-clicks depth="2" style="margin: 2em">
-
-  * Not at all.
-    - tag the data.
-    - or added validation step.
-
- </v-clicks>
-
- <div v-click="14">
-  * But:
-    * <span v-mark="{type:'underline', color:'orange', at:15}">Boxing / Unboxing</span>
- </div>
-</div>
-<div>
-
-````md magic-move
-```scala
-//
 ```
-```scala
-case class Firstname(value: String)
-```
-```scala {*|1|3|4|5}
-object Firstname:
-  def attempt(value: String): Either[String, Firstname] =
-    if value.nonEmpty then Right(Firstname(value))
-    else Left("Invalid firstname")
-```
-```scala {*|1|3|4|5}
-case class Email(value: String)
-object Email:
-  def attempt(value: String): Either[String, Email] =
-    if value.contains("@") then Right(Email(value))
-    else Left("Invalid email")
-```
-```scala {*|10}
-case class Email(value: String)
-object Email:
-  def attempt(value: String): Either[String, Email] =
-    if value.contains("@") then Right(Email(value))
-    else Left("Invalid email")
+This contraints checked will:
+ - occur at compile time.
+ - be enforce at runtime.
 
-case class Age(value: Int)
-object Age:
-  def attempt(value: Int): Either[String, Age] =
-    if value > 0 then Right(Age(value))
-    else Left("Invalid age")
 ```
-```scala
-val user = for
-  firstname <- Firstname.attempt("John")
-  lastname  <- Lastname.attempt("Doe")
-  email     <- Email.attempt("john.does@foo.bar")
-  password  <- Password.attempt("notsecured")
-  age       <- Age.attempt(42)
-yield User(firstname, lastname, email, password, age)
 ```
-```scala
-val user: Either[String, User] = for
-  firstname <- Firstname.attempt("John")
-  lastname  <- Lastname.attempt("Doe")
-  email     <- Email.attempt("john.does@foo.bar")
-  password  <- Password.attempt("notsecured")
-  age       <- Age.attempt(42)
-yield User(firstname, lastname, email, password, age)
+This contraints can be checked:
+ - occur at compile time.
+ - be enforce at runtime.
+
+Across the whole code base:
+  - from the API to the database.
+  - from the database to the API.
 ```
 ````
-</div>
-</div>
-
-<div v-motion v-click 
-  :initial="{  y: 100, x:300 }"
-  :enter="{  y: 0 }" style="border: 1px #FF9999 solid; width:20em">
-“make illegal states unrepresentable” 
-<br />
--- Yaron Minsky
-</div>
 
 
-<!-- 
-
-We just want to handle and validate the data, before using it.
-
--->
-
-
-
----
-
-# Scala Full Stack
-
-## Boxing / unboxing, really ?
-
-<div grid="~ cols-[40%_60%]">
-<v-clicks depth="2" style="margin: 2em">
-
-  * Not at all.
-    - Just compilation garanties.
-</v-clicks>
-<div>
-
-````md magic-move
-
-```scala
-//
-```
-
-```scala
-case class Email(value: String) // Boxing 100% overhead
-```
-```scala
-case class Email(value: String) extends AnyVal // Boxing can happen
-```
-```scala
-opaque type Email = String // No boxing at all
-```
-```scala
-case class Email(value: String)
-object Email:
-  def attempt(value: String): Either[String, Email] =
-    if value.contains("@") then Right(Email(value))
-    else Left("Invalid email")
-```
-```scala {*|1|4,5}
-opaque type Email = String
-object Email:
-  def attempt(value: String): Either[String, Email] =
-    if value.contains("@") then Right(value)
-    else Left("Invalid email")
-```
-````
-<v-click>
-Strickly same usage:
-```scala
-val user: Either[String, User] = for
-  firstname <- Firstname.attempt("John")
-  lastname <- Lastname.attempt("Doe")
-  email <- Email.attempt("john.does@foo.bar")
-  password <- Password.attempt("notsecured")
-yield User(firstname, lastname, email, password, Age(42))
-```
-</v-click>
-
-</div>
-</div>
-
-
-
-<div v-motion v-click 
-  :initial="{  y: 100, x:300 }"
-  :enter="{  y: 50 }" style="border: 1px #FF9999 solid; width:20em">
-Type safe is a compilation garanty
-  <br />
-  With no runtime overhead.
-<br />
-</div>
-
-<!--
-
-- We can avoid boxing / unboxing with value class.
-  - no real garanties.
-- We can avoid boxing / unboxing with opaque type.
-  - real garanties at compilation time (compilation error if not respected).
-- Note that:
-  - the API is strictly the same.
-  - the usage is strictly the same.
-  - Email is a Email at compile time.
-  - Email is a String at runtime.
-  - Email now is just a type alias for String
-   
-
--->
-
----
-transition: fade
----
-
-# Scala Full Stack
-
-## Ok a little bit more complex.
-
-### For the library author
-
-````md magic-move
-```scala
-opaque type Email = String
-opaque type Password = String
-
-case class User(email: Email, password: Password)
-```
-```scala
-object User:
-  opaque type Email = String
-  opaque type Password = String
-
-case class User(email: User.Email, password: User.Password)
-```
-```scala
-object User:
-  opaque type Password = String
-  def password(str: String): Either[String, Password] =
-    Either.cond(str.length >= 8, str, "Password too short")
-
-  opaque type Email = String
-
-  def email(value: String): Either[String, User.Email] =
-    if value.contains("@") then Right(value)
-    else Left("Invalid email")
-
-case class User(email: User.Email, password: User.Password)
-```
-````

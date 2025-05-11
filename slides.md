@@ -55,7 +55,6 @@ With ZIO, Tapir && Laminar
 ---
 transition: fade-out
 layout: two-cols
-
 ---
 
 ## Agenda
@@ -89,37 +88,30 @@ layout: two-cols
 
 ---
 src: ./pages/01_scala_complex.md
+---
 
+---
+src: ./pages/02_why.md
 ---
 
 ---
 src: ./pages/02_ono-at-ledger.md
-
 ---
 
 ---
 src: ./pages/03_setup.md
-
----
-
----
-src: ./pages/04_why.md
-
 ---
 
 ---
 src: ./pages/04_architecture.md
-
 ---
 
 ---
 src: ./pages/05_adt.md
-
 ---
 
 ---
-src: ./pages/06_type_safety.md
-
+src: ./pages/06_metaprog.md
 ---
 
 ---
@@ -146,7 +138,6 @@ Need now to talk about ZIO, the glue between the layers.
 
 ---
 src: ./pages/05_zio.md
-
 ---
 
 ---

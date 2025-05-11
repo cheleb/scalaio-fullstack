@@ -86,61 +86,6 @@ Scala is a language that can be compiled to:
 * to WASM (experimental)
  -->
 
----
-
-## Monolith 3-tiers architecture
-
-<div grid="~ cols-[25%_50%_30%] gap-0">
-  <div>
-  <v-clicks>
-
-  Frontend: SPA
-
-- [ScalaJs](https://www.scala-js.org)
-- [ZIO](https://zio.dev)
-- [Sttp Tapir](https://tapir.softwaremill.com/en/latest/) REST client
-- [Laminar](https://laminar.dev)
-- [UI5](https://github.com/sherpal/LaminarSAPUI5Bindings) Web Components
-
- </v-clicks>
- </div>
-  <div>
-    <img src="../images/runtime-stack.drawio.svg" style="width: 70%; height: auto; margin:2em" />
-  </div>
-  <div>
-<v-clicks>
-
-Backend:
-  
-- [Scala](https://www.scala-lang.org)
-- [ZIO](https://zio.dev)
-- [Tapir](https://tapir.softwaremill.com/en/latest/) REST API
-- [Quill](https://getquill.io) SQL queries
-
-</v-clicks>
-<v-clicks>
-
-  Database:
-
-- [Postgres](https://www.postgresql.org)
-- [Flyway](https://github.com/flyway/flyway) migrations
-
-</v-clicks>
- </div>
-
-</div>
-
-<!--
-
-I started on my own a project to build a full stack app with Scala.
-
-* Frontend: SPA
-* Backend:
-  * BFF
-  * REST API
-* Database: Postgres
-
--->
 
 
 ---
@@ -236,3 +181,59 @@ But ...
   * docker
 
  -->
+
+---
+
+## Monolith 3-tiers architecture
+
+<div grid="~ cols-[25%_50%_30%] gap-0">
+  <div>
+  <v-clicks>
+
+  Frontend: SPA
+
+- [ScalaJs](https://www.scala-js.org)
+- [ZIO](https://zio.dev)
+- [Sttp Tapir](https://tapir.softwaremill.com/en/latest/) REST client
+- [Laminar](https://laminar.dev)
+- [UI5](https://github.com/sherpal/LaminarSAPUI5Bindings) Web Components
+
+ </v-clicks>
+ </div>
+  <div>
+    <img src="../images/runtime-stack.drawio.svg" style="width: 70%; height: auto; margin:2em" />
+  </div>
+  <div>
+<v-clicks>
+
+Backend:
+  
+- [Scala](https://www.scala-lang.org)
+- [ZIO](https://zio.dev)
+- [Tapir](https://tapir.softwaremill.com/en/latest/) REST API
+- [Quill](https://getquill.io) SQL queries
+
+</v-clicks>
+<v-clicks>
+
+  Database:
+
+- [Postgres](https://www.postgresql.org)
+- [Flyway](https://github.com/flyway/flyway) migrations
+
+</v-clicks>
+ </div>
+
+</div>
+
+<!--
+
+I started on my own a project to build a full stack app with Scala.
+
+* Frontend: SPA
+* Backend:
+  * BFF
+  * REST API
+* Database: Postgres
+
+-->

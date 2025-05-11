@@ -1,7 +1,6 @@
 ---
 transition: fade
 layout: two-cols
-
 ---
 
 # Setup Full Stack
@@ -35,7 +34,6 @@ layout: two-cols
 ---
 transition: fade
 layout: two-cols
-
 ---
 
 ## 10s demo
@@ -337,18 +335,11 @@ Add backends and frontends dependencies to the shared project variant according 
 
 -->
 
-
----
-
-## Setup / Backend
-
-<img alt="mike" src="../images/completed.webp" />
-
 ---
 
 ## Setup / Frontend / NPM / package.json
 
-```json {*|7-11,20-21|13-18}{lines:true}
+```json {*|7-11,20-21}{lines:true}
 {
   "name": "scala-at-sunnytech",
   "private": true,
@@ -369,8 +360,8 @@ Add backends and frontends dependencies to the shared project variant according 
   },
   "devDependencies": {
     "@scala-js/vite-plugin-scalajs": "^1.0.0",
-    "vite": "^5.4.9",
-    "typescript": "5.6.3",
+    "vite": "^6.3.5",
+    "typescript": "5.8.3",
     "@types/chart.js": "2.9.29"
   }
 }
@@ -390,7 +381,7 @@ Development time dependencies are typescript and chart.js to illustrate how to u
 
 ## Setup / Frontend / NPM / vite.config.js
 
-```js {*|2|5|8|12}
+```js {*|8|12}
 import { defineConfig } from "vite";
 import scalaJSPlugin from "@scala-js/vite-plugin-scalajs";
 
@@ -418,7 +409,7 @@ export default defineConfig({
 
 ---
 
-## Setup / Frontend
+## Setup
 
 <img alt="mike" src="../images/completed.webp" />
 
