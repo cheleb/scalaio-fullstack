@@ -9,12 +9,11 @@
 
 ---
 
-<img src="../images/architecture.svg" style="width: 100%" />
+<img src="../images/architecture-global.drawio.svg" style="width: 100%" />
 <img src="../images/youarehere.png" width="50"  v-motion 
   :initial="{ x: 0, y:0 }"
-  :enter="{ x: 350, y:-490 }"
-  :click-1="{ x: 650, y:-490 }"
-  :click-2="{ x: 60, y:-490 }"
+  :enter="{ x: 0, y:0 }"
+  :click-1="{ x: 350, y:-490 }"
   :leave="{ x: 300 }" />
  
 <div v-click="+2">

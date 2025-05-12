@@ -319,8 +319,9 @@ trait Show[A]:
 
 object Show extends AutoDerivation[Show]:
 
+  // Product type
   override def join[T](ctx: CaseClass[Show, T]): Show[T] = ???
-
+  // Sum type
   override def split[T](ctx: SealedTrait[Show, T]): Show[T] = ???
 
   given Show[String] with
@@ -351,6 +352,31 @@ object Show extends AutoDerivation[Show]:
   given Show[Password] with
     def show(a: Password): String = "********"
 ```
+```scala
+trait Show[A]:
+  def show(a: A): String
+
+object Show extends AutoDerivation[Show]:
+
+  // Product type
+  override def join[T](ctx: CaseClass[Show, T]): Show[T] = ???
+  // Sum type
+  override def split[T](ctx: SealedTrait[Show, T]): Show[T] = ???
+
+  given Show[String] with
+    def show(a: String): String = a
+  given Show[Int] with
+    def show(a: Int): String = a.toString
+  given Show[Password] with
+    def show(a: Password): String = "********"
+
+// ...
+
+john.show // User(John, Doe, john.doe@foo.bar, ********)
+
+
+```
+
 ````
 
 

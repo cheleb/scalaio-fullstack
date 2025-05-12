@@ -150,35 +150,13 @@ src: ./pages/05_zio.md
 * One line to setup a new project ✅
 * One line to start the dev environment ✅
 * One ZIO layer to rule them all ✅
-* One line to bind data in the UI
+* One line to bind data in the UI ✅
 * One line to expose API
 * One line to consume API
 * One line to deploy
 
 
 </v-clicks>
-
-
-<div v-click="[1, 2]"  v-motion
-  :enter="{ x: 250, y:-150 }"
-  :leave="{ x: 50 }"
->
-  <img src="./images/larry.jpeg" width="500" style="position:absolute"/>
-</div>
-<div v-click="[2, 3]"  v-motion
-  :initial="{ x: -50, y:-370 }"
-  :enter="{ x: 350, y:-150 }"
-  :leave="{ x: 50 }"
->
-  <img src="./images/gotowork.webp" width="400" style="position:absolute"/>
-</div>
-<div v-click="[4, 5]"  v-motion
-  :initial="{ x: -50, y:-500 }"
-  :enter="{ x: 350, y:-150 }"
-  :leave="{ x: 50 }"
->
-  <img src="./images/UI5_bindings.png" width="400" style="position:absolute"/>
-</div>
 <div v-click="[5, 7]"  v-motion
   :initial="{ x: -50, y:0 }"
   :enter="{ x: 350, y:-150 }"
