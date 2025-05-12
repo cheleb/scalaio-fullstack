@@ -53,8 +53,62 @@ With ZIO, Tapir && Laminar
 
 
 ---
-transition: fade-out
+transition: fade
 layout: two-cols
+
+---
+
+## 100% Scala
+
+````md magic-move
+
+```md
+- Strongly typed
+
+- Functional programming
+
+- Metaprogramming
+```
+```md
+- Strongly typed
+  - Type safety (error detection)
+  - Development speed
+
+- Functional programming
+
+- Metaprogramming
+```
+```md
+- Strongly typed
+  - Type safety (error detection)
+  - Development speed
+
+- Functional programming
+  - Immutability & pure functions
+  - Reactive programming
+
+- Metaprogramming
+```
+```md
+- Strongly typed
+  - Type safety (error detection)
+  - Development speed
+
+- Functional programming
+  - Immutability & pure functions
+  - Reactive programming
+
+- Metaprogramming
+  - Type class derivation
+  - Scala macros
+```
+````
+
+::right::
+
+<img alt="World of Scala" src="./images/world-of-scala.png" width="80%"/>
+
+
 ---
 
 ## Agenda
@@ -68,9 +122,9 @@ layout: two-cols
 - OOP vs FP: Scala types and values.
   - Type safety.
   - Type class
-- Effect system: ZIO
-  - Library internals.
   - Scala derivation metaprogramming.
+- Effects system: ZIO
+  - Library internals.
 - Deployment.
 </v-clicks>
 
@@ -88,30 +142,37 @@ layout: two-cols
 
 ---
 src: ./pages/01_scala_complex.md
+
 ---
 
 ---
 src: ./pages/02_why.md
+
 ---
 
 ---
 src: ./pages/02_ono-at-ledger.md
+
 ---
 
 ---
 src: ./pages/03_setup.md
+
 ---
 
 ---
 src: ./pages/04_architecture.md
+
 ---
 
 ---
 src: ./pages/05_adt.md
+
 ---
 
 ---
 src: ./pages/06_metaprog.md
+
 ---
 
 ---
