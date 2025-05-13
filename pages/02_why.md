@@ -196,7 +196,6 @@ But ...
 - [ZIO](https://zio.dev)
 - [Sttp Tapir](https://tapir.softwaremill.com/en/latest/) REST client
 - [Laminar](https://laminar.dev)
-- [UI5](https://github.com/sherpal/LaminarSAPUI5Bindings) Web Components
 
  </v-clicks>
  </div>

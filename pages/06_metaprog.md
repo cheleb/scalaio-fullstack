@@ -43,13 +43,16 @@ layout: two-cols
 
 In scala, we can use ADT to represent data types.
 
-* ADT = Algebraic Data Type
-  * Product type = case class
-  * Sum type = sealed trait
+<v-clicks>
+
+- ADT = Algebraic Data Type
+  - Product type = case class
+  - Sum type = sealed trait
+</v-clicks>
 
 ````md magic-move
 ```scala
-// Product type vs Sum type
+.
 ```
 ```scala
 // Product type

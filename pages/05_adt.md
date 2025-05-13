@@ -220,13 +220,13 @@ object Password:
 ```
 This contraints checked will:
  - occur at compile time.
- - be enforce at runtime.
+ - be enforced at runtime.
 
 ```
 ```
 This contraints can be checked:
  - occur at compile time.
- - be enforce at runtime.
+ - be enforced at runtime.
 
 Across the whole code base:
   - from the API to the database.
