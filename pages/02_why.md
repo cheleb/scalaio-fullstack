@@ -26,6 +26,23 @@
 
 ---
 
+## Scala Full Stack, really ?
+
+<br />
+
+<div grid="~ cols-4 gap-1">
+  <div><img alt="jvm" src="../images/jvm.png" style="width: 40%; height: auto;"  /></div>
+  <div><img alt="node" src="../images/js.png" style="width: 20%; height: auto;"  /></div>
+  <div><img alt="native" src="../images/scalanative.webp" style="width: 25%; height: auto;"  /></div>
+  <div><img alt="wasm" src="../images/wasm.png" style="width: 30%; height: auto;"  /></div>
+  <div>2004</div>
+  <div>2010</div>
+  <div>2012</div>
+  <div>2024</div>
+</div>
+
+---
+
 ## Scala Full Stack ?
 
 <div grid="~ cols-6 gap-1">
