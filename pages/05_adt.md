@@ -55,14 +55,14 @@ Rich type system...
 <v-clicks depth="2">
 
 - Generics
-- Variance
+- Variance ?
+  - Invariant
+  - Covariant
+  - Contravariant
 - Intersection Types
 - Union Types
 - Algebraic Data Types
 - Opaque Types
-- Structural Types
-- Dependent Function Types
-- Other Types ?
 
 </v-clicks>
 
@@ -75,11 +75,51 @@ Rich type system...
 ```
 
 ```scala
-//
+class Animal
+class Dog extends Animal
+
+// Eq java Array<A> 
 class Array[A]
 ```
 ```scala
-trait ZIO[-R, +E, +A]
+class Animal
+class Dog extends Animal
+
+// Quiz 💚 or 💥
+class Array[A]
+
+val a: Array[Animal] = new Array[Dog]()
+
+```
+```scala
+class Animal
+class Dog extends Animal
+
+// Invariant
+class Array[A]
+                       💥
+val a: Array[Animal] = new Array[Dog]()
+
+```
+```scala
+class Animal
+class Dog extends Animal
+
+//Covariant
+class List[+A]
+                      💚 
+val a: List[Animal] = new List[Dog]()
+
+```
+```scala
+trait Animal
+class Dog extends Animal
+
+//Contravariant
+class Vet[-A]
+
+val a: Vet[Dog] = new Vet[Animal]()
+
 ```
 ```scala
 type A = Database & RabbitMQ
@@ -102,14 +142,16 @@ opaque type Email = String
 
 <v-clicks>
 
-- Other Types:
-  - Type lambdas
-  - Match types
-  - Existential types
-  - Higher-kinded types
-  - Singleton types
-  - Refinement types
-  - Kind polymorphis
+- Structural Types
+- Dependent Function Types
+- Other Types ?
+- Type lambdas
+- Match types
+- Existential types
+- Higher-kinded types
+- Singleton types
+- Refinement types
+- Kind polymorphis
 </v-clicks>
 
 
