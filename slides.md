@@ -118,16 +118,18 @@ layout: two-cols
 - 10s demo time / 2 lines of shell:
   - scaffolding and IDE magic.
   - End ~~User~~ Developer  Experience.
-- UI with Laminar.
-  - Laminar form derivation.
+- Programming with Type:
+  - Scala type system. 
+  - UI Laminar form derivation.
+- Progamming with values:
   - Tapir: HTTP client.
-- Effects system: ZIO
+  - Effects system: ZIO
 - Backend:
   - Tapir: HTTP server.
   - Persistence
-- Deployment.
-  - Docker, Kubernetes
-  - ArgoCD
+- Deployment
+  - Docker, Kubernetes, ArgoCD
+
 </v-clicks>
 
 ::right::
@@ -175,16 +177,21 @@ src: ./pages/06_metaprog.md
 ## Agenda / ZIO
 
 - Scala, a complex language  ?
-- Demo time:
+- 10s demo time / 2 lines of shell:
   - scaffolding and IDE magic.
   - End ~~User~~ Developer  Experience.
-- OOP vs FP: Scala types and values.
-  - Type safety.
-  - Type class
-- Effect system: ZIO 👈
-  - Library internals.
-  - Scala derivation metaprogramming.
+- Programming with Type:
+  - Scala type system. 
+  - UI Laminar form derivation.
+- Progamming with values:
+  - Tapir: HTTP client. 👈
+  - Effects system: ZIO
+- Backend:
+  - Tapir: HTTP server.
+  - Persistence
 - Deployment.
+  - Docker, Kubernetes
+  - ArgoCD
 
 <!--
 

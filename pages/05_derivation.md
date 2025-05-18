@@ -1,3 +1,165 @@
+# Typesystem best friend vs boilerplate !
+
+What is a type ?
+
+A type is a <span v-mark="{type:'underline', color:'orange', at:1}">set of values</span> and a set of operations that can be performed on those values.
+
+---
+
+# Scala type system
+
+### Rich type system
+
+<div grid="~ cols-[30%_70%] gap-2">
+
+<div>
+<v-clicks depth="3">
+  
+  - Generic variance
+      - invariant
+      - covariant
+      - contravariant
+    - union types
+    - intersection types
+    - higher-kinded types
+    - type classes
+  - Compile time operations
+    - context functions
+    - extension
+    - macros
+    - metaprogramming
+</v-clicks>
+
+</div>
+
+<div style="margin-top: 4em">
+
+````md magic-move {lines: true, at:1}
+```scala
+trait Animal
+trait Dog extends Animal
+trait Cat extends Animal 
+```
+```scala
+trait Animal
+trait Dog extends Animal
+trait Cat extends Animal 
+
+val animals: Array[Animal] = Array[Dog]()
+```
+```scala
+trait Animal
+trait Dog extends Animal
+trait Cat extends Animal 
+
+val animals: Array[Animal] = Array[Dog]() 💥
+```
+```scala
+trait Animal
+trait Dog extends Animal
+trait Cat extends Animal 
+
+trait List[+A] // is co-variant "+"
+
+val animals: List[Animal] = List.empty[Dog]
+
+```
+
+```scala
+trait Animal
+trait Dog extends Animal
+trait Cat extends Animal 
+
+trait Vet[-A] // is contra-variant "-"
+
+val veterinary: Vet[Dog] = Vet[Animal]("Dr. Who") // Contra-variant
+```
+
+```scala
+type pet = Cat | Dog 
+```
+```scala
+type Environement = Database & RabbitMQ 
+```
+```scala
+trait Functor[F[_]] extends Invariant[F]: 
+  def map[A, B](fa: F[A])(f: A => B): F[B]
+```
+
+````
+</div>
+</div>
+
+
+
+
+
+ 
+---
+transition: fade
+layout: two-cols
+---
+
+## Metaprog / ADT
+
+In scala, we can use ADT to represent data types.
+
+<v-clicks>
+
+- ADT = Algebraic Data Type
+  - Product type = case class
+  - Sum type = sealed trait
+</v-clicks>
+
+````md magic-move
+```scala
+.
+```
+```scala
+// Product type
+case class Box(size: Size,
+               color: Color)
+```
+```scala
+// Product type ??
+case class Box(size: Size,
+               color: Color)
+// Sum type ??
+enum Size:
+  case Small
+  case Medium
+  case Large
+
+enum Color:
+  case Red
+  case Green
+  case Blue(dark: Boolean)
+```
+```scala
+// Product type
+case class Box(size: Size,
+               color: Color)
+// Sum type
+enum Size:
+  case Small
+  case Medium
+  case Large
+
+enum Color:
+  case Red
+  case Green
+  case Blue(dark: Boolean)
+```
+
+````
+
+
+::right::
+
+<img src="../images/datatypes.jpg" alt="Architecture Diagram" width="100%"/>
+
+
+
 ---
 transition: fade
 layout: two-cols
@@ -106,7 +268,7 @@ Logger.info(user.show)
 ```
 ```scala
 
-extension (a: A)(using sa: Show[A]) 
+extension [A] (a: A)(using sa: Show[A]) 
   def show: String =
      sa.show(a)
 
