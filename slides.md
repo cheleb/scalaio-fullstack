@@ -55,7 +55,6 @@ With ZIO, Tapir && Laminar
 ---
 transition: fade
 layout: two-cols
-
 ---
 
 ## 100% Scala
@@ -119,13 +118,16 @@ layout: two-cols
 - 10s demo time / 2 lines of shell:
   - scaffolding and IDE magic.
   - End ~~User~~ Developer  Experience.
-- OOP vs FP: Scala types and values.
-  - Type safety.
-  - Type class
-  - Scala derivation metaprogramming.
+- UI with Laminar.
+  - Laminar form derivation.
+  - Tapir: HTTP client.
 - Effects system: ZIO
-  - Library internals.
+- Backend:
+  - Tapir: HTTP server.
+  - Persistence
 - Deployment.
+  - Docker, Kubernetes
+  - ArgoCD
 </v-clicks>
 
 ::right::
@@ -142,37 +144,30 @@ layout: two-cols
 
 ---
 src: ./pages/01_scala_complex.md
-
 ---
 
 ---
 src: ./pages/02_why.md
-
 ---
 
 ---
 src: ./pages/02_ono-at-ledger.md
-
 ---
 
 ---
 src: ./pages/03_setup.md
-
 ---
 
 ---
 src: ./pages/04_architecture.md
-
 ---
 
 ---
-src: ./pages/05_adt.md
-
+src: ./pages/05_ui.md
 ---
 
 ---
 src: ./pages/06_metaprog.md
-
 ---
 
 ---
