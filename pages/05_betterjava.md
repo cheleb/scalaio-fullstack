@@ -144,7 +144,6 @@ opaque type Email = String
 
 - Structural Types
 - Dependent Function Types
-- Other Types ?
 - Type lambdas
 - Match types
 - Existential types
@@ -250,14 +249,12 @@ case class User(firstname: Firstname,
 opaque type Password <: String = String
 
 object Password:
-  given JsonCodec[Password] = JsonCodec.string
-    .transformOrFail[Password](
-      str =>
-      if str.length >= 12 then Right(str)
-      else Left("Password must be at least 12 characters long"),
-      identity
-  )
-  given Schema[Password] = Schema.string
+  def apply(value: String): Password = 
+    if value.length < 8 then
+      throw new IllegalArgumentException("Password must be at least 8 characters long")
+    else
+      value.asInstanceOf[Password]
+
 ```
 ```
 This contraints checked will:

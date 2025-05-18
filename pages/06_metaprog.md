@@ -56,14 +56,19 @@ In scala, we can use ADT to represent data types.
 ```
 ```scala
 // Product type
-case class Box(size: Int :| Between(0, 100),
+case class Box(size: Size,
                color: Color)
 ```
 ```scala
 // Product type ??
-case class Box(size: Int :| Between(0, 100),
+case class Box(size: Size,
                color: Color)
 // Sum type ??
+enum Size:
+  case Small
+  case Medium
+  case Large
+
 enum Color:
   case Red
   case Green
@@ -71,9 +76,14 @@ enum Color:
 ```
 ```scala
 // Product type
-case class Box(size: Int :| Between(0, 100),
+case class Box(size: Size,
                color: Color)
 // Sum type
+enum Size:
+  case Small
+  case Medium
+  case Large
+
 enum Color:
   case Red
   case Green
@@ -86,301 +96,6 @@ enum Color:
 ::right::
 
 <img src="../images/datatypes.jpg" alt="Architecture Diagram" width="100%"/>
-
----
-transition: fade
-layout: two-cols
----
-
-## Metaprog / Type class ?
-
-
-Somewhere in the codebase 👇
-
-
-````md magic-move
-```
-...
-```
-```scala
-trait Show[A]:
-  def show(a: A): String
-
-```
-```
-.
-```
-```scala
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-```
-```scala
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.toString)
-```
-```scala
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.toString)
-// Leaks sensitive data
-
-```
-```scala
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.show)
-
-```
-```scala
-extension (user: User) 
-  def show: String = s"${user.firstname} ${user.lastname}"
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.show)
-```
-```scala
-extension [A] (a: A)(using sa: Show[A]) 
-  def show: String = sa.show(a)
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.show)
-```
-```scala
-extension (user: User) 
-  def show: String = s"${user.firstname} ${user.lastname}"
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.show)
-```
-```scala
-extension (user: User) 
-  def show: String = ???
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.show)
-```
-```scala
-extension [A] (a: A)
-  def show: String = ???
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.show)
-```
-```scala
-extension [A] (a: A)(using sa: Show[A]) 
-  def show: String = ???
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.show)
-```
-```scala
-//                          ?
-extension [A] (a: A)(using sa: Show[A]) 
-  def show: String = sa.show(a)
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.show)
-```
-```scala
-//
-extension [A] (a: A)(using sa: Show[A]) 
-  def show: String = sa.show(a)
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.show)
-```
-```scala
-
-val user: User = fetchFromDB("john.doe@example.com")
-
-Logger.info(user.show)
-```
-````
-
-<div style="margin-top: 2em; margin-left: 6em;">
-  <img v-click="+17" src="../images/tellme.webp" alt="tellme" width="60%"/>
-</div>
-::right::
-
-<br />
-<br />
-Somewhere else in a deps 👇
-
-
-<br />
-
-
-````md magic-move {at:2}
-```scala
-case class User(firsname: String,
-                lastname: String,
-                email: String,
-                password: String)
-```
-```scala
-// Type class
-trait Show[A]:
-  def show(a: A): String
-
-
-case class User(firsname: String,
-                lastname: String,
-                email: String,
-                password: String)
-```
-````
-
-<div v-click="+14">
-
-````md magic-move {at:16}
-```scala
-object User:
-    given Show[User] with
-        def show(user: User): String =
-        s"${user.firstname} ${user.lastname}"
-```
-```
-...
-```
-````
-</div>
-
-<div v-click="+15">
-
-```scala
-extension [A] (a: A)(using sa: Show[A]) 
-  def show: String = sa.show(a)
-
-```
-
-</div>
-
-
----
-
-## Metaprog / Generic derivation
-
-
-
-````md magic-move
-
-```scala
-trait Show[A]:
-  def show(a: A): String
-```
-
-```scala
-trait Show[A]:
-  def show(a: A): String
-
-object Show:
-  given Show[String] with
-    def show(a: String): String = a
-  given Show[Int] with
-    def show(a: Int): String = a.toString
-```
-```scala
-trait Show[A]:
-  def show(a: A): String
-
-object Show:
-  given Show[String] with
-    def show(a: String): String = a
-  given Show[Int] with
-    def show(a: Int): String = a.toString
-  given Show[Password] with
-    def show(a: Password): String = "********"
-```
-```scala
-trait Show[A]:
-  def show(a: A): String
-
-object Show extends AutoDerivation[Show]:
-  given Show[String] with
-    def show(a: String): String = a
-  given Show[Int] with
-    def show(a: Int): String = a.toString
-  given Show[Password] with
-    def show(a: Password): String = "********"
-```
-```scala
-trait Show[A]:
-  def show(a: A): String
-
-object Show extends AutoDerivation[Show]:
-
-  // Product type
-  override def join[T](ctx: CaseClass[Show, T]): Show[T] = ???
-  // Sum type
-  override def split[T](ctx: SealedTrait[Show, T]): Show[T] = ???
-
-  given Show[String] with
-    def show(a: String): String = a
-  given Show[Int] with
-    def show(a: Int): String = a.toString
-  given Show[Password] with
-    def show(a: Password): String = "********"
-```
-```scala
-trait Show[A]:
-  def show(a: A): String
-
-object Show extends AutoDerivation[Show]:
-
-  def join[T](ctx: CaseClass[Show, T]): Show[T] = value =>
-    ctx.params.map { param =>
-      param.typeclass.show(param.deref(value))
-    }.mkString(s"${ctx.typeInfo.short}(", ",", ")")
-
-  override def split[T](ctx: SealedTrait[Show, T]): Show[T] = value =>
-    ctx.choose(value) { sub => sub.typeclass.show(sub.cast(value)) }
-
-  given Show[String] with
-    def show(a: String): String = a
-  given Show[Int] with
-    def show(a: Int): String = a.toString
-  given Show[Password] with
-    def show(a: Password): String = "********"
-```
-```scala
-trait Show[A]:
-  def show(a: A): String
-
-object Show extends AutoDerivation[Show]:
-
-  // Product type
-  override def join[T](ctx: CaseClass[Show, T]): Show[T] = ???
-  // Sum type
-  override def split[T](ctx: SealedTrait[Show, T]): Show[T] = ???
-
-  given Show[String] with
-    def show(a: String): String = a
-  given Show[Int] with
-    def show(a: Int): String = a.toString
-  given Show[Password] with
-    def show(a: Password): String = "********"
-
-// ...
-
-john.show // User(John, Doe, john.doe@foo.bar, ********)
-
-
-```
-
-````
 
 
 ---
@@ -438,8 +153,19 @@ Where ?
 <br /><br /><br /><br /><br />
 
 
-<v-clicks at="2" style="margin-left: 2em">
-
+<div v-click="+3">
+````md magic-move {at:3}
+```
+- Form
+```
+```
+- Form
+- HTTP
+  - JsonCodec
+  - OpenAPI
+  - GraphQL
+```
+```
 - Form
 - HTTP
   - JsonCodec
@@ -449,4 +175,6 @@ Where ?
 - Avro
 - Protobuf
 - Config...
-</v-clicks>
+```
+````
+</div>
