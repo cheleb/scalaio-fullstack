@@ -121,7 +121,7 @@ layout: two-cols
 - Programming with Type:
   - Scala type system. 
   - UI Laminar form derivation.
-- Progamming with values:
+- Programming with values:
   - Tapir: HTTP client.
   - Effects system: ZIO
 - Backend:
@@ -183,8 +183,8 @@ src: ./pages/06_metaprog.md
 - Programming with Type:
   - Scala type system. 
   - UI Laminar form derivation.
-- Progamming with values:
-  - Tapir: HTTP client. 👈
+- Programming with values:  👈
+  - Tapir: HTTP client.
   - Effects system: ZIO
 - Backend:
   - Tapir: HTTP server.
@@ -195,49 +195,18 @@ src: ./pages/06_metaprog.md
 
 <!--
 
-Need now to talk about ZIO, the glue between the layers.
+Programming with values:
+  - ZIO: Effects system.
+  - Tapir: HTTP client.
 
 -->
 
 ---
+src: ./pages/07_values.md
+---
+
+---
 src: ./pages/05_zio.md
----
-
----
-
-# Scala Full Stack (lazy guide to)
-
-
-<v-clicks depth="3">
-
-* One line to setup a new project ✅
-* One line to start the dev environment ✅
-* One ZIO layer to rule them all ✅
-* One line to bind data in the UI ✅
-* One line to expose API
-* One line to consume API
-* One line to deploy
-
-
-</v-clicks>
-<div v-click="[5, 7]"  v-motion
-  :initial="{ x: -50, y:0 }"
-  :enter="{ x: 350, y:-150 }"
-  :leave="{ x: 50 }"
->
-  <img src="./images/rest.png" width="400" style="position:absolute"/>
-</div>
-<div v-click="7"  v-motion
-  :initial="{ x: -50, y:-0 }"
-  :enter="{ x: 300, y:-150 }"
-  :leave="{ x: 50 }"
->
-  <img src="./images/deploy.webp" width="400" style="position:absolute"/>
-</div>
-
-
----
-src: ./pages/06_ui.md
 ---
 
 ---
@@ -251,6 +220,7 @@ src: ./pages/072_tapir_client.md
 ---
 src: ./pages/08_all_together.md
 ---
+
 ---
 
 # Under the hood - Laminar Form Derivation

@@ -33,7 +33,7 @@ div(
 
 # Profile page
 
-```scala {*|5-7|2-3|8-9|17-19}
+```scala {*|5-7|9|11-17}
 object ProfilePage:
 
   val userBus = new EventBus[User]

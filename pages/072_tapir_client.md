@@ -29,6 +29,35 @@ And we want to process the result in the UI.
 
 ---
 
+# One line to run the request
+
+
+````md magic-move
+```scala {*|1-3|7|13-16}
+val personVar = Var(
+  NewUser("", "", "", Password(""), Password(""))
+)
+div(
+  h1("Signup"),
+  div(
+    personVar.asForm
+  ),
+  div(
+    Button(
+      "Create",
+      onClick --> { _ =>
+        UserEndpoint
+          .create(personVar.now())
+          .emitTo(userBus, errorBus)
+      
+      }
+    )
+  )
+
+```
+````
+
+---
 
 # Tapir Client Side
 
