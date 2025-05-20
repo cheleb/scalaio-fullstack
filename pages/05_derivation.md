@@ -43,7 +43,9 @@ trait Cat extends Animal
 ```scala
 trait Animal
 trait Dog extends Animal
-trait Cat extends Animal 
+trait Cat extends Animal
+
+class Array[T]
 
 val animals: Array[Animal] = Array[Dog]()
 ```
@@ -51,6 +53,8 @@ val animals: Array[Animal] = Array[Dog]()
 trait Animal
 trait Dog extends Animal
 trait Cat extends Animal 
+
+class Array[T]
 
 val animals: Array[Animal] = Array[Dog]() 💥
 ```
@@ -215,25 +219,11 @@ Logger.info(user.show)
 
 // User: john doe <john.doe@example.com">
 ```
-```scala
-//
-
-
-
-val user: User = fetchFromDB("john.doe@example.com")
-Logger.info(user.toString) ❌ // Linter error
-
-```
-```scala
-extension (user: User) 
-  def show: String =
-     s"${user.firstname} ${user.lastname} <$email>"
-
-val user: User = fetchFromDB("john.doe@example.com")
-Logger.info(user.toString) ❌ // Linter error
-
-```
-```scala {*|2-4|*}
+```scala {*|7-8|*}
+case class User(firsname: String,
+                lastname: String,
+                email: String,
+                password: String)
 
 extension (user: User) 
   def show: String =
@@ -241,14 +231,61 @@ extension (user: User)
 
 val user: User = fetchFromDB("john.doe@example.com")
 Logger.info(user.show)
-
 // User: john doe <john.doe@example.com">
 ```
 ```scala
+case class User(firsname: String,
+                lastname: String,
+                email: String,
+                password: String)
 
 extension (user: User)(using sa: Show[User]) 
   def show: String =
      s"${user.firstname} ${user.lastname} <$email>"
+     
+val user: User = fetchFromDB("john.doe@example.com")
+Logger.info(user.show)
+
+// User: john doe <john.doe@example.com">
+```
+```scala
+case class User(firsname: String,
+                lastname: String,
+                email: String,
+                password: String)
+
+extension (user: User)(using sa: Show[User]) 
+  def show: String = sa.show(user)
+     
+val user: User = fetchFromDB("john.doe@example.com")
+Logger.info(user.show) // Not instance of Show[User]
+
+```
+```scala
+case class User(firsname: String,
+                lastname: String,
+                email: String,
+                password: String)
+
+extension (user: User)(using sa: Show[User]) 
+  def show: String = sa.show(user)
+     
+val user: User = fetchFromDB("john.doe@example.com")
+Logger.info(user.show💥) // Not instance of Show[User]
+```
+```scala
+case class User(firsname: String,
+                lastname: String,
+                email: String,
+                password: String)
+
+extension (user: User)(using sa: Show[User]) 
+  def show: String = sa.show(user)
+     
+given Show[User] with
+  def show(user: User): String =
+    s"${user.firstname} ${user.lastname} <${user.email}>"                
+
 
 val user: User = fetchFromDB("john.doe@example.com")
 Logger.info(user.show)
@@ -256,6 +293,10 @@ Logger.info(user.show)
 // User: john doe <john.doe@example.com">
 ```
 ```scala
+case class User(firsname: String,
+                lastname: String,
+                email: String,
+                password: String)
 
 extension (user: User)(using sa: Show[User]) 
   def show: String =
@@ -267,6 +308,10 @@ Logger.info(user.show)
 // User: john doe <john.doe@example.com">
 ```
 ```scala
+case class User(firsname: String,
+                lastname: String,
+                email: String,
+                password: String)
 
 extension [A] (a: A)(using sa: Show[A]) 
   def show: String =
@@ -278,6 +323,11 @@ Logger.info(user.show)
 // User: john doe <john.doe@example.com">
 ```
 ```scala
+case class User(firsname: String,
+                lastname: String,
+                email: String,
+                password: String)
+
 
 val user: User = fetchFromDB("john.doe@example.com")
 Logger.info(user.show)
@@ -292,56 +342,17 @@ Logger.info(user.show)
 Somewhere else ...
 <br />
 
-<div v-click="+5">
+<div v-click="+7">
 
 ````md magic-move {at:8}
-```scala
-//
+```scala {*|*|*|*|*}
 
-
-
-case class User(firsname: String,
-                lastname: String,
-                email: String,
-                password: String)
-```
-```scala
 trait Show[A]:
   def show(a: A): String
-
-
-case class User(firsname: String,
-                lastname: String,
-                email: String,
-                password: String)
 ```
-```scala
+```scala {*|*} 
 trait Show[A]:
   def show(a: A): String
-
-case class User(firsname: String,
-                lastname: String,
-                email: String,
-                password: String)
-
-object User:
-  given Show[User] with
-    def show(user: User): String =
-      s"${user.firstname} ${user.lastname} <${user.email}>"                
-```
-```scala {*|*|*} 
-trait Show[A]:
-  def show(a: A): String
-
-case class User(firsname: String,
-                lastname: String,
-                email: String,
-                password: String)
-
-object User:
-  given Show[User] with
-    def show(user: User): String =
-      s"${user.firstname} ${user.lastname} <${user.email}>"                
 ```
 ```scala
 trait Show[A]:
@@ -350,29 +361,6 @@ trait Show[A]:
 extension [A] (a: A)(using sa: Show[A]) 
   def show: String =
      sa.show(a)
-
-case class User(firsname: String,
-                lastname: String,
-                email: String,
-                password: String)
-
-object User:
-  given Show[User] with
-    def show(user: User): String =
-      s"${user.firstname} ${user.lastname} <${user.email}>"                
-```
-```scala
-trait Show[A]:
-  def show(a: A): String
-
-extension [A] (a: A)(using sa: Show[A]) 
-  def show: String =
-     sa.show(a)
-
-case class User(firsname: String,
-                lastname: String,
-                email: String,
-                password: String)
 
 ```
 ````
@@ -404,17 +392,6 @@ trait Show[A]:
 extension [A] (a: A)(using sa: Show[A]) 
   def show: String =
      sa.show(a)
-
-// ... ...
-
-case class User(firsname: String,
-                lastname: String,
-                email: String,
-                password: String)
-object User:
-    given Show[User] with
-        def show(user: User): String =
-        s"${user.firstname} ${user.lastname} <${user.email}>"                
                     
 ```
 ```scala
@@ -501,7 +478,6 @@ object Show extends AutoDerivation[Show]:
 
 ---
 transition: fade
-layout: two-cols
 ---
 
 # Show\[A\]
@@ -564,34 +540,6 @@ case class User(firsname: String,
 
 val user: User = fetchFromDB("john.doe@example")
 Logger.info(user.show)                
-
-```
-````
-
-
-::right::
-
-<br />
-<br />
-
-````md magic-move
-```scala
-package alib.show
-
-trait Show[A]:
-  def show(a: A): String
-
-extension [A] (a: A)(using sa: Show[A]) 
-  def show: String =
-     sa.show(a)
-
-object Show extends AutoDerivation[Show]:
-     
-     // Type class instance for String, Int, Password
-     given Show[Password] with
-          def show(a: Password): String = "********"
-     given Show[String] with // ...
-                             // ...
 
 ```
 ````
