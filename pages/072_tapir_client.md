@@ -29,10 +29,43 @@ And we want to process the result in the UI.
 
 ---
 
+# One line to run the request
+
+
+````md magic-move
+```scala {*|1-3|7|13-16}
+val personVar = Var(
+  NewUser("", "", "", Password(""), Password(""))
+)
+div(
+  h1("Signup"),
+  div(
+    personVar.asForm
+  ),
+  div(
+    Button(
+      "Create",
+      onClick --> { _ =>
+        UserEndpoint
+          .create(personVar.now())
+          .emitTo(userBus, errorBus)
+      
+      }
+    )
+  )
+
+```
+````
+
+---
 
 # Tapir Client Side
 
-With another bunch of imports, we can implement the client side of the API, in one liner:
+One import:
+
+```scala
+import dev.cheleb.ziolaminartapir.*
+```
 
 Let say we have a Person instance:
 
@@ -53,40 +86,24 @@ val person = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
 PersonEndpoint.create( person )   // 😳      
 ```
-
 ```scala
 val person = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
-PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, User]
+PersonEndpoint.create( person ) // ??? 🧙
 ```
 
-```scala
+```scala {*|*|3}
 val person = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
 PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, User]
-              .emitTo(userBus, errorBus) // (2) Then run it, and process the result in UI.
 ```
 ````
 
-
-<ul>
-  <li v-click="+3">First extention allows to consume the payload, and produce an RIO that depends on HttpClient</li>
-  <li v-click="+4">`emitTo` is another extension method, we will detail shortly</li>
-</ul>
-
-<!--
-
-Ideally, we would like to process the result in the UI, with a minimal of boilerplate.
-
-We have an endpoint definition, what would be nice would be to call it with a payload, and process the result in the UI.
-
-Guess what, we can do that with ...  few extension methods.
-
--->
-
----
-
-# Tapir 101
+<div v-motion style="position: absolute; width: 63%; border: 1px solid green; padding: 0px; margin: auto;"
+  :initial="{ x: 300, y:-480 }"
+  :enter="{ x: 1000, y:-400 }"
+  :click-1="{ x: 400, y:-300 }"
+  :leave="{ x: 50 }">
 
 ```scala
 //                                   In      Error     Out 
@@ -101,41 +118,18 @@ val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
     .out(jsonBody[User])  // Response is JSON-encoded User
 ```
 
-<!--
-
-The value is even not related to HttpClient, it's just an endpoint definition.
-
-However, we can call it with a payload, and process the result in the UI.
-
-Where is the magic?
-
--->
-
-
----
-
-# Under the hood - Http Request
-
-Inspired from [Rock The JVM](https://rockthejvm.com) courses/blog/videos ZIO rite of passage.
-
-<div v-click="+1">
-```scala
-import dev.cheleb.ziolaminartapir.*
-```
-</div>
-<div v-click="+2">
-Et voilà, you can now use Tapir in a reactive way, in your ScalaJS project.
 </div>
 
-<div v-click="+3">
-```scala
-// This import brings bunch of extension to Endpoint and ZIO.
-```
-</div>
 
 <div v-click="+4">
 
+* and extension method to turn an endpoint into a function from Input to ZIO
+
 ````md magic-move {at:5}
+
+```scala
+extension [I, E <: Throwable, O](endpoint: PublicEndpoint[I, E, O, Any])
+```
 
 ```scala
 extension [I, E <: Throwable, O](endpoint: Endpoint[Unit, I, E, O, Any])
@@ -154,29 +148,51 @@ extension [I, E <: Throwable, O](endpoint: Endpoint[Unit, I, E, O, Any])
 </div>
 
 
+
+
+
 <!--
 
-In Scala, we an object has an "apply" method, we can call it without the method name, hence it become a function.
-The function signature is `I => RIO[SameOriginBackendClient, O]`.
+Ideally, we would like to process the result in the UI, with a minimal of boilerplate.
+
+We have an endpoint definition, what would be nice would be to call it with a payload, and process the result in the UI.
+
+Guess what, we can do that with ...  few extension methods.
 
 -->
+
 
 ---
 
 # Under the hood - Http Request
-
+````md magic-move
+```scala
+val person = Person("john.doe@foo.bar", "notsecured")
+// From our endpoint definition that Person ~~> User
+PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, User]
+```
+```scala
+val person = Person("john.doe@foo.bar", "notsecured")
+// From our endpoint definition that Person ~~> User
+PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, User]
+              .runJs()                   // (2) Then run it fire and forget.
+```
 ```scala
 val person = Person("john.doe@foo.bar", "notsecured")
 // From our endpoint definition that Person ~~> User
 PersonEndpoint.create( person )          // (1) RIO[SameOriginBackendClient, User]
               .emitTo(userBus, errorBus) // (2) Then run it, and process the result in UI.
 ```
+````
 
-<div v-click="+1">
+<div v-click="+3">
 
 We need antoher extension method to run the ZIO, and process the result in the UI.
 
-````md magic-move {at:2}
+````md magic-move {at:4}
+```scala
+extension [E <: Throwable, A](zio: RIO[SameOriginBackendClient, A])
+```
 ```scala
 extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 ```
@@ -211,56 +227,6 @@ extension [E <: Throwable, A](zio: ZIO[SameOriginBackendClient, E, A])
 </div>
 
 
-
----
-
-# Under the hood - Http Request
-
-There are a few more extension methods:
-
-* Different origin client
-* Bearer token support (local storage)
-
-<div v-click="+1">
-
-```scala
-PersonEndpoint.profile(false).emitTo(userBus)
-```
-
-For the curious, the `profile` endpoint is defined as:
-
-```scala
-val profile: Endpoint[String, Boolean, Throwable, (User, Option[Pet]), Any]
-```
-
-</div>
-
----
-
-# Under the hood - Http Request
-
-```scala
-val profile: Endpoint[String, Boolean, Throwable, (User, Option[Pet]), Any]
-```
-
-Yet another extension method, to handle secured endpoint.
-
-```scala {*|1|6|8}{lines:true}
-extension [I, E <: Throwable, O](endpoint: Endpoint[String, I, E, O, Any])
-
-  // Call the secured endpoint with a payload, and get a ZIO back.
-
-  @targetName("securedApply")
-  def apply[UserToken <: WithToken](
-      payload: I
-  )(using session: Session[UserToken]): RIO[SameOriginBackendClient, O] =
-
-    ZIO
-      .service[SameOriginBackendClient]
-      .flatMap(_.securedEndpointRequestZIO(endpoint)(payload))
-
-```
-
 ---
 
 # Under the hood - Http Request
@@ -275,9 +241,12 @@ No boilerplate, no magic, just Scala.
   <li v-click="+5">Reactive</li>
   <li v-click="+6">Type-safe</li>
   <li v-click="+7">Minimal boilerplate</li>
+  <li v-click="+8">Different origin client</li>
+  <li v-click="+9">Bearer token support (local storage)</li>
+
 </ul>
 
-<div v-click="+8" class="absolute left-30%">
+<div v-click="+10" class="absolute left-30%">
 ```scala
 PersonEndpoint //
           .create(personVar.now())

@@ -1,81 +1,166 @@
-# Setup
+---
+transition: fade
+layout: two-cols
+---
 
-<div grid="~ cols-[50%_25%_25%] gap-1">
-  <div>
-   <v-clicks depth="3">
+# Setup Full Stack
 
-   - Build tools
-     - NPM
-       - Node Package Manager.
-       - <span v-mark="{type:'underline', color:'orange', at:9, delay:2000}">Vite: Hot reload of UI.</span>
-     - SBT
-       - <span v-mark="{type:'underline', color:'orange', at:9}">Scala JS</span>
-       - Scala JVM
-   - Docker
-   - Kubernetes
-   </v-clicks>
-  </div>
-  <div>
-    <img v-click="+8" src="../images/dev-stack-scala.svg" style="width: 50%" />
-  </div>
-  <div>
-    <img v-click="+6" src="../images/dev-stack-scalajs.svg" style="width: 50%" />
-  </div>
+<v-clicks depth="3">
+
+- Build tools
+  - NPM
+    - Node Package Manager.
+    - <span v-mark="{type:'underline', color:'orange', at:6, delay:2000}">Vite: Hot reload of UI.</span>
+  - SBT
+    - <span v-mark="{type:'underline', color:'orange', at:6}">Scala JS</span>
+    - Scala JVM
+- Docker
+- Kubernetes
+
+</v-clicks>
+
+::right::
+
+<div grid="~ cols-2">
+<div>
+ <img alt="ScalaJS Stack" v-click="+6" src="../images/dev-stack-scalajs.drawio.svg" style="width: 70%; border: 1px dashed yellow; padding:1em" />
+</div>
+<div>
+ <div></div>
+ <img alt="Scala Stack" v-click="+8" src="../images/dev-stack-scala.drawio.svg" style="width: 70%; border: 1px dashed red; padding:1em; margin-top: 12em" />
+</div>
 </div>
 
 ---
+transition: fade
+layout: two-cols
+---
 
-# Demo
+## 10s demo
 
 Dozen of tools to setup ... 
 
-<div grid="~ cols-2">
-<div v-click><img  src="../images/keyboard.webp" width="20%"/>
+<v-clicks>
+
+- Docker
+  - compose
+- Kubernetes
+  - ArgoCD
+  - Kustomize
+- SBT
+  - scala
+  - ScalaJS
+- NPM
+  - Vite
+  - ScalaJS plugin  
+
+</v-clicks>
+
+::right::
+
+<div v-click><img alt="Cat at works" src="../images/keyboard.webp" width="20%"/>
 package.json, vite.config.js, build.sbt, plugins.sbt, Dockerfile, Kubernetes, ...
 </div>
-<img v-click src="../images/boring.webp" width="40%"/>
-</div>
+
+<v-clicks depth="1">
+
+- 15 files ...
+- 1000 lines of code/config
+</v-clicks>
+
+<img alt="Boring"  v-click src="../images/boring.webp" width="40%"/>
 
 ---
 
-# One line to setup a new project
+## One line ( 1/2 ) :  setup a new project
 
-<img src="../images/lazyness.png" width="20%" />
+<img alt="Lazy" src="../images/lazyness.png" width="20%" style="margin: 3em" />
 
 <div  v-click>Let's automate it with a template
 ```bash
-sbt new cheleb/zio-scalajs-laminar.g8 --name=devoxx-fullstack-demo
+sbt new cheleb/zio-scalajs-laminar.g8 --name=scala-at-sunnytech
 ```
 </div>
 
 <div v-click>
 Or with K8S / ArgoCD support.
 
-
 ```bash
-sbt new cheleb/zio-scalajs-laminar.g8  --name=zio-laminar-demo-k8s\
-                                       --githubUser=cheleb --with-argocd=true --version=0.0.6 --force
-
+sbt new cheleb/zio-scalajs-laminar.g8  --name=scala-at-sunnytech-k8s\
+                                       --githubUser=cheleb --with-argocd=true\
+                                       --force
 ```
-</div>
 
+</div>
 
 ---
 
-# One line to go to work
+## One line ( 2/2 ): Go to work
+
+<div grid="~ cols-2">
+
+ <div>
+  <div v-click>
+   <div style="float: left">
+    <p> Docker</p>
+    <div>
+     <img alt="docker"  src="../images/database.drawio.svg" width="90px" />
+   </div>
+  </div>
+   <img alt="Snoopy at works" src="../images/gotowork.webp" width="200"  style="padding: 0.5em"/>
+ </div>
+</div>
+ <div>
+  <div v-click>
+   <div style="float: left">
+    <p> Scala</p>
+    <div>
+     <img alt="Scala"  src="../images/scala.png" width="90" style="padding:1em" />
+   </div>
+  </div>
+   <img alt="Snoopy at works" src="../images/gotowork.webp" width="200" style="padding: 0.5em" />
+ </div>
+</div>
+
+ <div>
+  <div v-click>
+  <div style="float: left">
+    <p> ScalaJS</p>
+   <div>
+    <img alt="Scala JS"  src="../images/scala-js-logo.svg" width="90"  />
+   </div>
+  </div>
+   <img alt="Snoopy at works" src="../images/gotowork.webp" width="200" style="padding: 0.5em" />
+ </div>
+</div>
+
+ <div>
+  <div v-click>
+  <div style="float: left">
+    <p>Vite</p>
+   <div>
+    <img alt="docker"  src="../images/vite-logo.drawio.svg" width="90px" />
+   </div>
+  </div>
+   <img alt="Snoopy at works" src="../images/gotowork.webp" width="200" style="padding: 0.5em" />
+ </div>
+</div>
+
+</div>
 
 <div  v-click>
-  <img src="../images/gotowork.webp" width="400" />
 
 ```bash
-code devoxx-fullstack-demo
+code scala-at-sunnytech
 ```
+
 </div>
 <div v-click>
 Or with K8S / ArgoCD support.
 ```bash
-code devoxx-fullstack-demo-k8s
+code scala-at-sunnytech-k8s
 ```
+
 </div>
 
 <!--
@@ -161,31 +246,29 @@ Who wants to type the same commands over and over again?
 Who knows about tasks.json in VSCode ?
   * Just a few lines of JSON to automate tasks.
 
-
 When folder opens, run the setup script, then run the demo.
 
 -->
 
 ---
 
-
-# Project Structure / SBT
+## Project Structure / SBT
 
 <div grid="~ cols-3">
   <div></div>
   <div v-click>
-    <img src="../images/crossproject.drawio.svg" style="width: 50%" />
+    <img alt="Cross project" src="../images/crossproject.drawio.svg" style="width: 50%" />
   </div>
   <div></div>
   <div>
     <h4>server</h4>
-    <img src="../images/scala.drawio.svg" style="width: 50%" />
+    <img alt="scala module" src="../images/scala.drawio.svg" style="width: 50%" />
   </div>
   <div v-click>
-    <img src="../images/scala-jvm-js.drawio.svg" style="width: 50%" /></div>
+    <img alt="Scala JVM/JS module" src="../images/scala-jvm-js.drawio.svg" style="width: 50%" /></div>
   <div>
     <h4>client</h4>
-    <img src="../images/scalajs.drawio.svg" style="width: 50%" />
+    <img alt="Scala JS Module" src="../images/scalajs.drawio.svg" style="width: 50%" />
   </div>
 </div>
 
@@ -213,7 +296,8 @@ The JVM project will depend on the shared project, and the JS project will depen
 
 ---
 
-# SBT Cross Project
+## SBT Cross Project
+
 <h4>Shared</h4>
 
 ```scala
@@ -251,20 +335,13 @@ Add backends and frontends dependencies to the shared project variant according 
 
 -->
 
-
 ---
 
-# Setup / Backend
+## Setup / Frontend / NPM / package.json
 
-<img src="../images/completed.webp" />
-
----
-
-### Setup / Frontend / NPM / package.json
-
-```json {*|7-11,20-21|13-18}{lines:true}
+```json {*|7-11,20-21}{lines:true}
 {
-  "name": "scalaZio-fullstack-demo",
+  "name": "scala-at-sunnytech",
   "private": true,
   "version": "0.0.1",
   "main": "index.js",
@@ -283,8 +360,8 @@ Add backends and frontends dependencies to the shared project variant according 
   },
   "devDependencies": {
     "@scala-js/vite-plugin-scalajs": "^1.0.0",
-    "vite": "^5.4.9",
-    "typescript": "5.6.3",
+    "vite": "^6.3.5",
+    "typescript": "5.8.3",
     "@types/chart.js": "2.9.29"
   }
 }
@@ -302,10 +379,9 @@ Development time dependencies are typescript and chart.js to illustrate how to u
 
 ---
 
-### Setup / Frontend / NPM / vite.config.js
+## Setup / Frontend / NPM / vite.config.js
 
-
-```js {*|2|5|8|12}
+```js {*|8|12}
 import { defineConfig } from "vite";
 import scalaJSPlugin from "@scala-js/vite-plugin-scalajs";
 
@@ -333,10 +409,9 @@ export default defineConfig({
 
 ---
 
-# Setup / Frontend
+## Setup
 
-<img src="../images/completed.webp" />
-
+<img alt="mike" src="../images/completed.webp" />
 
 <div v-click v-motion style="position:absolute"  
   :initial="{ x: 0, y: -100 }"
@@ -345,7 +420,7 @@ export default defineConfig({
 >
  Enjoy the ride 🚀
 
- - Hot reload of UI
- - Warm reload of Backend
+- Hot reload of UI
+- Warm reload of Backend
 
 </div>

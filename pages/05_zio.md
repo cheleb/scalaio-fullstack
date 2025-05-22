@@ -118,17 +118,26 @@ Sound abstract, but in practice, it's quite simple to use. Wait for the examples
 
 ````md magic-move {lines: true, at:1}
 ```scala
+val simple = ZIO.succeed(42) // Future.success
+```
+```scala
+//               R     E       A
 val simple: ZIO[Any, Nothing, Int] = ZIO.succeed(42)
 ```
 ```scala
 val simple: UIO[Int] = ZIO.succeed(42) // Succeed with an `A`, cannot fail, no requirements.
 ```
 ```scala
+val simple: UIO[Int] = ZIO.succeed(42)
+
+def whatIsTheAnswer(i: Int) = ZIO.succeed(s"The answer is $i")
+```
+```scala {3}
 val simple:                  UIO[Int]    = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int): UIO[String] = ZIO.succeed(s"The answer is $i")
 ```
-```scala
+```scala {5}
 val simple:                     UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")
@@ -141,13 +150,6 @@ val simple:                     UIO[Int]     = ZIO.succeed(42)                  
 def whatIsTheAnswer(i: Int):    UIO[String]  = ZIO.succeed(s"The answer is $i")       // Int => UIO[String]
 
 def sayItLoud(message: String): Task[Unit]   = Console.printLine(message)             // String => Task[Unit]
-```
-```scala
-val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
-
-val whatIsTheAnswer: Int    =>  UIO[String]  = i => ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
-
-val sayItLoud:       String =>  Task[Unit]   = message => Console.printLine(message)  // String => Task[Unit]
 ```
 ```scala
 val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
@@ -266,6 +268,22 @@ val program: Task[Unit] = simple |> whatIsTheAnswer
                                 |> flatMap sayIntLoud
 ```
 ```scala
+import zorglub.flatmapthatshit.*
+
+val simple:                     UIO[Int]     = ZIO.succeed(42)                        // UIO[Int]
+
+val whatIsTheAnswer: Int    =>  UIO[String]  = i => ZIO.succeed(s"The answer is $i")  // Int => UIO[String]
+
+val sayItLoud:       String =>  Task[Unit]   = message => Console.printLine(message)  // String => Task[Unit]
+
+val program: Task[Unit] = simple |> whatIsTheAnswer
+                                 |> flatMap sayIntLoud
+
+val program: Task[Unit] = simple.flatMap(i => whatIsTheAnswer(i))  // UIO[String]
+                                .flatMap(str => sayIntLoud(str))   // Task[Unit]                                
+```
+
+```scala
 val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
@@ -288,7 +306,7 @@ val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(message).repeatN(i%2)
+def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(s"$message and isEven: ${i % 2 == 0}")
 
 val program: Task[Unit] = simple.flatMap(i => whatIsTheAnswer(i))
                                 .flatMap(str => sayIntLoud(str, 💥i)) // Won't compile
@@ -298,7 +316,7 @@ val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(message).repeatN(i%2)
+def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(s"$message and isEven: ${i % 2 == 0}")
 
 val program: Task[Unit]  = simple.flatMap { i => 
                                               whatIsTheAnswer(i)
@@ -313,7 +331,7 @@ val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(message).repeatN(i%2)
+def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(s"$message and isEven: ${i % 2 == 0}")
 
 val program: Task[Unit] = for { // For comprehension
     i   <- simple
@@ -322,6 +340,16 @@ val program: Task[Unit] = for { // For comprehension
   } yield ()
 ```
 ````
+
+<div v-click="[2,4]" v-motion style="position:absolute; padding: 0.3em; border: 2px solid green; border-radius: 5px"
+  :initial="{ x: 0, y: -90 }"
+  :enter="{ x: 400, y: -130 }"
+  :leave="{ x: 50 }">
+
+```scala
+def succeed[A]( a: => A ): ZIO[Any, Nothing, A] = ???
+```
+</div>
 
 
 <!--
@@ -358,7 +386,18 @@ val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def writeToDB(message: String, i: Int): ???    = 
+def writeToDB(message: String, i: Int): Task[Int]    = 
+ for
+   db <- Database.service(login, password, ...)
+   nRow <- db.insert(message)
+ yield nRow
+```
+```scala
+val simple:                             UIO[Int]     = ZIO.succeed(42)
+
+def whatIsTheAnswer(i: Int)             UIO[String]  = ZIO.succeed(s"The answer is $i")
+
+def writeToDB(message: String, i: Int)               = 
   ZIO.service[Database]  // UIO[Database, Database]
 ```
 ```scala
@@ -366,7 +405,7 @@ val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def writeToDB(message: String, i: Int): ???    = 
+def writeToDB(message: String, i: Int)               = 
   ZIO.service[Database]  // UIO[Database, Database]
     .flatMap(db => db.insert(message))
 ```

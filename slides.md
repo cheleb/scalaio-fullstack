@@ -23,13 +23,23 @@ mdc: true
 overviewSnapshots: true
 ---
 
-# Scala Full Stack
+<style>
+h1, h2 {
+  background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+</style>
+
+## Scala Full Stack
 
 With ZIO, Tapir && Laminar
 
-
 (https://github.com/cheleb/zio-scalajs-laminar.g8)
-
 
 <div class="abs-br m-6 flex gap-2">
   <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
@@ -43,35 +53,72 @@ With ZIO, Tapir && Laminar
 
 
 ---
-transition: fade-out
+transition: fade
+layout: two-cols
 ---
 
-# Agenda
+## 100% Scala
 
-<v-clicks depth="1">
+````md magic-move
 
-  - Why this talk ?
-  - Overview:
-    - Architecture && Librairies
-    - Demo time.
-  - ZIO
-  - Deep dive:
-    - End ~~User~~ Developer  Experience.
-    - Library internals.
-    - Scala derivation metaprogramming.
-  - Deployment.
-</v-clicks>
+```md
+- Strongly typed
 
-<!--
+- Functional programming
 
- - ZIO is central to the architecture:
-    - the glue between the layers.
-    - orchestrating the side effects.
+- Metaprogramming
+```
+```md
+- Strongly typed
+  - Type safety (error detection)
+  - Development speed
 
--->
+- Functional programming
+
+- Metaprogramming
+```
+```md
+- Strongly typed
+  - Type safety (error detection)
+  - Development speed
+
+- Functional programming
+  - Immutability & pure functions
+  - Reactive programming
+
+- Metaprogramming
+```
+```md
+- Strongly typed
+  - Type safety (error detection)
+  - Development speed
+
+- Functional programming
+  - Immutability & pure functions
+  - Reactive programming
+
+- Metaprogramming
+  - Type class derivation
+  - Scala macros
+```
+````
+
+::right::
+
+<img alt="World of Scala" src="./images/world-of-scala.png" width="80%"/>
+
 
 ---
-src: ./pages/01_why.md
+src: ./pages/00_agenda.md
+---
+
+
+---
+src: ./pages/01_scala_complex.md
+---
+
+---
+src: ./pages/02_why.md
 ---
 
 ---
@@ -79,100 +126,46 @@ src: ./pages/02_ono-at-ledger.md
 ---
 
 ---
-src: ./pages/03_action.md
----
-
----
-src: ./pages/04_setup.md
----
-
----
 src: ./pages/04_architecture.md
 ---
 
 ---
+src: ./pages/03_setup.md
+---
+---
+src: ./pages/05_ui.md
+---
 
-# Agenda
+---
+src: ./pages/06_metaprog.md
+---
 
+---
 
-  - Why this talk ?
-  - Architecture && Librairies
-  - Demo time.
-  - ZIO 👈
-  - Deep dive: 
-    - End User Experience.
-    - Library internals.
-    - Scala derivation metaprogramming.
-  - Deployment.
+## Agenda / ZIO
 
+- Scala, a complex language  ?
+- 10s demo time / 2 lines of shell
+- Programming with Type
+- Programming with values:  👈
+  - Tapir: HTTP client.
+  - Effects system: ZIO
+- Deployment
 
 <!--
 
-Need now to talk about ZIO, the glue between the layers.
+Programming with values:
+  - ZIO: Effects system.
+  - Tapir: HTTP client.
 
 -->
 
 ---
+src: ./pages/07_values.md
+---
+
+---
 src: ./pages/05_zio.md
----
-
----
-
-# Scala Full Stack (lazy guide to)
-
-
-<v-clicks depth="3">
-
-* One line to setup a new project ✅
-* One line to start the dev environment ✅
-* One ZIO layer to rule them all ✅
-* One line to bind data in the UI
-* One line to expose API
-* One line to consume API
-* One line to deploy
-
-
-</v-clicks>
-
-
-<div v-click="[1, 2]"  v-motion
-  :enter="{ x: 250, y:-150 }"
-  :leave="{ x: 50 }"
->
-  <img src="./images/larry.jpeg" width="500" style="position:absolute"/>
-</div>
-<div v-click="[2, 3]"  v-motion
-  :initial="{ x: -50, y:-370 }"
-  :enter="{ x: 350, y:-150 }"
-  :leave="{ x: 50 }"
->
-  <img src="./images/gotowork.webp" width="400" style="position:absolute"/>
-</div>
-<div v-click="[4, 5]"  v-motion
-  :initial="{ x: -50, y:-500 }"
-  :enter="{ x: 350, y:-150 }"
-  :leave="{ x: 50 }"
->
-  <img src="./images/UI5_bindings.png" width="400" style="position:absolute"/>
-</div>
-<div v-click="[5, 7]"  v-motion
-  :initial="{ x: -50, y:0 }"
-  :enter="{ x: 350, y:-150 }"
-  :leave="{ x: 50 }"
->
-  <img src="./images/rest.png" width="400" style="position:absolute"/>
-</div>
-<div v-click="7"  v-motion
-  :initial="{ x: -50, y:-0 }"
-  :enter="{ x: 300, y:-150 }"
-  :leave="{ x: 50 }"
->
-  <img src="./images/deploy.webp" width="400" style="position:absolute"/>
-</div>
-
-
----
-src: ./pages/06_ui.md
 ---
 
 ---
@@ -186,34 +179,7 @@ src: ./pages/072_tapir_client.md
 ---
 src: ./pages/08_all_together.md
 ---
----
 
-# Under the hood - Laminar Form Derivation
-
-No boilerplate, no magic, just Scala.
-
-<div v-click="+1"><a href="https://cheleb.github.io/laminar-form-derivation/demo/index.html">Laminar Form Derivation</a> with Magnolia</div>
-<ul>
-  <li v-click="+2">Case class to form</li>
-  <li v-click="+3">Databinding</li>
-  <li v-click="+4">Validation</li>
-  <li v-click="+5">Error handling</li>
-</ul>
-
-<div v-click="+6">
-
-```scala
-import import dev.cheleb.scalamigen.*
-
-case class Person(name: String, email: String, password: Password)
-
-val personVar = Var(Person("John", "john.does@foo.bar", Password("notsecured") ))
-
-personVar.asForm
-
-```
-
-</div>
 
 ------
 
@@ -297,6 +263,9 @@ code zio-laminar-demo-k8s
 
 </div>
 
+---
+src: ./pages/11_deployment.md
+---
 
 ---
 
