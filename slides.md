@@ -124,9 +124,6 @@ layout: two-cols
 - Programming with values:
   - Tapir: HTTP client.
   - Effects system: ZIO
-- Backend:
-  - Tapir: HTTP server.
-  - Persistence
 - Deployment
   - Docker, Kubernetes, ArgoCD
 

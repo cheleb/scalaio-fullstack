@@ -483,7 +483,8 @@ object JWTServiceLive {
 
   val jwtConfigLayer: TaskLayer[JWTConfig] = Configs.makeConfigLayer[JWTConfig]("jwt")
 
-  val configuredLayer: URLayer[JWTConfig, JWTServiceLive] = JWTServiceLive.layer
+  val configuredLayer: URLayer[JWTConfig, JWTServiceLive] =
+                                                            JWTServiceLive.layer
 }
 ```
 ```scala
@@ -498,7 +499,24 @@ object JWTServiceLive {
 
   val jwtConfigLayer: TaskLayer[JWTConfig] = Configs.makeConfigLayer[JWTConfig]("jwt")
 
-  val configuredLayer: TaskLayer[JWTConfig] = jwtConfigLayer >>> JWTServiceLive.layer
+  val configuredLayer: URLayer[JWTConfig, JWTServiceLive] =
+                                             jwtConfigLayer >>> JWTServiceLive.layer
+}
+```
+```scala
+
+object JWTServiceLive {
+  val layer: URLayer[JWTConfig, JWTServiceLive] = ZLayer(
+    for
+      jwtConfig <- ZIO.service[JWTConfig]
+      clock     <- Clock.javaClock
+    yield JWTServiceLive(jwtConfig, clock)
+  )
+
+  val jwtConfigLayer: TaskLayer[JWTConfig] = Configs.makeConfigLayer[JWTConfig]("jwt")
+
+  val configuredLayer: TaskLayer[JWTServiceLive] = 
+                                             jwtConfigLayer >>> JWTServiceLive.layer
 }
 ```
 ```scala

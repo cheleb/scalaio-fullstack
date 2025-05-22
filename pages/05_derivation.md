@@ -22,12 +22,10 @@ A type is a <span v-mark="{type:'underline', color:'orange', at:1}">set of value
     - union types
     - intersection types
     - higher-kinded types
-    - type classes
   - Compile time operations
-    - context functions
+    - Implicits (given/using)
     - extension
-    - macros
-    - metaprogramming
+
 </v-clicks>
 
 </div>
@@ -99,69 +97,6 @@ trait Functor[F[_]] extends Invariant[F]:
 
 
  
----
-transition: fade
-layout: two-cols
----
-
-## Metaprog / ADT
-
-In scala, we can use ADT to represent data types.
-
-<v-clicks>
-
-- ADT = Algebraic Data Type
-  - Product type = case class
-  - Sum type = sealed trait
-</v-clicks>
-
-````md magic-move
-```scala
-.
-```
-```scala
-// Product type
-case class Box(size: Size,
-               color: Color)
-```
-```scala
-// Product type ??
-case class Box(size: Size,
-               color: Color)
-// Sum type ??
-enum Size:
-  case Small
-  case Medium
-  case Large
-
-enum Color:
-  case Red
-  case Green
-  case Blue(dark: Boolean)
-```
-```scala
-// Product type
-case class Box(size: Size,
-               color: Color)
-// Sum type
-enum Size:
-  case Small
-  case Medium
-  case Large
-
-enum Color:
-  case Red
-  case Green
-  case Blue(dark: Boolean)
-```
-
-````
-
-
-::right::
-
-<img src="../images/datatypes.jpg" alt="Architecture Diagram" width="100%"/>
-
 
 
 ---
@@ -369,6 +304,9 @@ extension [A] (a: A)(using sa: Show[A])
 
 
 ---
+transition: fade
+layout: two-cols
+---
 
 # Generic Derivation
 
@@ -377,22 +315,13 @@ extension [A] (a: A)(using sa: Show[A])
 trait Show[A]:
   def show(a: A): String
 ```
-```scala
+```scala {*|*|*}
 trait Show[A]:
   def show(a: A): String
 
 extension [A] (a: A)(using sa: Show[A]) 
   def show: String =
      sa.show(a)
-```
-```scala
-trait Show[A]:
-  def show(a: A): String
-
-extension [A] (a: A)(using sa: Show[A]) 
-  def show: String =
-     sa.show(a)
-                    
 ```
 ```scala
 trait Show[A]:
@@ -460,9 +389,11 @@ extension [A] (a: A)(using sa: Show[A])
 object Show extends AutoDerivation[Show]:
 
     // Product type
-    override def join[T](ctx: CaseClass[Show, T]): Show[T] = ???
+    override def join[T](ctx: CaseClass[Show, T]): Show[T] =
+      ???
     // Sum type
-    override def split[T](ctx: SealedTrait[Show, T]): Show[T] = ???
+    override def split[T](ctx: SealedTrait[Show, T]): Show[T] = 
+      ???
 
     given Show[String] with
         def show(a: String): String = a
@@ -473,6 +404,34 @@ object Show extends AutoDerivation[Show]:
     given Show[Password] with
         def show(a: Password): String = "********"
                         
+```
+````
+
+::right::
+
+
+<br />
+
+### Usage
+
+````md magic-move {at: 2}
+```scala
+//
+```
+```scala
+1.show
+
+"john".show
+```
+```scala
+1.show 💥
+
+"john".show 💥
+```
+```scala
+1.show
+
+"john".show
 ```
 ````
 

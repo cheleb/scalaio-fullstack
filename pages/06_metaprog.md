@@ -3,45 +3,6 @@ transition: fade
 layout: two-cols
 ---
 
-## Metaprogramming
-
-
-Metaprogramming is the process of writing programs
-
-    ... that write or manipulate other programs.
-
-
-<br />
-
-<v-clicks depth>
-
-- Runtime:
-  - Reflection
-- Compile time
-  - Macros
-  - Type class derivation 👈
-</v-clicks>
-
-
-::right::
-
-<br /><br /><br /><br /><br />
-
-```scala
-case class User(firsname: String,
-                lastname: String,
-                email: String,
-                password: String)
-```
-
-
----
-transition: fade
-layout: two-cols
----
-
-
-
 ## Metaprog / Generic derivation
 
 Where ?
