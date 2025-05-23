@@ -14,7 +14,7 @@
    </div>
   </div>
   <div>
-    <a href="https://www.ledger.fr"><img style="background: white; padding: 0.5em" src="../images/ledger.svg" width="100"/></a>
+    <a href="https://www.ledger.fr"><img alt="Ledger devices" style="background: white; padding: 0.5em" src="../images/ledger.svg" width="100"/></a>
   </div>
   <div>
     Cryptocurrency hardware wallet leader worldwide.
@@ -28,10 +28,9 @@
   </div>
 </div>
 
-
 ---
 
-# What is Ledger?
+## What is Ledger?
 
 We secure both infrastructure, assets and solutions for cryptocurrencies and blockchain applications.
 
@@ -54,7 +53,6 @@ The creator of the world's most popular hardware wallet familly.
 Are all products of Ledger.
 
 Ledger is hiring, in almost all positions/stacks, check out our [job offers (https://www.ledger.fr/jobs/)](https://www.ledger.fr/jobs/).
-
 
 <!--
 

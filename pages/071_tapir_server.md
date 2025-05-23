@@ -1,142 +1,3 @@
-# Agenda
-
-* One line to setup a new project ✅
-* One line to start the dev environment ✅
-* One line to bind data in the UI ✅
-* One line to expose API 👈
-* One line to consume API
-* One line to deploy
-
----
-
-<img src="../images/architecture.svg" style="width: 100%" />
-<img src="../images/youarehere.png" width="50"  v-motion 
-  :initial="{ x: 0, y:0 }"
-  :enter="{ x: 350, y:-490 }"
-  :click-1="{ x: 650, y:-490 }"
-  :click-2="{ x: 60, y:-490 }"
-  :leave="{ x: 300 }" />
- 
-<div v-click="+2">
-  We are going to implement the API endpoints.
-</div>
-
-<!--
-
-1. We will use Tapir to declare the API endpoints.
-2. We will implement the server logic.
-3. We will support the client side.
-
--->
-
----
-
-# Controller: Tapir 101 by SoftwareMill
-
-First step is to define the API endpoints as <span v-mark="{type:'circle', color:'orange', at:0, delay:2000}">values</span>.
-
-
-````md magic-move
-
-```scala
-//                           In      Error     Out 
-//                            ☟        ☟        ☟
-val create: PublicEndpoint[Person, Throwable, User, Any] = ???
-```
-
-```scala {4|5|3,6|1,3,7-9}
-//                            In 
-//                            ☟
-val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
-    .name("person")
-    .post                 // POST method
-    .in("person")         // Endpoint path is /person
-    .in(              
-      jsonBody[Person]    // Request body is JSON-encoded Person
-    )
-```
-
-```scala {1,3,10}
-//                                             Out 
-//                                              ☟
-val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
-    .name("person")
-    .post                 // POST method
-    .in("person")         // Endpoint path is /person
-    .in(              
-      jsonBody[Person]    // Request body is JSON-encoded Person
-    )
-    .out(jsonBody[User])  // Response is JSON-encoded User
-```
-
-```scala {1,3-6}
-//                                   Error
-//                                     ☟
-val create: PublicEndpoint[Person, Throwable, User, Any] = endpoint
-    .errorOut(statusCode and plainBody[String])
-    .mapErrorOut[Throwable](HttpError.decode)(HttpError.encode)
-    .prependIn("api")
-    .name("person")
-    .post                 // POST method
-    .in("person")         // Endpoint path is /person
-    .in(              
-      jsonBody[Person]    // Request body is JSON-encoded Person
-    )
-    .out(jsonBody[User])  // Response is JSON-encoded User
-```
-
-```scala
-//                           In      Error     Out 
-//                            ☟        ☟        ☟
-val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint
-    .name("person")
-    .post                 // POST method
-    .in("person")         // Endpoint path is /person
-    .in(              
-      jsonBody[Person]    // Request body is JSON-encoded Person
-    )
-    .out(jsonBody[User])  // Response is JSON-encoded User
-```
-
-````
-<div grid="~ cols-2 gap-4">
-<div v-click="+8">
-  From this definition, Tapir will support:
-    <ul>
-        <li><a href="localhost:8080/docs/"><span v-mark="{type:'circle', color:'orange', at:[10,11]}">OpenAPI documentation</span></a></li>
-        <li><span v-mark="{type:'underline', color:'orange', at:11}">Http server</span> squeleton</li>
-        <li><span v-mark="{type:'underline', color:'orange', at:11}">Sttp client</span></li>
-    </ul>
-</div>
-<div v-click="+9">
-  POST /person HTTP/1.1
-  
-    {
-        "email": "john.doe@foo.bar",
-        "password": "notsecured",
-        [ ... ]
-    }
-</div>
-</div>
-
-
-<!--
-
-Tapir provides a type-safe way through a clean DSL to define API endpoints.
-
-- `baseEndpoint` is a value that represents the root of the API, with common settings (error handling).
-
-From API definition, Tapir will generate:
-- OpenAPI documentation
-- HTTP server squeleton
-- Sttp client
-
-
--->
-
-
-
----
 
 # Controller: Tapir / HTTP Server
 
@@ -425,35 +286,12 @@ object UserController:
 ```
 ```scala
 object UserController:
-  def makeZIO: URIO[UserService & JWTService, UserController] = ???
-```
-```scala
-object UserController:
   def makeZIO: URIO[UserService & JWTService, UserController] =
     for
       jwtService    <- ZIO.service[JWTService]
-      userService <- ZIO.service[UserService]
+      userService   <- ZIO.service[UserService]
     yield new UserController(userService, jwtService)
 
-```
-```scala
-private def makeControllers: : URIO[UserService & JWTService, List[UserController]] = for {
-    userController         <- UserController.makeZIO
-  } yield List(userController)
-```
-```scala
-private def makeControllers = for {
-    healthController       <- HealthController.makeZIO
-    userController         <- UserController.makeZIO
-    organisationController <- OrganisationController.makeZIO
-  } yield List(healthController, userController, organisationController)
-```
-```scala
-private def makeControllers : ZIO[UserService & JWTService & OrganisationService, Nothing, List[BaseController]] = for {
-    healthController       <- HealthController.makeZIO
-    userController         <- UserController.makeZIO
-    organisationController <- OrganisationController.makeZIO
-  } yield List(healthController, userController, organisationController)
 ```
 ```scala
 private def makeControllers : URIO[UserService & JWTService & OrganisationService, List[BaseController]] = for {
@@ -461,9 +299,6 @@ private def makeControllers : URIO[UserService & JWTService & OrganisationServic
     userController         <- UserController.makeZIO
     organisationController <- OrganisationController.makeZIO
   } yield List(healthController, userController, organisationController)
-```
-```scala
-val program: ZIO[FlywayService & UserService & OrganisationService & JWTService & Server, Throwable, Unit] = ???
 ```
 ```scala
 val program: RIO[FlywayService & UserService & OrganisationService & JWTService & Server, Unit] = ???
@@ -496,7 +331,7 @@ override def run =
 ```scala {*|1,6,8-11|8,11}
 val program: RIO[FlywayService & UserService & OrganisationService & JWTService & Server, Unit] = ???
 
-override def run =
+override def run: Task[Unit] =
     program
       .provide(
         Server.default,
@@ -517,7 +352,7 @@ override def run =
 <div v-click>
  `ZLayer.Debug.mermaid` will generate a diagram of the layers.
 
-[Mermaid](https://mermaid-js.github.io/mermaid-live-editor/edit/#pako:eNp9kcFOwzAMhl-l8gmkrYLBmNQDBwQcUCUkNsQlF6vxuog2qdxkKJr27ji0qIA0br_tz7_t5ACV0wQF1IzdLrvbKFtenClYE--Jc01bDI1XcC75S8k_NvEDY6qaikqzp7xydmvqwKRLjMQDuhD0mWu0pkdvnH2hzvXGO45fPc1IZvP5bVZe_YF_ujeT57Vgk0-u0WP5y2cpwGtPfGJYshjAhcjlIG_GnhMzV1J-etv8f-_oNPknuUohzKAlbtFoeeGDslmmwO-oJQWFSI38rkDZo3Chk4PoQae9ofAcaAYYvFtHW33HA3NvUD6rHZLHT8ZQl94)
+[Mermaid](https://mermaid.live/edit/#pako:eNqFkV1rgzAUhv-KnKsNrFSNNeZiF_u6GI7BujEYuQk1VVlNJGo3V_rfd_yi3Vi3gHCOed73TXJ2sNKJBAapEWVmXT5xFc_POCyl2UpzpdU6T52NaKXhcI57Lu7dbtp30XZEvpJxvpXOqucaI5P4gHqIPphUqLwSda7Voyx1ldfatL1mMrVmswsr9n_Ax-5H8QSxg4-TiFrE33wCBJ4raU6EdRYD6GEZDOVi1JzKHCksQyTvXp7-vfoooYjfyyr74zD40QGORvi3U4CN88kTYLVppA2FNIXoWthxZVkc6kwWkgPDMhHmjQNXe9SUQr1qXUwyo5s0A7YWmwq7psTXk9e5wMkfEKmSbuyNqoF5YdB7ANvBBzA_dDw_dAn1KIlcz3VtaIG5hDgLGhKfRgtCiR8Gexs--9S5g_8jXGROw8ALiD-l3iTda0yhoqn1slWrod9_AQtf1uQ)
 </div>
 
 
@@ -648,7 +483,8 @@ object JWTServiceLive {
 
   val jwtConfigLayer: TaskLayer[JWTConfig] = Configs.makeConfigLayer[JWTConfig]("jwt")
 
-  val configuredLayer: URLayer[JWTConfig, JWTServiceLive] = JWTServiceLive.layer
+  val configuredLayer: URLayer[JWTConfig, JWTServiceLive] =
+                                                            JWTServiceLive.layer
 }
 ```
 ```scala
@@ -663,7 +499,24 @@ object JWTServiceLive {
 
   val jwtConfigLayer: TaskLayer[JWTConfig] = Configs.makeConfigLayer[JWTConfig]("jwt")
 
-  val configuredLayer: TaskLayer[JWTConfig] = jwtConfigLayer >>> JWTServiceLive.layer
+  val configuredLayer: URLayer[JWTConfig, JWTServiceLive] =
+                                             jwtConfigLayer >>> JWTServiceLive.layer
+}
+```
+```scala
+
+object JWTServiceLive {
+  val layer: URLayer[JWTConfig, JWTServiceLive] = ZLayer(
+    for
+      jwtConfig <- ZIO.service[JWTConfig]
+      clock     <- Clock.javaClock
+    yield JWTServiceLive(jwtConfig, clock)
+  )
+
+  val jwtConfigLayer: TaskLayer[JWTConfig] = Configs.makeConfigLayer[JWTConfig]("jwt")
+
+  val configuredLayer: TaskLayer[JWTServiceLive] = 
+                                             jwtConfigLayer >>> JWTServiceLive.layer
 }
 ```
 ```scala
