@@ -33,25 +33,20 @@ div(
 
 # Profile page
 
-```scala {*|5-7|9|11-17}
-object ProfilePage:
+```scala {*|5-7|9}
+object ProfilePage extends SecuredPage:
 
   val userBus = new EventBus[User]
 
-  def apply(): ReactiveHtmlElement[HTMLDivElement] = div(
-    child <-- session(withoutSession)(withSession)
-  )
-
-  def withoutSession = h1("Please log in to view your profile")
-
-  def withSession(userToken: UserToken) = div(
+  def securedContent(userToken: UserToken) = div(
     onMountCallback { _ =>
       UserEndpoint.profile(()).emitTo(userBus)
     },
     renderUser
   )
 
-  def renderUser = div(
+  def renderUser =
+    div(
       h1("Profile Page"),
       child <-- userBus.events.map { user =>
         div(

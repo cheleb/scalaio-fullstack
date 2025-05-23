@@ -113,8 +113,8 @@ The Ugly:
 The good: 
   - DX awesome, feedback loop
   - Integration: UI, Effect System, HTTP client/server
-  - g8 scaffold
-  - VSCode automation
+  👉 g8 scaffold  
+  👉 VSCode automation
 The bad:
   - Integration: Quite a few lines of code
 The Ugly
@@ -123,8 +123,8 @@ The Ugly
 All good: 
   - DX awesome, feedback loop
   - Integration libs: UI, Effect System, HTTP client/server
-    - Tapir ZIO laminar integration
-    - Laminar Forms derivation
+    👉 Tapir ZIO laminar integration
+    👉 Laminar Forms derivation
   - g8 scaffold
   - VSCode automation
 ```

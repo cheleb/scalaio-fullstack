@@ -24,7 +24,7 @@ Where ?
 
 ::right::
 
-<div v-click="[1,6]" v-motion style="position:absolute" duration="1s"
+<div v-click="[1,4]" v-motion style="position:absolute" duration="1s"
   :initial="{ x: 0, y: 0 }"
   :enter="{ x: 0, y: 0 }"
   :click-1="{ x: 100, y: 100 }"
@@ -43,7 +43,6 @@ Where ?
   :enter="{ x: 100, y: -200 }"
   :click-2="{ x: 200, y: 100 }"
   :click-3="{ x: 310, y: -240 }"
-  :leave="{ x: 310 }"
 >
 <img alt="text form" src="../images/UI5_bindings.png" style="width: 40%; height: auto;" />
 </div>

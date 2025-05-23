@@ -109,7 +109,7 @@ First step is to define the API endpoints as <span v-mark="{type:'circle', color
 val create: PublicEndpoint[Person, Throwable, User, Any] = ???
 ```
 
-```scala {4|5|3,6|1,3,7-9}
+```scala {*|5|6|1,3,7-9}
 //                            In 
 //                            ☟
 val create: PublicEndpoint[Person, Throwable, User, Any] = baseEndpoint

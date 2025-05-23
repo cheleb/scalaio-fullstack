@@ -1,8 +1,7 @@
 # Typesystem best friend vs boilerplate !
 
-What is a type ?
 
-A type is a <span v-mark="{type:'underline', color:'orange', at:1}">set of values</span> and a set of operations that can be performed on those values.
+<img alt="Scala type system" src="../images/ScalaTypeHierarchy.png" style="width: 90%; height: auto; margin: 1em" />
 
 ---
 
@@ -394,6 +393,43 @@ object Show extends AutoDerivation[Show]:
     // Sum type
     override def split[T](ctx: SealedTrait[Show, T]): Show[T] = 
       ???
+
+    given Show[String] with
+        def show(a: String): String = a
+    
+    given Show[Int] with
+        def show(a: Int): String = a.toString
+
+    given Show[Password] with
+        def show(a: Password): String = "********"
+                        
+```
+```scala
+trait Show[A]:
+  def show(a: A): String
+
+extension [A] (a: A)(using sa: Show[A]) 
+  def show: String =
+     sa.show(a)
+
+object Show extends AutoDerivation[Show]:
+
+    // Product type
+    override def join[T](ctx: CaseClass[Show, T]): Show[T] =
+      new Show[T]:
+         def show(a: T): String =
+           caseClass.parameters
+             .map { p => p.typeclass.show(p.deref(a)) }
+             .mkString(" ")
+    
+    // Sum type
+    override def split[T](ctx: SealedTrait[Show, T]): Show[T] = 
+      new Show[T]:
+       def show(a: T): String =
+        sealedTrait.choose(a) { sub =>
+          sub.typeclass.show(sub.cast(a))
+        }
+    
 
     given Show[String] with
         def show(a: String): String = a
