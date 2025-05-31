@@ -109,37 +109,9 @@ layout: two-cols
 
 
 ---
+src: ./pages/00_agenda.md
+---
 
-## Agenda
-
-<v-clicks depth="2">
-
-- Scala, a complex language  ?
-- 10s demo time / 2 lines of shell:
-  - scaffolding and IDE magic.
-  - End ~~User~~ Developer  Experience.
-- Programming with Type:
-  - Scala type system. 
-  - UI Laminar form derivation.
-- Programming with values:
-  - Tapir: HTTP client.
-  - Effects system: ZIO
-- Deployment
-  - Docker, Kubernetes, ArgoCD
-
-</v-clicks>
-
-::right::
-
-<img v-click="2" alt="Full stack apps" src="./images/apps.svg" width="70%"/>
-
-<!--
-
- - ZIO is central to the architecture:
-    - the glue between the layers.
-    - orchestrating the side effects.
-
--->
 
 ---
 src: ./pages/01_scala_complex.md
@@ -154,13 +126,12 @@ src: ./pages/02_ono-at-ledger.md
 ---
 
 ---
-src: ./pages/03_setup.md
----
-
----
 src: ./pages/04_architecture.md
 ---
 
+---
+src: ./pages/03_setup.md
+---
 ---
 src: ./pages/05_ui.md
 ---

@@ -118,10 +118,19 @@ Sound abstract, but in practice, it's quite simple to use. Wait for the examples
 
 ````md magic-move {lines: true, at:1}
 ```scala
+val simple = ZIO.succeed(42) // Future.success
+```
+```scala
+//               R     E       A
 val simple: ZIO[Any, Nothing, Int] = ZIO.succeed(42)
 ```
 ```scala
 val simple: UIO[Int] = ZIO.succeed(42) // Succeed with an `A`, cannot fail, no requirements.
+```
+```scala
+val simple: UIO[Int] = ZIO.succeed(42)
+
+def whatIsTheAnswer(i: Int) = ZIO.succeed(s"The answer is $i")
 ```
 ```scala {3}
 val simple:                  UIO[Int]    = ZIO.succeed(42)
@@ -288,7 +297,7 @@ val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(message).repeatN(i%2)
+def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(s"$message and isEven: ${i % 2 == 0}")
 
 val program: Task[Unit] = simple.flatMap(i => whatIsTheAnswer(i))
                                 .flatMap(str => sayIntLoud(str, 💥i)) // Won't compile
@@ -298,7 +307,7 @@ val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(message).repeatN(i%2)
+def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(s"$message and isEven: ${i % 2 == 0}")
 
 val program: Task[Unit]  = simple.flatMap { i => 
                                               whatIsTheAnswer(i)
@@ -313,7 +322,7 @@ val simple:                             UIO[Int]     = ZIO.succeed(42)
 
 def whatIsTheAnswer(i: Int):            UIO[String]  = ZIO.succeed(s"The answer is $i")
 
-def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(message).repeatN(i%2)
+def sayItLoud(message: String, i: Int): Task[Unit]   = Console.printLine(s"$message and isEven: ${i % 2 == 0}")
 
 val program: Task[Unit] = for { // For comprehension
     i   <- simple
