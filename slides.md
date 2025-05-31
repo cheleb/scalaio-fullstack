@@ -186,34 +186,6 @@ src: ./pages/072_tapir_client.md
 src: ./pages/08_all_together.md
 ---
 
----
-
-# Under the hood - Laminar Form Derivation
-
-No boilerplate, no magic, just Scala.
-
-<div v-click="+1"><a href="https://cheleb.github.io/laminar-form-derivation/demo/index.html">Laminar Form Derivation</a> with Magnolia</div>
-<ul>
-  <li v-click="+2">Case class to form</li>
-  <li v-click="+3">Databinding</li>
-  <li v-click="+4">Validation</li>
-  <li v-click="+5">Error handling</li>
-</ul>
-
-<div v-click="+6">
-
-```scala
-import import dev.cheleb.scalamigen.*
-
-case class Person(name: String, email: String, password: Password)
-
-val personVar = Var(Person("John", "john.does@foo.bar", Password("notsecured") ))
-
-personVar.asForm
-
-```
-
-</div>
 
 ------
 
@@ -297,6 +269,9 @@ code zio-laminar-demo-k8s
 
 </div>
 
+---
+src: ./pages/11_deployment.md
+---
 
 ---
 

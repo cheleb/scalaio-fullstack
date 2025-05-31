@@ -69,7 +69,7 @@ trait UserService:
   def register(person: Person): Task[User]
 // ...
 class UserController private (userService: UserService, jwtService: JWTService):
-
+     //          ServerEndpoint[-R,  F[_]] 
      val create: ServerEndpoint[Any, Task] = ???
 ```
 ```scala
