@@ -1,13 +1,145 @@
-# Typesystem best friend vs boilerplate !
+# Typesystem best friend !
 
+<v-clicks depth="2">
 
-<img alt="Scala type system" src="../images/ScalaTypeHierarchy.png" style="width: 90%; height: auto; margin: 1em" />
+- Type:
+  - A set of operations
+  - A set of values
+- ADT:
+  - Algebraic Data Type
+  - A type that can be constructed from other types
+  - A type that can be deconstructed into other types
+- Type class:
+  - A type that defines a set of operations on a type
+  - A type that can be used to extend the functionality of a type
+- Generic Derivation
+
+</v-clicks>
 
 ---
 
 # Scala type system
 
-### Rich type system
+<img alt="Scala type system" src="../images/ScalaTypeHierarchy.png" style="width: 90%; height: auto; margin: 1em" />
+
+
+---
+transition: fade
+layout: two-cols
+---
+
+# Scala type / ADT
+
+````md magic-move
+```scala
+enum Color:
+
+  case Black, White
+  case Brown(dark: Boolean)
+
+```
+```scala
+enum Color:
+
+  case Black, White
+  case Brown(dark: Boolean)  
+
+sealed trait Totem
+
+case class Dog(color: Color, age: Byte) extends Totem
+
+case class Tree(color: Color, age: Short) extends Totem
+```
+```scala
+enum Color:
+
+  case Black, White
+  case Brown(dark: Boolean)
+
+sealed trait Totem
+
+case class Dog(color: Color, age: Byte) extends Totem
+
+case class Tree(color: Color, age: Short) extends Totem
+```
+```scala
+enum Color: // ??? values
+  case Black, White
+  case Brown(dark: Boolean)
+
+sealed trait Totem
+
+case class Dog(color: Color, age: Byte) extends Totem
+
+case class Tree(color: Color, age: Short) extends Totem
+```
+```scala
+enum Color:                   // 4 values
+  case Black, White           // 1 + 1
+  case Brown(dark: Boolean)   //   2
+
+sealed trait Totem
+
+case class Dog(color: Color, age: Byte) extends Totem
+
+case class Tree(color: Color, age: Short) extends Totem
+```
+```scala
+enum Color:                   // 4 values
+  case Black, White           // 1 + 1
+  case Brown(dark: Boolean)   //   2
+
+sealed trait Totem
+              // 4                256  
+case class Dog(color: Color, age: Byte) extends Totem
+              // 4                 65536
+case class Tree(color: Color, age: Short) extends Totem
+```
+```scala
+enum Color:                   // 4 values
+  case Black, White           // 1 + 1
+  case Brown(dark: Boolean)   //   2
+
+sealed trait Totem
+              // 4        *       256    = 1024
+case class Dog(color: Color, age: Byte) extends Totem
+              // 4        *        65536 = 262144
+case class Tree(color: Color, age: Short) extends Totem
+```
+```scala
+enum Color:                   // 4 values
+  case Black, White           // 1 + 1
+  case Brown(dark: Boolean)   //   2
+
+sealed trait Totem // ???
+              // 4        *       256    = 1024
+case class Dog(color: Color, age: Byte) extends Totem
+              // 4        *        65536 = 262144
+case class Tree(color: Color, age: Short) extends Totem
+```
+```scala
+enum Color:                   // 4 values
+  case Black, White           // 1 + 1
+  case Brown(dark: Boolean)   //   2
+
+sealed trait Totem // 1024 + 262144      = 263168
+              // 4        *       256    = 1024
+case class Dog(color: Color, age: Byte) extends Totem
+              // 4        *        65536 = 262144
+case class Tree(color: Color, age: Short) extends Totem
+```
+````
+
+
+::right::
+
+<img alt="Scala type system" src="../images/datatypes.png" style="width: 90%; height: auto; margin: 1em" />
+
+
+
+---
+
+# Scala type / generic
 
 <div grid="~ cols-[30%_70%] gap-2">
 
@@ -21,9 +153,11 @@
     - union types
     - intersection types
     - higher-kinded types
-  - Compile time operations
-    - Implicits (given/using)
-    - extension
+  - Function:
+    - HOF
+    - using
+    - given
+  - extension
 
 </v-clicks>
 
@@ -86,16 +220,86 @@ type Environement = Database & RabbitMQ
 trait Functor[F[_]] extends Invariant[F]: 
   def map[A, B](fa: F[A])(f: A => B): F[B]
 ```
+```scala
+// Kind of magic
+def toJson[A](a: A, encoder: Encoder[A]): String =
+  encoder.encode(a)
+
+// ...
+
+val json: String = toJson(user, UserEncoder)
+
+```
+```scala
+// Kind of magic
+def toJson[A](a: A)(encoder: Encoder[A]): String =
+  encoder.encode(a)
+
+// ...
+
+val json: String = toJson(user)(UserEncoder)
+
+```
+```scala
+// Kind of magic
+def toJson[A](a: A)(using encoder: Encoder[A]): String =
+  encoder.encode(a)
+
+// ...
+
+val json: String = toJson(user)(using UserEncoder)
+
+```
+```scala
+// Kind of magic
+def toJson[A](a: A)(using encoder: Encoder[A]): String =
+  encoder.encode(a)
+
+// ...
+given Encoder[User] = UserEncoder
+
+val json: String = toJson(user)
+
+```
+```scala {10-11}
+// Kind of magic
+def toJson[A](a: A)(using encoder: Encoder[A]): String =
+  encoder.encode(a)
+
+// ...
+given Encoder[User] = UserEncoder
+
+val json: String = toJson(user)
+
+extension [A] (a: A)(using encoder: Encoder[A]) 
+  def toJson: String = encoder.encode(a)
+
+```
+```scala
+// Kind of magic
+extension [A] (a: A)(using encoder: Encoder[A]) 
+  def toJson: String = encoder.encode(a)
+
+// ...
+given Encoder[User] = UserEncoder
+
+val json: String = user.toJson
+
+
+```
+```scala
+// Kind of magic
+import alib.json.*
+
+
+val json: String = user.toJson
+
+
+```
 
 ````
 </div>
 </div>
-
-
-
-
-
- 
 
 
 ---
@@ -309,6 +513,34 @@ layout: two-cols
 
 # Generic Derivation
 
+<br />
+
+````md magic-move {at: 2}
+```scala
+//
+```
+```scala
+1.show
+
+"john".show
+```
+```scala
+1.show 💥
+
+"john".show 💥
+```
+```scala
+1.show
+
+"john".show
+```
+````
+
+::right::
+
+
+<br />
+
 ````md magic-move
 ```scala
 trait Show[A]:
@@ -443,33 +675,7 @@ object Show extends AutoDerivation[Show]:
 ```
 ````
 
-::right::
 
-
-<br />
-
-### Usage
-
-````md magic-move {at: 2}
-```scala
-//
-```
-```scala
-1.show
-
-"john".show
-```
-```scala
-1.show 💥
-
-"john".show 💥
-```
-```scala
-1.show
-
-"john".show
-```
-````
 
 ---
 transition: fade
