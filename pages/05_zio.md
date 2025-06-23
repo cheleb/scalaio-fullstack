@@ -265,7 +265,7 @@ val whatIsTheAnswer: Int    =>  UIO[String]  = i => ZIO.succeed(s"The answer is 
 val sayItLoud:       String =>  Task[Unit]   = message => Console.printLine(message)  // String => Task[Unit]
 
 val program: Task[Unit] = simple |> whatIsTheAnswer
-                                |> flatMap sayIntLoud
+                                |> sayIntLoud
 ```
 ```scala
 import zorglub.flatmapthatshit.*
@@ -277,7 +277,7 @@ val whatIsTheAnswer: Int    =>  UIO[String]  = i => ZIO.succeed(s"The answer is 
 val sayItLoud:       String =>  Task[Unit]   = message => Console.printLine(message)  // String => Task[Unit]
 
 val program: Task[Unit] = simple |> whatIsTheAnswer
-                                 |> flatMap sayIntLoud
+                                 |> sayIntLoud
 
 val program: Task[Unit] = simple.flatMap(i => whatIsTheAnswer(i))  // UIO[String]
                                 .flatMap(str => sayIntLoud(str))   // Task[Unit]                                

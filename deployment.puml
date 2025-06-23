@@ -1,0 +1,38 @@
+
+@startuml "Deployment Diagram"
+
+autonumber
+
+Actor Developper
+
+box GitHub #lightblue
+Entity GitHub
+
+Entity GitOps
+
+end box
+
+Entity CI
+
+Collections DockerHub
+
+box Argo CD #lightgreen  
+
+Control ImageUpdater
+
+Control ArgoCD
+
+end box
+
+Entity Kubernetes
+
+Developper -> GitHub : Tag
+GitHub -> CI : Trigger
+CI -> DockerHub : Build
+DockerHub -> ImageUpdater : Detect New Image
+ImageUpdater -> GitOps : Update Manifest
+GitOps -> ArgoCD : trigger
+ArgoCD -> Kubernetes : Deploy Application
+
+
+@enduml
