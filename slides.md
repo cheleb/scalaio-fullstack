@@ -268,6 +268,35 @@ src: ./pages/11_deployment.md
 ---
 
 ---
+transition: fade
+layout: two-cols
+
+---
+
+# Conclusion
+
+
+* Definitively
+* Isomorphic
+* DX
+* Type safety
+  * Boilerplate free
+* Reactive to the core
+
+::right::
+
+## Scala full stack
+
+<br />
+
+* ScalaJS really complete.
+  * JS Interop
+* Compiler is your friend.
+* Effects system
+  * Significant learning curve
+  * Reactive programming is not easy
+
+---
 
 # Take over / What next?
 

@@ -254,21 +254,3 @@ PersonEndpoint //
 ```
 
 </div>
-
-
-
----
-
-# Tapir Sttp
-
-Both server and client side are implemented with Tapir and Sttp.
-
-* Tapir: API definition
-* Sttp as HTTP client: One line to run the request
-* Sttp as backend ZIO: One line handle the request
-
-In the mean time:
-* Json marshalling/unmarshalling
-* Error handling
-* Security (Bearer token)
-* Reactive
