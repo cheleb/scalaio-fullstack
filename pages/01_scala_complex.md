@@ -6,16 +6,13 @@
 
 Not the language !
 
-<img alt="grammars" v-click src="../images/grammars.png" style="width: 80%; height: auto" />
+<img alt="grammars" src="../images/grammars.png" style="width: 80%; height: auto" />
 
 ---
 
 ## Scala Complexity / Syntax ?
 
-````md magic-move {lines: true, at:1}
-```scala
-// Not the Syntax !
-```
+````md magic-move {lines: true}
 ```scala
 // Not the Syntax !
 def helloWorld = println("Hello, World!")

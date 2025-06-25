@@ -55,6 +55,7 @@ With ZIO, Tapir && Laminar
 ---
 transition: fade
 layout: two-cols
+
 ---
 
 ## 100% Scala
@@ -107,14 +108,18 @@ layout: two-cols
 
 <img alt="World of Scala" src="./images/world-of-scala.png" width="80%"/>
 
-
 ---
 src: ./pages/00_agenda.md
----
 
+---
 
 ---
 src: ./pages/01_scala_complex.md
+---
+
+---
+src: ./pages/01_vs_java.md
+
 ---
 
 ---
